@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    <sys:String x:Key="ThemeName">Dark Theme</sys:String>
+
+    <SolidColorBrush x:Key="PrimaryColor" Color="#616161" />
+    <SolidColorBrush x:Key="DarkPrimaryColor" Color="#424242" />
+    <SolidColorBrush x:Key="LightPrimaryColor" Color="#757575" />
+    <SolidColorBrush x:Key="AccentColor" Color="#1976D2" />
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#E0E0E0" />
+    <SolidColorBrush x:Key="SecondaryTextColor" Color="#BDBDBD" />
+    <SolidColorBrush x:Key="DividerColor" Color="#64B5F6" />
+    <SolidColorBrush x:Key="GraphicsColor" Color="#BBDEFB" />
+
+</ResourceDictionary>

@@ -1,0 +1,97 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:EWPF.Controls">
+
+    <Style x:Key="RotatingCanvasStyle" TargetType="{x:Type Canvas}">
+        <!--<Style.Triggers>
+            <Trigger Property="IsVisible" Value="True">
+
+                <Trigger.EnterActions>
+                    <BeginStoryboard Name="Storyboard_Rotate">
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" 
+                                                             Duration="0:0:5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+
+                <Trigger.ExitActions>
+                    <StopStoryboard BeginStoryboardName="Storyboard_Rotate" />
+                </Trigger.ExitActions>
+
+            </Trigger>
+        </Style.Triggers>-->
+    </Style>
+
+    <Style TargetType="{x:Type controls:BusyIndicator}">
+
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Stroke" Value="{DynamicResource PrimaryColor}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:BusyIndicator}">
+
+                    <Viewbox Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}}, 
+                                    Path=Width}" 
+                             Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}},
+                                    Path=Height}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                        <Grid Background="Transparent" ToolTip="{TemplateBinding ToolTip}" 
+                              HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            <Canvas x:Name="PART_Canvas" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Width="100" Height="100"
+                                RenderTransformOrigin="0.5,0.5"
+                                Style="{StaticResource RotatingCanvasStyle}">
+
+                                <Canvas.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Canvas.RenderTransform>
+
+                            </Canvas>
+
+                        </Grid>
+
+                    </Viewbox>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
