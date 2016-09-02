@@ -4,14 +4,14 @@
     xmlns:controls="clr-namespace:EWPF.Controls">
 
     <Style x:Key="RotatingCanvasStyle" TargetType="{x:Type Canvas}">
-        <!--<Style.Triggers>
+        <Style.Triggers>
             <Trigger Property="IsVisible" Value="True">
 
                 <Trigger.EnterActions>
                     <BeginStoryboard Name="Storyboard_Rotate">
                         <Storyboard RepeatBehavior="Forever">
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" 
-                                                             Duration="0:0:5"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1.2"
+                                             AccelerationRatio="0.4" DecelerationRatio="0.6" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -21,7 +21,7 @@
                 </Trigger.ExitActions>
 
             </Trigger>
-        </Style.Triggers>-->
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type controls:BusyIndicator}">
@@ -38,7 +38,8 @@
                                     Path=Width}" 
                              Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}},
                                     Path=Height}"
-                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                             HorizontalAlignment="Center" VerticalAlignment="Center"
+                             Margin="20">
 
                         <Grid Background="Transparent" ToolTip="{TemplateBinding ToolTip}" 
                               HorizontalAlignment="Center" VerticalAlignment="Center">

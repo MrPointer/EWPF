@@ -20,7 +20,7 @@
         <GroupBox x:Name="ProgressGroupBox" Margin="5" Header="Progress Bars">
 
             <!-- ToDo: Add Custom control later -->
-            <ewpfc:BusyIndicator Points="4" PointMargin="0" />
+            <ewpfc:BusyIndicator Points="10" />
             <!--<ewpf:CircularProgressBar Foreground="Red" />-->
 
         </GroupBox>

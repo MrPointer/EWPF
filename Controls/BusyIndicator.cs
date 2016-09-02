@@ -69,25 +69,6 @@ namespace EWPF.Controls
 
         #endregion
 
-        #region Point Margin
-
-        /// <summary>
-        /// Gets or sets the margin of a point in the busy indicator's circle from it's enclosing container (A canvas).
-        /// </summary>
-        public static readonly DependencyProperty PointMarginProperty = DependencyProperty.Register(
-            "PointMargin", typeof(double), typeof(BusyIndicator), new FrameworkPropertyMetadata(default(double), OnPointMarginChanged));
-
-        /// <summary>
-        /// Margin of a point from the enclosing container (A canvas).
-        /// </summary>
-        public double PointMargin
-        {
-            get { return (double)GetValue(PointMarginProperty); }
-            set { SetValue(PointMarginProperty, value); }
-        }
-
-        #endregion
-
         #endregion
 
         #region Constructors
@@ -243,6 +224,10 @@ namespace EWPF.Controls
         #endregion
     }
 
+    #region Converters
+
+    #region Point To Canvas Left
+
     /// <summary>
     /// Multi converter used to convert a busy indicator's point to Canvas.Left value, meaning the point's X coordinate.
     /// </summary>
@@ -294,6 +279,10 @@ namespace EWPF.Controls
         }
     }
 
+    #endregion
+
+    #region Point To Canvas Top
+
     /// <summary>
     /// Multi converter used to convert a busy indicator's point to Canvas.Top value, meaning the point's Y coordinate.
     /// </summary>
@@ -335,6 +324,10 @@ namespace EWPF.Controls
         }
     }
 
+    #endregion
+
+    #region Canavs Size To Radius
+
     /// <summary>
     /// Multi converter used to convert canvas' size to radius by
     /// </summary>
@@ -368,4 +361,20 @@ namespace EWPF.Controls
             throw new NotImplementedException();
         }
     }
+
+    #endregion
+
+    #region Bool To Acceleration Ratio
+
+
+
+    #endregion
+
+    #region Bool To Deceleration Ratio
+
+
+
+    #endregion
+
+    #endregion
 }
