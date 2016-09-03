@@ -29,6 +29,7 @@ namespace EWPF.Controls
         private MultiBinding m_PointYCoordinateBinding;
         private MultiBinding m_EllipseSizeBinding;
         private Binding m_StrokeBinding;
+        private Binding m_OpacityBinding;
 
         private static bool m_IsInitialized;
 
@@ -168,13 +169,15 @@ namespace EWPF.Controls
 
         #region Control-Related Methods
 
+        /// <summary>
+        /// Invalidates the enclosing canvas by clearing its' children and adding new ones instead.
+        /// </summary>
         private void InvalidateCanvas()
         {
             m_ParentCanvas.Children.Clear();
             for (int i = 0; i < Points; i++)
             {
-                var newPoint = CreatePoint();
-                newPoint.Tag = i;
+                var newPoint = CreatePoint(i);
                 m_ParentCanvas.Children.Add(newPoint);
             }
         }
@@ -182,15 +185,17 @@ namespace EWPF.Controls
         /// <summary>
         /// Creates a new ellipse representing a point on the busy indicator's circle based on it's ordinal value among other points.
         /// </summary>
+        /// <param name="i_PointIndex">Point's index in the series of points constructing buys indicator's circle.</param>
         /// <returns>Ellipse object representing a point on the busy indicator's circle.</returns>
-        private Ellipse CreatePoint()
+        private Ellipse CreatePoint(int i_PointIndex)
         {
-            var ellipse = new Ellipse { Stretch = Stretch.Fill };
+            var ellipse = new Ellipse { Stretch = Stretch.Fill, Tag = i_PointIndex };
             ellipse.SetBinding(WidthProperty, m_EllipseSizeBinding);
             ellipse.SetBinding(HeightProperty, m_EllipseSizeBinding);
             ellipse.SetBinding(Canvas.LeftProperty, m_PointXCoordinateBinding);
             ellipse.SetBinding(Canvas.TopProperty, m_PointYCoordinateBinding);
             ellipse.SetBinding(Shape.FillProperty, m_StrokeBinding);
+            ellipse.SetBinding(OpacityProperty, m_OpacityBinding);
             return ellipse;
         }
 
@@ -245,12 +250,27 @@ namespace EWPF.Controls
                 };
 
             #endregion
+
+            #region Opacity
+
+            m_OpacityBinding = new Binding
+            {
+                Path = new PropertyPath("Tag"),
+                RelativeSource = RelativeSource.Self,
+                Converter = new PointIndexToOpacityConverter(),
+                ConverterParameter = Points
+            };
+
+            #endregion
         }
 
         #endregion
 
         #region Animation-Related
 
+        /// <summary>
+        /// Creates the busy indicator's storyboard, which controls the animation process.
+        /// </summary>
         private void CreateAnimationStoryBoard()
         {
             m_AnimationStoryboard = new Storyboard();
@@ -404,6 +424,31 @@ namespace EWPF.Controls
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #endregion
+
+    #region Point Index To Opacity
+
+    /// <summary>
+    /// Converter used convert a point's index to its' matching opacity in the circle.
+    /// </summary>
+    public class PointIndexToOpacityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is int) || !(parameter is int))
+                return 1.0; // default value
+            int index = (int)value;
+            int totalPoints = (int)parameter;
+            double opacityValue = (double) index / totalPoints;
+            return opacityValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
