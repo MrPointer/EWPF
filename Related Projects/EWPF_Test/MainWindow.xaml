@@ -18,7 +18,6 @@
 
         <GroupBox x:Name="ProgressGroupBox" Margin="5" Header="Progress Bars">
 
-            <!-- ToDo: Add Custom control later -->
             <ewpfc:BusyIndicator IsAccelerated="True" Points="18" />
 
         </GroupBox>
