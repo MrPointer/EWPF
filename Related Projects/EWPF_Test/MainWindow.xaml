@@ -1,7 +1,6 @@
 ﻿<Window x:Class="ControlTemplatesTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ewpf="clr-namespace:EWPF;assembly=EWPF"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen" Background="{DynamicResource GraphicsColor}">
 
@@ -20,8 +19,7 @@
         <GroupBox x:Name="ProgressGroupBox" Margin="5" Header="Progress Bars">
 
             <!-- ToDo: Add Custom control later -->
-            <ewpfc:BusyIndicator IsAccelerated="True" Points="10" />
-            <!--<ewpf:CircularProgressBar Foreground="Red" />-->
+            <ewpfc:BusyIndicator IsAccelerated="True" Points="18" />
 
         </GroupBox>
 
