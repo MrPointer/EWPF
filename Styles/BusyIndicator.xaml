@@ -3,27 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:EWPF.Controls">
 
-    <Style x:Key="RotatingCanvasStyle" TargetType="{x:Type Canvas}">
-        <Style.Triggers>
-            <Trigger Property="IsVisible" Value="True">
-
-                <Trigger.EnterActions>
-                    <BeginStoryboard Name="Storyboard_Rotate">
-                        <Storyboard RepeatBehavior="Forever">
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1.2"
-                                             AccelerationRatio="0.4" DecelerationRatio="0.6" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.EnterActions>
-
-                <Trigger.ExitActions>
-                    <StopStoryboard BeginStoryboardName="Storyboard_Rotate" />
-                </Trigger.ExitActions>
-
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="{x:Type controls:BusyIndicator}">
 
         <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -46,8 +25,7 @@
 
                             <Canvas x:Name="PART_Canvas" HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Width="100" Height="100"
-                                RenderTransformOrigin="0.5,0.5"
-                                Style="{StaticResource RotatingCanvasStyle}">
+                                RenderTransformOrigin="0.5,0.5">
 
                                 <Canvas.RenderTransform>
                                     <RotateTransform Angle="0" />

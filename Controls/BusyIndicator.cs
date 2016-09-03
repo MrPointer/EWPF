@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 namespace EWPF.Controls
@@ -17,6 +18,10 @@ namespace EWPF.Controls
 
         private const string cm_PARENT_CANVAS_NAME = "PART_Canvas";
         private Canvas m_ParentCanvas;
+
+        private Storyboard m_AnimationStoryboard;
+        private BeginStoryboard m_AnimationBeginStoryboard;
+        private StopStoryboard m_AnimationStopStoryboard;
 
         private double m_AngleBetweenPoints;
 
@@ -69,6 +74,25 @@ namespace EWPF.Controls
 
         #endregion
 
+        #region Is Accelerated
+
+        /// <summary>
+        /// Gets or sets weather the busy indicator should apply an acceleration and deceleration animation.
+        /// </summary>
+        public static readonly DependencyProperty IsAcceleratedProperty = DependencyProperty.Register(
+            "IsAccelerated", typeof(bool), typeof(BusyIndicator), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Indicates weather the busy indicator should be accelerated and decelerated in it's animation.
+        /// </summary>
+        public bool IsAccelerated
+        {
+            get { return (bool)GetValue(IsAcceleratedProperty); }
+            set { SetValue(IsAcceleratedProperty, value); }
+        }
+
+        #endregion
+
         #endregion
 
         #region Constructors
@@ -79,13 +103,30 @@ namespace EWPF.Controls
         static BusyIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator), new FrameworkPropertyMetadata(typeof(BusyIndicator)));
-            //PointsProperty = DependencyProperty.Register("Points", typeof(int), typeof(BusyIndicator),
-            //    new FrameworkPropertyMetadata(default(int), OnPointsChanged));
         }
 
         #endregion
 
         #region Methods
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handles an event raised when the enclosing canvas's visibility has changed - 
+        /// It stops the busy indicator's animation if the canvas becomes invisible and the animation is still running.
+        /// </summary>
+        /// <param name="sender">Enclosing Canvas.</param>
+        /// <param name="e">Irrelevant due to a bug in WPF's system.</param>
+        private void ParentCanvasIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visibilityState = m_ParentCanvas.IsVisible;
+            if (visibilityState) return;
+            if (m_AnimationStoryboard == null) return;
+            m_AnimationStoryboard.Stop();
+            m_AnimationStoryboard = null;
+        }
+
+        #endregion
 
         #region Callback Methods
 
@@ -105,26 +146,21 @@ namespace EWPF.Controls
         }
 
         /// <summary>
-        /// Handles an event raised when the PointsMargin property has changed.
+        /// Called upon control invalidation, usually before the enclosing control is loaded.
         /// </summary>
-        /// <param name="i_Sender">Instance of this class.</param>
-        /// <param name="i_EventArgs">Event args for this method containing old and new values about the margin of points.</param>
-        private static void OnPointMarginChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
-        {
-            var instance = i_Sender as BusyIndicator;
-            if (instance == null)
-                return;
-            if (!m_IsInitialized) return; // Do not proceed if control is not yet initialized
-            instance.InvalidateCanvas();
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             m_ParentCanvas = GetTemplateChild(cm_PARENT_CANVAS_NAME) as Canvas;
             if (m_ParentCanvas == null) return;
+            m_ParentCanvas.IsVisibleChanged += ParentCanvasIsVisibleChanged;
+
+            CreateAnimationStoryBoard();
             CreatePointBindings(); // Create all necessary bindings
             InvalidateCanvas();
+
+            m_AnimationStoryboard.Begin();
+
             m_IsInitialized = true;
         }
 
@@ -183,10 +219,6 @@ namespace EWPF.Controls
             m_PointXCoordinateBinding.Bindings.Add(new Binding("Height") { Source = m_ParentCanvas });
             m_PointXCoordinateBinding.Bindings.Add(new Binding("Tag") { RelativeSource = RelativeSource.Self });
             m_PointXCoordinateBinding.Bindings.Add(new Binding("Width") { RelativeSource = RelativeSource.Self });
-            m_PointXCoordinateBinding.Bindings.Add(new Binding("PointMargin")
-            {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor) { AncestorType = typeof(BusyIndicator) }
-            });
 
             #endregion
 
@@ -202,10 +234,6 @@ namespace EWPF.Controls
             m_PointYCoordinateBinding.Bindings.Add(new Binding("Height") { Source = m_ParentCanvas });
             m_PointYCoordinateBinding.Bindings.Add(new Binding("Tag") { RelativeSource = RelativeSource.Self });
             m_PointYCoordinateBinding.Bindings.Add(new Binding("Height") { RelativeSource = RelativeSource.Self });
-            m_PointYCoordinateBinding.Bindings.Add(new Binding("PointMargin")
-            {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor) { AncestorType = typeof(BusyIndicator) }
-            });
 
             #endregion
 
@@ -217,6 +245,27 @@ namespace EWPF.Controls
                 };
 
             #endregion
+        }
+
+        #endregion
+
+        #region Animation-Related
+
+        private void CreateAnimationStoryBoard()
+        {
+            m_AnimationStoryboard = new Storyboard();
+            var renderTransformAnimation = new DoubleAnimation
+            {
+                AccelerationRatio = IsAccelerated ? 0.4 : 0,
+                DecelerationRatio = IsAccelerated ? 0.6 : 0,
+                Duration = new Duration(TimeSpan.FromSeconds(1.0).Add(TimeSpan.FromMilliseconds(200.0))),
+                From = 0.0,
+                To = 360.0,
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+            m_AnimationStoryboard.Children.Add(renderTransformAnimation);
+            Storyboard.SetTarget(renderTransformAnimation, m_ParentCanvas);
+            Storyboard.SetTargetProperty(renderTransformAnimation, new PropertyPath("RenderTransform.Angle"));
         }
 
         #endregion
@@ -252,17 +301,16 @@ namespace EWPF.Controls
         /// <param name="culture">The culture to use in the converter.</param>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 5 || !(values[0] is double) || !(values[1] is double)
-                || !(values[2] is int) || !(values[3] is double) || !(values[4] is double) || !(parameter is double)) // Error in parameters
+            if (values.Length != 4 || !(values[0] is double) || !(values[1] is double)
+                || !(values[2] is int) || !(values[3] is double) || !(parameter is double)) // Error in parameters
                 return null;
             double canvasWidth = (double)values[0];
             double canvasHeight = (double)values[1];
             int ordinalNumber = (int)values[2];
             double ellipseWidth = (double)values[3];
-            double pointMargin = (double)values[4];
             double angle = (double)parameter;
             double radius = Math.Min(canvasWidth, canvasHeight) / 2; // Determine optimal size and then divide by 2
-            double xCord = radius + radius * Math.Cos(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseWidth / 2 + pointMargin;
+            double xCord = radius + radius * Math.Cos(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseWidth / 2;
             return xCord;
         }
 
@@ -297,17 +345,16 @@ namespace EWPF.Controls
         /// <param name="culture">The culture to use in the converter.</param>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 5 || !(values[0] is double) || !(values[1] is double)
-                || !(values[2] is int) || !(values[3] is double) || !(values[4] is double) || !(parameter is double)) // Error in parameters
+            if (values.Length != 4 || !(values[0] is double) || !(values[1] is double)
+                || !(values[2] is int) || !(values[3] is double) || !(parameter is double)) // Error in parameters
                 return null;
             double canvasWidth = (double)values[0];
             double canvasHeight = (double)values[1];
             int ordinalNumber = (int)values[2];
             double ellipseHeight = (double)values[3];
-            double pointMargin = (double)values[4];
             double angle = (double)parameter;
             double radius = Math.Min(canvasWidth, canvasHeight) / 2; // Determine optimal size and then divide by 2
-            double yCord = radius + radius * Math.Sin(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseHeight / 2 + pointMargin;
+            double yCord = radius + radius * Math.Sin(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseHeight / 2;
             return yCord;
         }
 
@@ -366,13 +413,45 @@ namespace EWPF.Controls
 
     #region Bool To Acceleration Ratio
 
+    /// <summary>
+    /// Converter used to convert a boolean value, indicating if acceleration should be applied on the busy indicator),
+    /// to it's acceleration ratio.
+    /// </summary>
+    public class BoolToAccelerationRatioConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool isAccelerated = (bool)value;
+            return isAccelerated ? 0.4 : 0;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     #endregion
 
     #region Bool To Deceleration Ratio
 
+    /// <summary>
+    /// Converter used to convert a boolean value, indicating if acceleration should be applied on the busy indicator),
+    /// to it's acceleration ratio.
+    /// </summary>
+    public class BoolToDecelerationRatioConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool isDecelerated = (bool)value;
+            return isDecelerated ? 0.6 : 0;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     #endregion
 
