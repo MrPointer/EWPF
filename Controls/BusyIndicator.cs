@@ -84,12 +84,31 @@ namespace EWPF.Controls
             "IsAccelerated", typeof(bool), typeof(BusyIndicator), new PropertyMetadata(default(bool)));
 
         /// <summary>
-        /// Indicates weather the busy indicator should be accelerated and decelerated in it's animation.
+        /// Gets or sets a boolean value indicating weather the busy indicator should be accelerated and decelerated in it's animation.
         /// </summary>
         public bool IsAccelerated
         {
             get { return (bool)GetValue(IsAcceleratedProperty); }
             set { SetValue(IsAcceleratedProperty, value); }
+        }
+
+        #endregion
+
+        #region Is Animated
+
+        /// <summary>
+        /// Gets or sets weather the progress bar's animation is active or not.
+        /// </summary>
+        public static readonly DependencyProperty IsAnimatedProperty = DependencyProperty.Register(
+            "IsAnimated", typeof(bool), typeof(BusyIndicator), new FrameworkPropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating weather the progress bar's animation is active or not.
+        /// </summary>
+        public bool IsAnimated
+        {
+            get { return (bool)GetValue(IsAnimatedProperty); }
+            set { SetValue(IsAnimatedProperty, value); }
         }
 
         #endregion
@@ -160,7 +179,8 @@ namespace EWPF.Controls
             CreatePointBindings(); // Create all necessary bindings
             InvalidateCanvas();
 
-            m_AnimationStoryboard.Begin();
+            if (IsAnimated)
+                m_AnimationStoryboard.Begin();
 
             m_IsInitialized = true;
         }
