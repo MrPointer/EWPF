@@ -444,7 +444,7 @@ namespace EWPF.Controls
                 return 1.0; // default value
             int index = (int)value;
             int totalPoints = (int)parameter;
-            double opacityValue = (double) index / totalPoints;
+            double opacityValue = (double)index / totalPoints;
             return opacityValue;
         }
 
