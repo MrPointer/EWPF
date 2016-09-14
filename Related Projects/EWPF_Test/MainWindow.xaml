@@ -1,4 +1,4 @@
-﻿<Window x:Class="ControlTemplatesTest.MainWindow"
+﻿<Window x:Class="EWPF_Test.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
@@ -18,7 +18,7 @@
 
         <GroupBox Margin="5" Header="Progress Bars">
 
-            <ewpfc:BusyIndicator IsAccelerated="True" IsAnimated="True" Points="18" />
+            <ewpfc:BusyIndicator x:Name="BusyIndicator" IsAccelerated="True" Points="18" />
 
         </GroupBox>
 

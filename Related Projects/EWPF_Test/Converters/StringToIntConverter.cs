@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ControlTemplatesTest.Converters
+namespace EWPF_Test.Converters
 {
     public class StringToIntConverter : IValueConverter
     {

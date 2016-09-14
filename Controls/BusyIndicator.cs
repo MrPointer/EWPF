@@ -100,7 +100,7 @@ namespace EWPF.Controls
         /// Gets or sets weather the progress bar's animation is active or not.
         /// </summary>
         public static readonly DependencyProperty IsAnimatedProperty = DependencyProperty.Register(
-            "IsAnimated", typeof(bool), typeof(BusyIndicator), new FrameworkPropertyMetadata(default(bool)));
+            "IsAnimated", typeof(bool), typeof(BusyIndicator), new FrameworkPropertyMetadata(default(bool), OnIsAnimatedChanged));
 
         /// <summary>
         /// Gets or sets a boolean value indicating weather the progress bar's animation is active or not.
@@ -166,6 +166,24 @@ namespace EWPF.Controls
         }
 
         /// <summary>
+        /// Handles an event raised when IsAnimation property has changed, 
+        /// meaning when the animating state of the busy indicator has changed.
+        /// </summary>
+        /// <param name="i_Sender">This class.</param>
+        /// <param name="i_EventArgs">Event args for this method containing the new value of the IsAnimated property.</param>
+        private static void OnIsAnimatedChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
+        {
+            var instance = i_Sender as BusyIndicator;
+            if (instance == null)
+                return;
+            bool isAnimated = (bool)i_EventArgs.NewValue;
+            if (isAnimated) // Animation should start
+                instance.StartAnimation();
+            else
+                instance.StopAnimation();
+        }
+
+        /// <summary>
         /// Called upon control invalidation, usually before the enclosing control is loaded.
         /// </summary>
         public override void OnApplyTemplate()
@@ -180,7 +198,7 @@ namespace EWPF.Controls
             InvalidateCanvas();
 
             if (IsAnimated)
-                m_AnimationStoryboard.Begin();
+                StartAnimation();
 
             m_IsInitialized = true;
         }
@@ -306,6 +324,29 @@ namespace EWPF.Controls
             m_AnimationStoryboard.Children.Add(renderTransformAnimation);
             Storyboard.SetTarget(renderTransformAnimation, m_ParentCanvas);
             Storyboard.SetTargetProperty(renderTransformAnimation, new PropertyPath("RenderTransform.Angle"));
+        }
+
+        /// <summary>
+        /// Starts the animation bound to the busy indicator, changing its' visibility to Visibility.Visible if needed.
+        /// </summary>
+        public void StartAnimation()
+        {
+            if (m_AnimationStoryboard == null)
+                return;
+            if (Visibility != Visibility.Visible) // Control isn't visible
+                Visibility = Visibility.Visible;
+            m_AnimationStoryboard.Begin();
+        }
+
+        /// <summary>
+        /// Stops the animation bound to the busy indicator and sets its' visibility state to <see cref="Visibility.Hidden"/>.
+        /// </summary>
+        public void StopAnimation()
+        {
+            if (m_AnimationStoryboard == null)
+                return;
+            m_AnimationStoryboard.Stop();
+            Visibility = Visibility.Hidden;
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ControlTemplatesTest
+namespace EWPF_Test
 {
     /// <summary>
     /// Interaction logic for App.xaml
