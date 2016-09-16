@@ -72,7 +72,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="MVVM\Services\IDialogService.cs" />
+    <Compile Include="MVVM\Services\IMessageBoxService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

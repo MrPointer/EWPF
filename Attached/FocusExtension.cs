@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace EWPF
+namespace EWPF.Attached
 {
     public static class FocusExtension
     {
