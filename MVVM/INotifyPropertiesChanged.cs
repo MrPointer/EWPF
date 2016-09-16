@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace EWPF
+namespace EWPF.MVVM
 {
     /// <summary>
     /// An interface declaring methods to notify WPF's binding system that a bounded property's value has changed.

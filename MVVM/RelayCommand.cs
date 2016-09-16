@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace EWPF
+namespace EWPF.MVVM
 {
     /// <summary>
     /// Represents a typical WPF command (ICommand) but stores Action and Predicate objects within it,

@@ -20,8 +20,6 @@ namespace EWPF.Controls
         private Canvas m_ParentCanvas;
 
         private Storyboard m_AnimationStoryboard;
-        private BeginStoryboard m_AnimationBeginStoryboard;
-        private StopStoryboard m_AnimationStopStoryboard;
 
         private double m_AngleBetweenPoints;
 
@@ -135,9 +133,9 @@ namespace EWPF.Controls
         /// Handles an event raised when the enclosing canvas's visibility has changed - 
         /// It stops the busy indicator's animation if the canvas becomes invisible and the animation is still running.
         /// </summary>
-        /// <param name="sender">Enclosing Canvas.</param>
-        /// <param name="e">Irrelevant due to a bug in WPF's system.</param>
-        private void ParentCanvasIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        /// <param name="i_Sender">Enclosing Canvas.</param>
+        /// <param name="i_E">Irrelevant due to a bug in WPF's system.</param>
+        private void ParentCanvasIsVisibleChanged(object i_Sender, DependencyPropertyChangedEventArgs i_E)
         {
             bool visibilityState = m_ParentCanvas.IsVisible;
             if (visibilityState) return;
@@ -373,23 +371,23 @@ namespace EWPF.Controls
         /// if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.
         /// <see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the 
         /// <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.</returns>
-        /// <param name="values">The array of values that the source bindings in the 
+        /// <param name="i_Values">The array of values that the source bindings in the 
         /// <see cref="T:System.Windows.Data.MultiBinding" /> produces. 
         /// The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value
         ///  to provide for conversion.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object Convert(object[] i_Values, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            if (values.Length != 4 || !(values[0] is double) || !(values[1] is double)
-                || !(values[2] is int) || !(values[3] is double) || !(parameter is double)) // Error in parameters
+            if (i_Values.Length != 4 || !(i_Values[0] is double) || !(i_Values[1] is double)
+                || !(i_Values[2] is int) || !(i_Values[3] is double) || !(i_Parameter is double)) // Error in parameters
                 return null;
-            double canvasWidth = (double)values[0];
-            double canvasHeight = (double)values[1];
-            int ordinalNumber = (int)values[2];
-            double ellipseWidth = (double)values[3];
-            double angle = (double)parameter;
+            double canvasWidth = (double)i_Values[0];
+            double canvasHeight = (double)i_Values[1];
+            int ordinalNumber = (int)i_Values[2];
+            double ellipseWidth = (double)i_Values[3];
+            double angle = (double)i_Parameter;
             double radius = Math.Min(canvasWidth, canvasHeight) / 2; // Determine optimal size and then divide by 2
             double xCord = radius + radius * Math.Cos(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseWidth / 2;
             return xCord;
@@ -398,11 +396,11 @@ namespace EWPF.Controls
         /// <summary>
         /// Converts a binding target value to the source binding values.</summary>
         /// <returns>An array of values that have been converted from the target value back to the source values.</returns>
-        /// <param name="value">The value that the binding target produces.</param>
-        /// <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        /// <param name="i_Value">The value that the binding target produces.</param>
+        /// <param name="i_TargetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object[] ConvertBack(object i_Value, Type[] i_TargetTypes, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
@@ -420,20 +418,20 @@ namespace EWPF.Controls
         /// <summary>
         /// Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.</summary>
         /// <returns>A converted value.If the method returns null, the valid null value is used.A return value of <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.<see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.</returns>
-        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        /// <param name="i_Values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object Convert(object[] i_Values, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            if (values.Length != 4 || !(values[0] is double) || !(values[1] is double)
-                || !(values[2] is int) || !(values[3] is double) || !(parameter is double)) // Error in parameters
+            if (i_Values.Length != 4 || !(i_Values[0] is double) || !(i_Values[1] is double)
+                || !(i_Values[2] is int) || !(i_Values[3] is double) || !(i_Parameter is double)) // Error in parameters
                 return null;
-            double canvasWidth = (double)values[0];
-            double canvasHeight = (double)values[1];
-            int ordinalNumber = (int)values[2];
-            double ellipseHeight = (double)values[3];
-            double angle = (double)parameter;
+            double canvasWidth = (double)i_Values[0];
+            double canvasHeight = (double)i_Values[1];
+            int ordinalNumber = (int)i_Values[2];
+            double ellipseHeight = (double)i_Values[3];
+            double angle = (double)i_Parameter;
             double radius = Math.Min(canvasWidth, canvasHeight) / 2; // Determine optimal size and then divide by 2
             double yCord = radius + radius * Math.Sin(Math.PI / 180 * angle * ordinalNumber - Math.PI / 2) - ellipseHeight / 2;
             return yCord;
@@ -442,11 +440,11 @@ namespace EWPF.Controls
         /// <summary>
         /// Converts a binding target value to the source binding values.</summary>
         /// <returns>An array of values that have been converted from the target value back to the source values.</returns>
-        /// <param name="value">The value that the binding target produces.</param>
-        /// <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        /// <param name="i_Value">The value that the binding target produces.</param>
+        /// <param name="i_TargetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object[] ConvertBack(object i_Value, Type[] i_TargetTypes, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
@@ -464,27 +462,27 @@ namespace EWPF.Controls
         /// <summary>
         /// Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.</summary>
         /// <returns>A converted value.If the method returns null, the valid null value is used.A return value of <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.<see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.</returns>
-        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        /// <param name="i_Values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object Convert(object[] i_Values, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            if (values.Length != 2 || !(values[0] is double) || !(values[1] is double)) // Error in parameters
+            if (i_Values.Length != 2 || !(i_Values[0] is double) || !(i_Values[1] is double)) // Error in parameters
                 return null;
-            double canvasWidth = (double)values[0];
-            double canvasHeight = (double)values[1];
+            double canvasWidth = (double)i_Values[0];
+            double canvasHeight = (double)i_Values[1];
             return Math.Min(canvasWidth, canvasHeight) * 10 / 100; // Determine optimal size and take a 10% of it
         }
 
         /// <summary>
         /// Converts a binding target value to the source binding values.</summary>
         /// <returns>An array of values that have been converted from the target value back to the source values.</returns>
-        /// <param name="value">The value that the binding target produces.</param>
-        /// <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        /// <param name="i_Value">The value that the binding target produces.</param>
+        /// <param name="i_TargetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
+        public object[] ConvertBack(object i_Value, Type[] i_TargetTypes, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
@@ -499,17 +497,17 @@ namespace EWPF.Controls
     /// </summary>
     public class PointIndexToOpacityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            if (!(value is int) || !(parameter is int))
+            if (!(i_Value is int) || !(i_Parameter is int))
                 return 1.0; // default value
-            int index = (int)value;
-            int totalPoints = (int)parameter;
+            int index = (int)i_Value;
+            int totalPoints = (int)i_Parameter;
             double opacityValue = (double)index / totalPoints;
             return opacityValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
@@ -525,13 +523,13 @@ namespace EWPF.Controls
     /// </summary>
     public class BoolToAccelerationRatioConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            bool isAccelerated = (bool)value;
+            bool isAccelerated = (bool)i_Value;
             return isAccelerated ? 0.4 : 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
@@ -547,13 +545,13 @@ namespace EWPF.Controls
     /// </summary>
     public class BoolToDecelerationRatioConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            bool isDecelerated = (bool)value;
+            bool isDecelerated = (bool)i_Value;
             return isDecelerated ? 0.6 : 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
         }
