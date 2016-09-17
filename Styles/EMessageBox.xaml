@@ -1,0 +1,53 @@
+﻿<Window x:Class="EWPF.Styles.EMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
+        Title="EMessageBox" Height="300" Width="300" FlowDirection="{Binding Path=MBoxFlowDirection}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../EWPFResources.xaml" />
+    </Window.Resources>
+
+    <Window.DataContext>
+        <vm:EMsgBoxViewModel />
+    </Window.DataContext>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock FontSize="16" />
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" Command="{Binding Path=PositiveCommand}" />
+            <Button Grid.Column="1" x:Name="NegativeButton" Content="{Binding Path=NegativeText}"
+                    Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}"
+                    Command="{Binding Path=NegativeCommand}"/>
+            <Button Grid.Column="2" x:Name="NeutralButton" Content="{Binding Path=NeutralText}" 
+                    Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisiblity}}"
+                    Command="{Binding Path=NeutralCommand}"/>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

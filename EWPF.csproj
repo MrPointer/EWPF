@@ -54,9 +54,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StringToVisiblityConverter.cs" />
     <Compile Include="MVVM\BaseViewModel.cs" />
     <Compile Include="Controls\BusyIndicator.cs" />
     <Compile Include="Attached\FocusExtension.cs" />
+    <Compile Include="MVVM\ViewModel\EMsgBoxViewModel.cs" />
     <Compile Include="MVVM\INotifyPropertiesChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -74,6 +76,10 @@
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\Services\IDialogService.cs" />
     <Compile Include="MVVM\Services\IMessageBoxService.cs" />
+    <Compile Include="Styles\EMessageBox.xaml.cs">
+      <DependentUpon>EMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\MessageBoxUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -91,11 +97,19 @@
     <Folder Include="Dialogs\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Converters\ConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EWPFResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\EMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
