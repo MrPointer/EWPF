@@ -54,6 +54,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\FlowDirToHAlignmentConverter.cs" />
     <Compile Include="Converters\StringsToColumnConverter.cs" />
     <Compile Include="Converters\StringToVisiblityConverter.cs" />
     <Compile Include="MVVM\BaseViewModel.cs" />

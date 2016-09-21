@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
-        Title="{Binding Path=Title}" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         FlowDirection="{Binding Path=MBoxFlowDirection}">
 
     <Window.Resources>
@@ -31,7 +31,15 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="10">
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="HorizontalAlignment" 
+                            Value="{Binding Path=MBoxFlowDirection, Converter={StaticResource FlowDirectionToHorizontalAlignment}}" />
+                </Style>
+            </Grid.Resources>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
