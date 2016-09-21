@@ -1,4 +1,7 @@
-﻿using EWPF.MVVM;
+﻿using System.Windows;
+using System.Windows.Input;
+using EWPF.MVVM;
+using EWPF.MVVM.Services;
 
 namespace EWPF_Test.MVVM
 {
@@ -29,7 +32,7 @@ namespace EWPF_Test.MVVM
 
         #region Commands
 
-
+        private RelayCommand m_ButtonClickCommand;
 
         #endregion
 
@@ -56,7 +59,15 @@ namespace EWPF_Test.MVVM
 
         #region Command Executions
 
-
+        /// <summary>
+        /// Shows a message box based on its' given type.
+        /// </summary>
+        /// <param name="i_State">Type of the message box to show.</param>
+        private void ShowMessageBox(object i_State)
+        {
+            if (MessageBoxService == null) return;
+            MessageBoxService.Show(@"Test", @"Hello World!", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
 
         #endregion
 
@@ -90,13 +101,22 @@ namespace EWPF_Test.MVVM
 
         #region Commands
 
-
+        /// <summary>
+        /// Command used to show a message box upon a click on the button.
+        /// </summary>
+        public ICommand ButtonClickCommand
+        {
+            get { return m_ButtonClickCommand ?? (m_ButtonClickCommand = new RelayCommand(ShowMessageBox, i_O => true)); }
+        }
 
         #endregion
 
         #region Other
 
-
+        /// <summary>
+        /// Gets or sets a reference to a meesage box service used to show message boxes on top of the bound view.
+        /// </summary>
+        public IMessageBoxService MessageBoxService { get; set; }
 
         #endregion
 

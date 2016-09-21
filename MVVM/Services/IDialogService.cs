@@ -8,7 +8,7 @@ namespace EWPF.MVVM.Services
     /// <para/>
     /// This is a service-like interface implementing the DI pattern.
     /// </summary>
-    public interface IDialogService
+    public interface IDialogService : IService
     {
         #region Fields
 

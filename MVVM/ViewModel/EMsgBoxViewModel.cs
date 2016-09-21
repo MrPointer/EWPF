@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using EWPF.MVVM.Services;
 
 namespace EWPF.MVVM.ViewModel
 {
@@ -66,17 +67,20 @@ namespace EWPF.MVVM.ViewModel
 
         private void HandlePositive(object i_State)
         {
-            // ToDo: Close Window
+            if (WindowService == null) return;
+            WindowService.CloseWindow(true);
         }
 
         private void HandleNegative(object i_State)
         {
-
+            if (WindowService == null) return;
+            WindowService.CloseWindow(false);
         }
 
         private void HandleNeutral(object i_State)
         {
-
+            if (WindowService == null) return;
+            WindowService.CloseWindow(null);
         }
 
         #endregion
@@ -212,7 +216,10 @@ namespace EWPF.MVVM.ViewModel
 
         #region Other
 
-
+        /// <summary>
+        /// Gets or sets a reference to a window service used to interact with the view's bound window.
+        /// </summary>
+        public IWindowService WindowService { get; set; }
 
         #endregion
 

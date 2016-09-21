@@ -54,10 +54,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StringsToColumnConverter.cs" />
     <Compile Include="Converters\StringToVisiblityConverter.cs" />
     <Compile Include="MVVM\BaseViewModel.cs" />
     <Compile Include="Controls\BusyIndicator.cs" />
     <Compile Include="Attached\FocusExtension.cs" />
+    <Compile Include="MVVM\Services\IService.cs" />
+    <Compile Include="MVVM\Services\IWindowService.cs" />
     <Compile Include="MVVM\ViewModel\EMsgBoxViewModel.cs" />
     <Compile Include="MVVM\INotifyPropertiesChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

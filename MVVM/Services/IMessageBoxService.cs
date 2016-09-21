@@ -7,7 +7,7 @@ namespace EWPF.MVVM.Services
     /// <para />
     /// The service can show windows' native message box or a custom one made by the EWPF team.
     /// </summary>
-    public interface IMessageBoxService
+    public interface IMessageBoxService : IService
     {
         #region Fields
 
