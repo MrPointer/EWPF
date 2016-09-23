@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
         Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
-        FlowDirection="{Binding Path=MBoxFlowDirection}">
+        FlowDirection="{Binding Path=MBoxFlowDirection}" Background="{DynamicResource PrimaryColor}" SnapsToDevicePixels="True">
 
     <Window.Resources>
         <ResourceDictionary Source="../EWPFResources.xaml" />
@@ -28,41 +28,32 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock FontSize="16" Text="{Binding Path=Content}" />
+            
+            <Image Grid.Column="1" Stretch="Uniform" StretchDirection="Both" />
 
         </Grid>
 
-        <Grid Grid.Row="1" Margin="10">
+        <StackPanel Grid.Row="1" Margin="10" Orientation="Horizontal" 
+                    HorizontalAlignment="{Binding Path=MBoxFlowDirection, Converter={StaticResource FlowDirectionToHorizontalAlignment}}">
 
-            <Grid.Resources>
+            <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Margin" Value="1,0" />
                     <Setter Property="FontSize" Value="16" />
                     <Setter Property="HorizontalAlignment" 
                             Value="{Binding Path=MBoxFlowDirection, Converter={StaticResource FlowDirectionToHorizontalAlignment}}" />
                 </Style>
-            </Grid.Resources>
+            </StackPanel.Resources>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" Command="{Binding Path=PositiveCommand}">
-                <Grid.Column>
-                    <MultiBinding Converter="{StaticResource StringsToColumnConverter}">
-                        <Binding Path="NegativeText" />
-                        <Binding Path="NeutralText" />
-                    </MultiBinding>
-                </Grid.Column>
-            </Button>
-            <Button Grid.Column="1" x:Name="NegativeButton" Content="{Binding Path=NegativeText}"
+            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" Command="{Binding Path=PositiveCommand}" />
+            <Button x:Name="NegativeButton" Content="{Binding Path=NegativeText}"
                     Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}"
                     Command="{Binding Path=NegativeCommand}"/>
-            <Button Grid.Column="2" x:Name="NeutralButton" Content="{Binding Path=NeutralText}" 
+            <Button x:Name="NeutralButton" Content="{Binding Path=NeutralText}" 
                     Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisiblity}}"
                     Command="{Binding Path=NeutralCommand}"/>
 
-        </Grid>
+        </StackPanel>
 
     </Grid>
 
