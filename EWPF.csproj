@@ -60,6 +60,7 @@
     <Compile Include="MVVM\BaseViewModel.cs" />
     <Compile Include="Controls\BusyIndicator.cs" />
     <Compile Include="Attached\FocusExtension.cs" />
+    <Compile Include="MVVM\Services\IPageService.cs" />
     <Compile Include="MVVM\Services\IService.cs" />
     <Compile Include="MVVM\Services\IWindowService.cs" />
     <Compile Include="MVVM\ViewModel\EMsgBoxViewModel.cs" />
