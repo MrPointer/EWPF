@@ -38,7 +38,7 @@ namespace EWPF.Utility
         /// <param name="i_Options">Message box's extra options.</param>
         /// <param name="i_OwnerWindow"></param>
         /// <returns>Message box's result.</returns>
-        public static MessageBoxResult ShowMessageBox(string i_Caption, string i_Content, 
+        public static MessageBoxResult ShowMessageBox(string i_Caption, string i_Content,
             MessageBoxButton i_Button, MessageBoxImage i_Image, MessageBoxOptions i_Options, Window i_OwnerWindow = null)
         {
             switch (i_Button)
@@ -47,18 +47,17 @@ namespace EWPF.Utility
                     return ShowOkDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.OKCancel:
-                    break;
+                    return ShowOkCancelDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.YesNoCancel:
-                    break;
+                    return ShowYesNoCancelDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.YesNo:
-                    break;
+                    return ShowYesNoDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
 
                 default: // Should never happen
                     throw new ArgumentOutOfRangeException("i_Button", i_Button, null);
             }
-            return MessageBoxResult.OK; // ToDo: Delete when all cases of the switch will return a value
         }
 
         /// <summary>
@@ -88,6 +87,99 @@ namespace EWPF.Utility
             emsgBox.Owner = i_OwnerWindow;
             emsgBox.ShowDialog();
             return MessageBoxResult.OK;
+        }
+
+        /// <summary>
+        /// Shows a message box dialog with two buttons: "Ok" and "Cancel".
+        /// Use it to ask user's permission to proceed a task for example.
+        /// </summary>
+        /// <param name="i_Caption">Message box's caption/title.</param>
+        /// <param name="i_Content">Message box's textual content.</param>
+        /// <param name="i_Image">Message box's image.</param>
+        /// <param name="i_Options">Message box's extra options.</param>
+        /// <param name="i_OwnerWindow"></param>
+        /// <returns>Message box's result.</returns>
+        public static MessageBoxResult ShowOkCancelDialog(string i_Caption, string i_Content,
+            MessageBoxImage i_Image, MessageBoxOptions i_Options, Window i_OwnerWindow = null)
+        {
+            var emsgBox = new EMessageBox();
+            var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
+            if (emsgBoxVM == null)
+                throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+            emsgBoxVM.Title = i_Caption;
+            emsgBoxVM.Content = i_Content;
+            emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
+                ? FlowDirection.RightToLeft
+                : FlowDirection.LeftToRight;
+            // ToDo: Extract text from language module
+            emsgBoxVM.PositiveText = "OK";
+            emsgBoxVM.NegativeText = "Cancel";
+            emsgBox.Owner = i_OwnerWindow;
+            var mboxResult = emsgBox.ShowDialog();
+            return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.Cancel;
+        }
+
+        /// <summary>
+        /// Shows a message box dialog with two buttons: "Yes" and "No".
+        /// Use it to ask user a determinite question.
+        /// </summary>
+        /// <param name="i_Caption">Message box's caption/title.</param>
+        /// <param name="i_Content">Message box's textual content.</param>
+        /// <param name="i_Image">Message box's image.</param>
+        /// <param name="i_Options">Message box's extra options.</param>
+        /// <param name="i_OwnerWindow"></param>
+        /// <returns>Message box's result.</returns>
+        public static MessageBoxResult ShowYesNoDialog(string i_Caption, string i_Content,
+            MessageBoxImage i_Image, MessageBoxOptions i_Options, Window i_OwnerWindow = null)
+        {
+            var emsgBox = new EMessageBox();
+            var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
+            if (emsgBoxVM == null)
+                throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+            emsgBoxVM.Title = i_Caption;
+            emsgBoxVM.Content = i_Content;
+            emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
+                ? FlowDirection.RightToLeft
+                : FlowDirection.LeftToRight;
+            // ToDo: Extract text from language module
+            emsgBoxVM.PositiveText = "Yes";
+            emsgBoxVM.NegativeText = "No";
+            emsgBox.Owner = i_OwnerWindow;
+            var mboxResult = emsgBox.ShowDialog();
+            return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.No;
+        }
+
+        /// <summary>
+        /// Shows a message box dialog with three buttons: "Yes", "No" and "Cancel".
+        /// Use it to ask user an indeterminite question.
+        /// </summary>
+        /// <param name="i_Caption">Message box's caption/title.</param>
+        /// <param name="i_Content">Message box's textual content.</param>
+        /// <param name="i_Image">Message box's image.</param>
+        /// <param name="i_Options">Message box's extra options.</param>
+        /// <param name="i_OwnerWindow"></param>
+        /// <returns>Message box's result.</returns>
+        public static MessageBoxResult ShowYesNoCancelDialog(string i_Caption, string i_Content,
+            MessageBoxImage i_Image, MessageBoxOptions i_Options, Window i_OwnerWindow = null)
+        {
+            var emsgBox = new EMessageBox();
+            var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
+            if (emsgBoxVM == null)
+                throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+            emsgBoxVM.Title = i_Caption;
+            emsgBoxVM.Content = i_Content;
+            emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
+                ? FlowDirection.RightToLeft
+                : FlowDirection.LeftToRight;
+            // ToDo: Extract text from language module
+            emsgBoxVM.PositiveText = "Yes";
+            emsgBoxVM.NegativeText = "No";
+            emsgBoxVM.NeutralText = "Cancel";
+            emsgBox.Owner = i_OwnerWindow;
+            var mboxResult = emsgBox.ShowDialog();
+            if (!mboxResult.HasValue)
+                return MessageBoxResult.Cancel;
+            return mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.No;
         }
 
         #endregion
