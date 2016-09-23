@@ -84,6 +84,7 @@
     <Compile Include="Styles\EMessageBox.xaml.cs">
       <DependentUpon>EMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\DialogUtility.cs" />
     <Compile Include="Utility\MessageBoxUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
