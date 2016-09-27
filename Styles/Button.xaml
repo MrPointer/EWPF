@@ -3,24 +3,49 @@
 
     <Style TargetType="{x:Type Button}">
 
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Padding" Value="5" />
 
         <Setter Property="BorderBrush" Value="{DynamicResource DarkPrimaryColor}" />
+        <Setter Property="Background" Value="{DynamicResource AccentColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Margin="{TemplateBinding Margin}" Background="{TemplateBinding Background}" 
+
+                    <Border x:Name="ButtonBorder" Margin="{TemplateBinding Margin}" 
+                            Background="{TemplateBinding Background}" TextBlock.Foreground ="{TemplateBinding Foreground}"
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
 
-                        <ContentPresenter SnapsToDevicePixels="True" Margin="{TemplateBinding Padding}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              RecognizesAccessKey="True"/>
+                        <VisualStateManager.VisualStateGroups>
+
+                            <VisualStateGroup x:Name="CommonStates">
+
+                                <VisualState x:Name="Normal" />
+
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
+                                                                       Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentLightColor}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Border >
+                            <ContentPresenter x:Name="ButtonCP" SnapsToDevicePixels="True" UseLayoutRounding="True" 
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"/>
+                        </Border>
 
                     </Border>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

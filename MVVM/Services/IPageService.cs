@@ -17,17 +17,8 @@
         /// Navigates UI to the given page.
         /// </summary>
         /// <param name="i_NavigatedPage">Page to navigate to, stored as an object since user can represent it any way it'll like.</param>
-        void GoToPage(object i_NavigatedPage);
-
-        /// <summary>
-        /// Navigates to the next page in the navigation system.
-        /// </summary>
-        void NextPage();
-
-        /// <summary>
-        /// Navigates to the previous page in the navigation system.
-        /// </summary>
-        void PreviousPage();
+        /// <param name="i_ExtraData">Extra data required for the operation to complete.</param>
+        void GoToPage(object i_NavigatedPage, params object[] i_ExtraData);
 
         #endregion
 

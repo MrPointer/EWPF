@@ -8,7 +8,9 @@
     <SolidColorBrush x:Key="DarkPrimaryColor" Color="#1976D2" />
     <SolidColorBrush x:Key="LightPrimaryColor" Color="#BBDEFB" />
     <SolidColorBrush x:Key="AccentColor" Color="#BDBDBD" />
+    <SolidColorBrush x:Key="AccentLightColor" Color="#D8D8D8" />
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#212121" />
+    <SolidColorBrush x:Key="PrimaryTextColorOpaque" Color="#99212121" />
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#757575" />
     <SolidColorBrush x:Key="DividerColor" Color="#E0E0E0" />
     <SolidColorBrush x:Key="GraphicsColor" Color="#2196F3" />
