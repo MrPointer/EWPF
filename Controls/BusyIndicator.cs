@@ -189,6 +189,8 @@ namespace EWPF.Controls
             base.OnApplyTemplate();
             m_ParentCanvas = GetTemplateChild(cm_PARENT_CANVAS_NAME) as Canvas;
             if (m_ParentCanvas == null) return;
+
+            Visibility = Visibility.Hidden; // Hide the control by default unless user sets the 'IsAnimated' property to 'true'
             m_ParentCanvas.IsVisibleChanged += ParentCanvasIsVisibleChanged;
 
             CreateAnimationStoryBoard();
@@ -210,6 +212,7 @@ namespace EWPF.Controls
         /// </summary>
         private void InvalidateCanvas()
         {
+            if (m_ParentCanvas == null) return;
             m_ParentCanvas.Children.Clear();
             for (int i = 0; i < Points; i++)
             {
