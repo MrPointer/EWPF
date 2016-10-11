@@ -4,15 +4,14 @@
 
     <sys:String x:Key="ThemeName">Light Theme</sys:String>
 
-    <SolidColorBrush x:Key="PrimaryColor" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="DarkPrimaryColor" Color="#1976D2" />
-    <SolidColorBrush x:Key="LightPrimaryColor" Color="#BBDEFB" />
-    <SolidColorBrush x:Key="AccentColor" Color="#BDBDBD" />
-    <SolidColorBrush x:Key="AccentLightColor" Color="#D8D8D8" />
-    <SolidColorBrush x:Key="PrimaryTextColor" Color="#212121" />
-    <SolidColorBrush x:Key="PrimaryTextColorOpaque" Color="#99212121" />
+    <SolidColorBrush x:Key="PrimaryColor" Color="#ECECEC" />
+    <SolidColorBrush x:Key="AccentColor" Color="#59ABE3" />
+    <SolidColorBrush x:Key="AccentLightColor" Color="#62BCF9" />
+    <SolidColorBrush x:Key="AccentOpaqueColor" Color="#404380AA" />
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#302D38" />
+    <SolidColorBrush x:Key="PrimaryTextColorOpaque" Color="#73302D38" />
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#757575" />
-    <SolidColorBrush x:Key="DividerColor" Color="#E0E0E0" />
-    <SolidColorBrush x:Key="GraphicsColor" Color="#2196F3" />
+    <SolidColorBrush x:Key="DividerColor" Color="#F7F2FC" />
+    <SolidColorBrush x:Key="GraphicsColor" Color="#A1D428" />
 
 </ResourceDictionary>

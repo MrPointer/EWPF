@@ -5,7 +5,7 @@
 
         <Setter Property="Padding" Value="5" />
 
-        <Setter Property="BorderBrush" Value="{DynamicResource DarkPrimaryColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextColor}" />
         <Setter Property="Background" Value="{DynamicResource AccentColor}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}" />
 
@@ -28,6 +28,19 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
                                                                        Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentLightColor}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
+                                                                       Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentOpaqueColor}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
+                                                                       Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource PrimaryTextColorOpaque}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

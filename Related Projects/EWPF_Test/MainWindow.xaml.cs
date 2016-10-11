@@ -13,11 +13,15 @@ namespace EWPF_Test
     /// </summary>
     public partial class MainWindow : Window, IMessageBoxService
     {
+        private bool m_IsActive;
+
         public MainWindow()
         {
             InitializeComponent();
+            m_IsActive = true;
             AssignServices();
             //DisplayBusyIndicatorAnimation();
+            //DisplayButtonStatesPereodically();
         }
 
         /// <summary>
@@ -36,6 +40,26 @@ namespace EWPF_Test
                 {
                     BusyIndicator.IsAnimated = false;
                 }));
+            });
+        }
+
+        private void DisplayButtonStatesPereodically()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                while (m_IsActive)
+                {
+                    Thread.Sleep(2000);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        MainBtn.IsEnabled = true;
+                    }));
+                    Thread.Sleep(5000);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        MainBtn.IsEnabled = false;
+                    }));
+                }
             });
         }
 
@@ -86,6 +110,18 @@ namespace EWPF_Test
             MessageBoxResult i_DefaultResult = MessageBoxResult.OK, MessageBoxOptions i_ExtraOptions = MessageBoxOptions.None)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Overrides of Window
+
+        /// <summary>Raises the <see cref="E:System.Windows.Window.Closed" /> event.</summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            m_IsActive = false;
         }
 
         #endregion
