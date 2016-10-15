@@ -4,13 +4,24 @@
     
     <sys:String x:Key="ThemeName">Dark Theme</sys:String>
 
-    <SolidColorBrush x:Key="PrimaryColor" Color="#616161" />
-    <SolidColorBrush x:Key="DarkPrimaryColor" Color="#424242" />
-    <SolidColorBrush x:Key="LightPrimaryColor" Color="#757575" />
-    <SolidColorBrush x:Key="AccentColor" Color="#1976D2" />
-    <SolidColorBrush x:Key="PrimaryTextColor" Color="#E0E0E0" />
-    <SolidColorBrush x:Key="SecondaryTextColor" Color="#BDBDBD" />
-    <SolidColorBrush x:Key="DividerColor" Color="#64B5F6" />
-    <SolidColorBrush x:Key="GraphicsColor" Color="#BBDEFB" />
+    <Color x:Key="PrimaryColor">#727173</Color>
+    <Color x:Key="AccentColor">#59ABE3</Color>
+    <Color x:Key="AccentLightColor">#62BCF9</Color>
+    <Color x:Key="AccentOpaqueColor">#404380AA</Color>
+    <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+    <Color x:Key="PrimaryTextOpaqueColor">#73FFFFFF</Color>
+    <Color x:Key="SecondaryTextColor">#BDBDBD</Color>
+    <Color x:Key="DividerColor">#64B5F6</Color>
+    <Color x:Key="GraphicsColor">#A1D428</Color>
+
+    <SolidColorBrush x:Key="PrimaryColorBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentLightColorBrush" Color="{StaticResource AccentLightColor}" />
+    <SolidColorBrush x:Key="AccentOpaqueColorBrush" Color="{StaticResource AccentOpaqueColor}" />
+    <SolidColorBrush x:Key="PrimaryTextColorBrush" Color="{StaticResource PrimaryTextColor}" />
+    <SolidColorBrush x:Key="PrimaryTextOpaqueColorBrush" Color="{StaticResource PrimaryTextOpaqueColor}" />
+    <SolidColorBrush x:Key="SecondaryTextColorBrush" Color="{StaticResource SecondaryTextColor}" />
+    <SolidColorBrush x:Key="DividerColorBrush" Color="{StaticResource DividerColor}" />
+    <SolidColorBrush x:Key="GraphicsColorBrush" Color="{StaticResource GraphicsColor}" />
 
 </ResourceDictionary>
