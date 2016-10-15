@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen" Background="{DynamicResource PrimaryColorBrush}">
+        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" Background="{DynamicResource PrimaryColorBrush}">
 
     <Window.DataContext>
         <vm:MainViewModel />
@@ -12,7 +12,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -66,8 +66,15 @@
                 <Slider Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="3" Minimum="0" Maximum="5" />
 
                 <PasswordBox Grid.Row="3" Grid.Column="0" Margin="3" VerticalContentAlignment="Center" Password="sample password" />
-                <Button x:Name="MainBtn" Grid.Row="3" Grid.Column="1" Margin="3" IsEnabled="True" Content="Click me to see a message box"
+
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+
+                    <Button x:Name="MainBtn" Margin="3" IsEnabled="True" Content="Click me to see a message box"
                         Command="{Binding Path=ButtonClickCommand}"/>
+                    
+                    <Button Margin="0,3" IsEnabled="False" Content="Disabled Button" />
+
+                </StackPanel>
 
             </Grid>
 
