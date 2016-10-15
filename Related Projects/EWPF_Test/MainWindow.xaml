@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen" Background="{DynamicResource PrimaryColor}">
+        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen" Background="{DynamicResource PrimaryColorBrush}">
 
     <Window.DataContext>
         <vm:MainViewModel />
