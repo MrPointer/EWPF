@@ -5,6 +5,8 @@
         
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
 
     </Style>
     
