@@ -3,6 +3,7 @@
     
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/Window.xaml" />
+        <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />

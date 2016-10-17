@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/EWPF;component/Themes/LightTheme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/EWPF;component/EWPFResources.xaml" />
                 <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>

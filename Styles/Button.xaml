@@ -8,6 +8,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}" />
+        <Setter Property="FontWeight" Value="DemiBold" />
 
         <Setter Property="Template">
             <Setter.Value>

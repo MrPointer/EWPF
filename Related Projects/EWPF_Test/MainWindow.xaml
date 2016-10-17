@@ -23,7 +23,7 @@
 
         <GroupBox Margin="5" Header="Progress Bars">
 
-            <ewpfc:BusyIndicator x:Name="BusyIndicator" IsAccelerated="True" Points="18" IsAnimated="False" />
+            <ewpfc:BusyIndicator x:Name="BusyIndicator" IsAccelerated="True" Points="18" IsAnimated="True" />
 
         </GroupBox>
 
