@@ -2,6 +2,7 @@
 using System.Windows;
 using EWPF.MVVM.ViewModel;
 using EWPF.Styles;
+using EWPFLang;
 
 namespace EWPF.Utility
 {
@@ -16,7 +17,7 @@ namespace EWPF.Utility
 
         #region Fields
 
-
+        private static LanguageCode sm_UsedLanguage;
 
         #endregion
 
@@ -36,24 +37,32 @@ namespace EWPF.Utility
         /// <param name="i_Button">Message box's button/s.</param>
         /// <param name="i_Image">Message box's image.</param>
         /// <param name="i_Options">Message box's extra options.</param>
+        /// <param name="i_DisplayLanguage">Language to display the message box in.</param>
         /// <param name="i_OwnerWindow"></param>
         /// <returns>Message box's result.</returns>
         public static MessageBoxResult ShowMessageBox(string i_Caption, string i_Content,
-            MessageBoxButton i_Button, MessageBoxImage i_Image, MessageBoxOptions i_Options, Window i_OwnerWindow = null)
+            MessageBoxButton i_Button, MessageBoxImage i_Image, MessageBoxOptions i_Options,
+            LanguageCode i_DisplayLanguage, Window i_OwnerWindow = null)
         {
+            sm_UsedLanguage = i_DisplayLanguage;
+            bool isRtlLanguage = i_DisplayLanguage == LanguageCode.Hebrew;
             switch (i_Button)
             {
                 case MessageBoxButton.OK:
-                    return ShowOkDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
+                    return ShowOkDialog(i_Caption, i_Content, i_Image, isRtlLanguage ?
+                        i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.OKCancel:
-                    return ShowOkCancelDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
+                    return ShowOkCancelDialog(i_Caption, i_Content, i_Image, isRtlLanguage ?
+                        i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.YesNoCancel:
-                    return ShowYesNoCancelDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
+                    return ShowYesNoCancelDialog(i_Caption, i_Content, i_Image, isRtlLanguage ?
+                        i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 case MessageBoxButton.YesNo:
-                    return ShowYesNoDialog(i_Caption, i_Content, i_Image, i_Options, i_OwnerWindow);
+                    return ShowYesNoDialog(i_Caption, i_Content, i_Image, isRtlLanguage ?
+                        i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 default: // Should never happen
                     throw new ArgumentOutOfRangeException("i_Button", i_Button, null);
@@ -172,9 +181,10 @@ namespace EWPF.Utility
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
             // ToDo: Extract text from language module
-            emsgBoxVM.PositiveText = "Yes";
-            emsgBoxVM.NegativeText = "No";
-            emsgBoxVM.NeutralText = "Cancel";
+            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
+            emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
+            emsgBoxVM.NeutralText = language.GetWord(DictionaryCode.Cancel);
             emsgBox.Owner = i_OwnerWindow;
             var mboxResult = emsgBox.ShowDialog();
             if (!mboxResult.HasValue)

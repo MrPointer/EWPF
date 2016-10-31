@@ -66,6 +66,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConstantValues.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -104,6 +105,10 @@
     <ProjectReference Include="..\..\EWPF.csproj">
       <Project>{a041388b-9279-48f8-a64d-445cf42e5663}</Project>
       <Name>EWPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EWPFLang\EWPFLang.csproj">
+      <Project>{6c9bb701-6ff8-4807-99e6-4a869b57e116}</Project>
+      <Name>EWPFLang</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

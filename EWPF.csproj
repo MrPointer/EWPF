@@ -144,6 +144,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Related Projects\EWPFLang\EWPFLang.csproj">
+      <Project>{6c9bb701-6ff8-4807-99e6-4a869b57e116}</Project>
+      <Name>EWPFLang</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

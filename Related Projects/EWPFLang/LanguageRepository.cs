@@ -44,7 +44,7 @@ namespace EWPFLang
             if (isLanguageLoaded)
                 return languageObject;
             languageObject = new Language(i_Code);
-            languageObject.LoadDictionaryFromXml(ConstantValues.DefaultLanguegesFolderPath);
+            languageObject.LoadDictionaryFromXml(ConstantValues.DefaultLanguagesFolderPath);
             m_Languages.Add(i_Code, languageObject);
             return languageObject;
         }

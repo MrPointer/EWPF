@@ -93,7 +93,8 @@ namespace EWPF_Test
         public MessageBoxResult Show(string i_Caption, string i_Content, MessageBoxButton i_Buttons, MessageBoxImage i_Icon,
             MessageBoxResult i_DefaultResult = MessageBoxResult.OK, MessageBoxOptions i_ExtraOptions = MessageBoxOptions.None)
         {
-            return MessageBoxUtility.ShowMessageBox(i_Caption, i_Content, i_Buttons, i_Icon, i_ExtraOptions, this);
+            return MessageBoxUtility.ShowMessageBox(i_Caption, i_Content, i_Buttons, i_Icon, i_ExtraOptions, 
+                ConstantValues.DEFAULT_LANGUAGE, this);
         }
 
         /// <summary>
