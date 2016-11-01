@@ -4,6 +4,5 @@
 
     <conv:StringToVisiblityConverter x:Key="StringToVisiblity" />
     <conv:StringsToColumnConverter x:Key="StringsToColumnConverter" />
-    <conv:FlowDirToHAlignmentConverter x:Key="FlowDirectionToHorizontalAlignment" />
 
 </ResourceDictionary>

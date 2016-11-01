@@ -177,7 +177,6 @@ namespace EWPF.MVVM.ViewModel
             get { return m_MBoxFlowDirection; }
             set
             {
-
                 if (m_MBoxFlowDirection == value) return;
                 m_MBoxFlowDirection = value;
                 OnPropertyChanged(cm_FLOW_DIRECTION_PROPERTY_NAME, this);

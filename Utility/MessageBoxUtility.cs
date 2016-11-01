@@ -177,7 +177,7 @@ namespace EWPF.Utility
                 throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
             emsgBoxVM.Title = i_Caption;
             emsgBoxVM.Content = i_Content;
-            emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
+            emsgBoxVM.MBoxFlowDirection = (i_Options & MessageBoxOptions.RtlReading) != 0
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
             // ToDo: Extract text from language module
