@@ -144,6 +144,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{5a217de7-f729-4615-bfa7-efadc37d837d}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="Related Projects\EWPFLang\EWPFLang.csproj">
       <Project>{6c9bb701-6ff8-4807-99e6-4a869b57e116}</Project>
       <Name>EWPFLang</Name>

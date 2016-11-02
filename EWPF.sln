@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWPF_Test", "Related Projec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWPFLang", "Related Projects\EWPFLang\EWPFLang.csproj", "{6C9BB701-6FF8-4807-99E6-4A869B57E116}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "..\Logger\Logger.csproj", "{5A217DE7-F729-4615-BFA7-EFADC37D837D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6C9BB701-6FF8-4807-99E6-4A869B57E116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C9BB701-6FF8-4807-99E6-4A869B57E116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9BB701-6FF8-4807-99E6-4A869B57E116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A217DE7-F729-4615-BFA7-EFADC37D837D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A217DE7-F729-4615-BFA7-EFADC37D837D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A217DE7-F729-4615-BFA7-EFADC37D837D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A217DE7-F729-4615-BFA7-EFADC37D837D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

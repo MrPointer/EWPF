@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Logger;
+using Path = System.IO.Path;
 
 namespace EWPF.Controls
 {
@@ -120,6 +123,8 @@ namespace EWPF.Controls
         /// </summary>
         static BusyIndicator()
         {
+            if (!Log.IsDefaultPathSet) // Set logging path if not set yet
+                Log.SetDefaultPath(Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath, "EWPF_Logger.log"));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator), new FrameworkPropertyMetadata(typeof(BusyIndicator)));
         }
 
@@ -137,11 +142,18 @@ namespace EWPF.Controls
         /// <param name="i_E">Irrelevant due to a bug in WPF's system.</param>
         private void ParentCanvasIsVisibleChanged(object i_Sender, DependencyPropertyChangedEventArgs i_E)
         {
-            bool visibilityState = m_ParentCanvas.IsVisible;
-            if (visibilityState) return;
-            if (m_AnimationStoryboard == null) return;
-            m_AnimationStoryboard.Stop();
-            m_AnimationStoryboard = null;
+            try
+            {
+                bool visibilityState = m_ParentCanvas.IsVisible;
+                if (visibilityState) return;
+                if (m_AnimationStoryboard == null) return;
+                m_AnimationStoryboard.Stop();
+                m_AnimationStoryboard = null;
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         #endregion
@@ -155,12 +167,19 @@ namespace EWPF.Controls
         /// <param name="i_EventArgs">Event args for this method containing the old and new values of the number of points.</param>
         private static void OnPointsChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
         {
-            var instance = i_Sender as BusyIndicator;
-            if (instance == null)
-                return;
-            instance.m_AngleBetweenPoints = 360.0 / (int)i_EventArgs.NewValue;
-            if (!m_IsInitialized) return; // Do not proceed if control is not yet initialized
-            instance.InvalidateCanvas();
+            try
+            {
+                var instance = i_Sender as BusyIndicator;
+                if (instance == null)
+                    return;
+                instance.m_AngleBetweenPoints = 360.0 / (int)i_EventArgs.NewValue;
+                if (!m_IsInitialized) return; // Do not proceed if control is not yet initialized
+                instance.InvalidateCanvas();
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -171,16 +190,23 @@ namespace EWPF.Controls
         /// <param name="i_EventArgs">Event args for this method containing the new value of the IsAnimated property.</param>
         private static void OnIsAnimatedChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
         {
-            var instance = i_Sender as BusyIndicator;
-            if (instance == null)
-                return;
+            try
+            {
+                var instance = i_Sender as BusyIndicator;
+                if (instance == null)
+                    return;
 
-            bool isAnimated = (bool)i_EventArgs.NewValue;
+                bool isAnimated = (bool)i_EventArgs.NewValue;
 
-            if (isAnimated) // Animation should start
-                instance.StartAnimation();
-            else
-                instance.StopAnimation();
+                if (isAnimated) // Animation should start
+                    instance.StartAnimation();
+                else
+                    instance.StopAnimation();
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -188,21 +214,28 @@ namespace EWPF.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-            m_ParentCanvas = GetTemplateChild(cm_PARENT_CANVAS_NAME) as Canvas;
-            if (m_ParentCanvas == null) return;
+            try
+            {
+                base.OnApplyTemplate();
+                m_ParentCanvas = GetTemplateChild(cm_PARENT_CANVAS_NAME) as Canvas;
+                if (m_ParentCanvas == null) return;
 
-            Visibility = Visibility.Hidden; // Hide the control by default unless user sets the 'IsAnimated' property to 'true'
-            m_ParentCanvas.IsVisibleChanged += ParentCanvasIsVisibleChanged;
+                m_ParentCanvas.IsVisibleChanged += ParentCanvasIsVisibleChanged;
+                Visibility = Visibility.Hidden; // Hide the control by default unless user sets the 'IsAnimated' property to 'true'
 
-            CreateAnimationStoryBoard();
-            CreatePointBindings(); // Create all necessary bindings
-            InvalidateCanvas();
+                //CreateAnimationStoryBoard();
+                CreatePointBindings(); // Create all necessary bindings
+                InvalidateCanvas();
 
-            if (IsAnimated)
-                StartAnimation();
+                if (IsAnimated)
+                    StartAnimation();
 
-            m_IsInitialized = true;
+                m_IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         #endregion
@@ -214,12 +247,19 @@ namespace EWPF.Controls
         /// </summary>
         private void InvalidateCanvas()
         {
-            if (m_ParentCanvas == null) return;
-            m_ParentCanvas.Children.Clear();
-            for (int i = 0; i < Points; i++)
+            try
             {
-                var newPoint = CreatePoint(i);
-                m_ParentCanvas.Children.Add(newPoint);
+                if (m_ParentCanvas == null) return;
+                m_ParentCanvas.Children.Clear();
+                for (int i = 0; i < Points; i++)
+                {
+                    var newPoint = CreatePoint(i);
+                    m_ParentCanvas.Children.Add(newPoint);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
             }
         }
 
@@ -314,19 +354,27 @@ namespace EWPF.Controls
         /// </summary>
         private void CreateAnimationStoryBoard()
         {
-            m_AnimationStoryboard = new Storyboard();
-            var renderTransformAnimation = new DoubleAnimation
+            try
             {
-                AccelerationRatio = IsAccelerated ? 0.4 : 0,
-                DecelerationRatio = IsAccelerated ? 0.6 : 0,
-                Duration = new Duration(TimeSpan.FromSeconds(1.0).Add(TimeSpan.FromMilliseconds(200.0))),
-                From = 0.0,
-                To = 360.0,
-                RepeatBehavior = RepeatBehavior.Forever
-            };
-            m_AnimationStoryboard.Children.Add(renderTransformAnimation);
-            Storyboard.SetTarget(renderTransformAnimation, m_ParentCanvas);
-            Storyboard.SetTargetProperty(renderTransformAnimation, new PropertyPath("RenderTransform.Angle"));
+                if (m_ParentCanvas == null) return;
+                m_AnimationStoryboard = new Storyboard();
+                var renderTransformAnimation = new DoubleAnimation
+                {
+                    AccelerationRatio = IsAccelerated ? 0.4 : 0,
+                    DecelerationRatio = IsAccelerated ? 0.6 : 0,
+                    Duration = new Duration(TimeSpan.FromSeconds(1.0).Add(TimeSpan.FromMilliseconds(200.0))),
+                    From = 0.0,
+                    To = 360.0,
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
+                m_AnimationStoryboard.Children.Add(renderTransformAnimation);
+                Storyboard.SetTarget(renderTransformAnimation, m_ParentCanvas);
+                Storyboard.SetTargetProperty(renderTransformAnimation, new PropertyPath("RenderTransform.Angle"));
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -334,14 +382,21 @@ namespace EWPF.Controls
         /// </summary>
         public void StartAnimation()
         {
-            if (m_AnimationStoryboard == null)
-                CreateAnimationStoryBoard();
-            if (m_AnimationStoryboard == null) // Validate storyboard has been created
-                throw new InvalidOperationException("Animation storyboard hasn't been created, can't proceed to display animation");
+            try
+            {
+                if (m_AnimationStoryboard == null)
+                    CreateAnimationStoryBoard();
+                if (m_AnimationStoryboard == null) // Validate storyboard has been created
+                    throw new InvalidOperationException("Animation storyboard hasn't been created, can't proceed to display animation");
 
-            if (Visibility != Visibility.Visible) // Control isn't visible
-                Visibility = Visibility.Visible;
-            m_AnimationStoryboard.Begin();
+                if (Visibility != Visibility.Visible) // Control isn't visible
+                    Visibility = Visibility.Visible;
+                m_AnimationStoryboard.Begin();
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+            }
         }
 
         /// <summary>

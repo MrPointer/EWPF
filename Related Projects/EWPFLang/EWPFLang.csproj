@@ -43,6 +43,7 @@
     <Compile Include="ConstantValues.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ELanguage.cs" />
+    <Compile Include="Language.cs" />
     <Compile Include="LanguageParseException.cs" />
     <Compile Include="LanguageRepository.cs" />
     <Compile Include="LanguageXmlReader.cs" />
