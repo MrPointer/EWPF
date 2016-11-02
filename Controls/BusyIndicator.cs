@@ -174,7 +174,9 @@ namespace EWPF.Controls
             var instance = i_Sender as BusyIndicator;
             if (instance == null)
                 return;
+
             bool isAnimated = (bool)i_EventArgs.NewValue;
+
             if (isAnimated) // Animation should start
                 instance.StartAnimation();
             else
@@ -333,7 +335,10 @@ namespace EWPF.Controls
         public void StartAnimation()
         {
             if (m_AnimationStoryboard == null)
-                return;
+                CreateAnimationStoryBoard();
+            if (m_AnimationStoryboard == null) // Validate storyboard has been created
+                throw new InvalidOperationException("Animation storyboard hasn't been created, can't proceed to display animation");
+
             if (Visibility != Visibility.Visible) // Control isn't visible
                 Visibility = Visibility.Visible;
             m_AnimationStoryboard.Begin();
