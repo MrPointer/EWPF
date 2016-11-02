@@ -13,7 +13,7 @@ namespace EWPFLang
 
         #region Fields
 
-        private static readonly Dictionary<LanguageCode, Language> m_Languages;
+        private static readonly Dictionary<LanguageCode, ELanguage> m_Languages;
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace EWPFLang
 
         static LanguageRepository()
         {
-            m_Languages = new Dictionary<LanguageCode, Language>();
+            m_Languages = new Dictionary<LanguageCode, ELanguage>();
         }
 
         #endregion
@@ -36,15 +36,15 @@ namespace EWPFLang
         /// </summary>
         /// <param name="i_Code">Code of the language to get.</param>
         /// <returns>Language object containing its' translated dictionary.</returns>
-        public static Language GetLanguage(LanguageCode i_Code)
+        public static ELanguage GetLanguage(LanguageCode i_Code)
         {
-            Language languageObject;
+            ELanguage languageObject;
 
             bool isLanguageLoaded = m_Languages.TryGetValue(i_Code, out languageObject);
             if (isLanguageLoaded)
                 return languageObject;
-            languageObject = new Language(i_Code);
-            languageObject.LoadDictionaryFromXml(ConstantValues.DefaultLanguagesFolderPath);
+            languageObject = new ELanguage(i_Code);
+            languageObject.LoadDictionaryFromXml(ConstantValues.DefaultELanguagesFolderPath);
             m_Languages.Add(i_Code, languageObject);
             return languageObject;
         }

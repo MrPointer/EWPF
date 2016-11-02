@@ -8,7 +8,7 @@ namespace EWPFLang
     /// <summary>
     /// A class representing a language.
     /// </summary>
-    public class Language
+    public class ELanguage
     {
         #region Events
 
@@ -25,7 +25,7 @@ namespace EWPFLang
         #region Constructors
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-        public Language(LanguageCode i_Code)
+        public ELanguage(LanguageCode i_Code)
         {
             Code = i_Code;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 
 namespace EWPFLang
 {
@@ -15,7 +14,7 @@ namespace EWPFLang
 
         #region Fields
 
-        internal static string DefaultLanguagesFolderPath =
+        internal static string DefaultELanguagesFolderPath =
             AppDomain.CurrentDomain.BaseDirectory + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "Languages";
 
         #endregion
