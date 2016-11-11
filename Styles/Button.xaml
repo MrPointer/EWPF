@@ -5,10 +5,10 @@
 
         <Setter Property="Padding" Value="5" />
 
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}" />
-        
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+
         <Setter Property="FontWeight" Value="DemiBold" />
 
         <Setter Property="Template">
@@ -29,20 +29,20 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
                                                                        Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentLightColorBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentLightBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                
+
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
                                                                        Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentOpaqueColorBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource AccentOpaqueBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder"
                                                                        Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource PrimaryTextOpaqueColorBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

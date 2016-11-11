@@ -3,11 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" Style="{StaticResource EWindowStyle}">
+        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+    
+    <Window.Resources>
+        
+    </Window.Resources>
+    
+    <Window.Style>
+        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource EWindowStyle}">
+            <Setter Property="ResizeMode" Value="NoResize" />
+        </Style>
+    </Window.Style>
 
     <Grid>
 
@@ -69,7 +79,8 @@
 
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
 
-                    <Button x:Name="MainBtn" Margin="3" IsEnabled="True" Content="Click me to see a message box"
+                    <Button x:Name="MainBtn" Margin="3" IsEnabled="True"
+                            Content="Click me to see a message box"
                             Command="{Binding Path=ButtonClickCommand}"/>
                     
                     <Button Margin="3" IsEnabled="False" Content="Disabled Button" />

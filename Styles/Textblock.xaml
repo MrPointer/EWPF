@@ -5,7 +5,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextOpaqueColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
             </Trigger>
         </Style.Triggers>
 

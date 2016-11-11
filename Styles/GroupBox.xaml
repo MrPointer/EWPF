@@ -5,7 +5,7 @@
 
     <Style TargetType="{x:Type GroupBox}">
         
-        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}" />
 
         <Setter Property="Template">
             <Setter.Value>
