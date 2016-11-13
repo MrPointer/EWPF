@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\EWindow.cs" />
+    <Compile Include="Converters\MBoxNButtonPositonConverter.cs" />
+    <Compile Include="Converters\MBoxPButtonPositionConverter.cs" />
     <Compile Include="Converters\StringsToColumnConverter.cs" />
     <Compile Include="Converters\StringToVisiblityConverter.cs" />
     <Compile Include="MVVM\BaseViewModel.cs" />
