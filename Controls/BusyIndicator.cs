@@ -355,8 +355,7 @@ namespace EWPF.Controls
         private void CreateAnimationStoryBoard()
         {
             try
-            {
-                if (m_ParentCanvas == null) return;
+            {                
                 m_AnimationStoryboard = new Storyboard();
                 var renderTransformAnimation = new DoubleAnimation
                 {
@@ -384,6 +383,7 @@ namespace EWPF.Controls
         {
             try
             {
+                if (m_ParentCanvas == null) return;
                 if (m_AnimationStoryboard == null)
                     CreateAnimationStoryBoard();
                 if (m_AnimationStoryboard == null) // Validate storyboard has been created
