@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" 
+        Style="{StaticResource EWindowStyle}">
 
     <Window.DataContext>
         <vm:MainViewModel />
@@ -12,12 +13,6 @@
     <Window.Resources>
         
     </Window.Resources>
-    
-    <Window.Style>
-        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource EWindowStyle}">
-            <Setter Property="ResizeMode" Value="NoResize" />
-        </Style>
-    </Window.Style>
 
     <Grid>
 
@@ -89,6 +84,10 @@
 
             </Grid>
 
+        </GroupBox>
+        
+        <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Header="Item Controls">           
+            
         </GroupBox>
 
     </Grid>

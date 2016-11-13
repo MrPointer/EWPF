@@ -1,9 +1,11 @@
 ﻿<Window x:Class="EWPF.Styles.EMessageBox"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ewpfc="clr-namespace:EWPF.Controls"
         xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
         Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
-        FlowDirection="{Binding Path=MBoxFlowDirection}" Style="{StaticResource EWindowStyle}">
+        FlowDirection="{Binding Path=MBoxFlowDirection}" ewpfc:EWindow.WindowBorder="MessageBox"
+        Style="{StaticResource EWindowStyle}">
 
     <Window.Resources>
         <ResourceDictionary Source="../EWPFResources.xaml" />

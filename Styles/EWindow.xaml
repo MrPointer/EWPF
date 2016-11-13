@@ -4,10 +4,10 @@
                     xmlns:ewpfC="clr-namespace:EWPF.Controls"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <Thickness x:Key="WindowBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
-    <Thickness x:Key="WindowDialogBorderThickness" Top="{x:Static SystemParameters.ThinVerticalBorderWidth}" 
-               Left="{x:Static SystemParameters.ThinVerticalBorderWidth}" Right="{x:Static SystemParameters.ThinVerticalBorderWidth}" 
-               Bottom="{x:Static SystemParameters.ThinVerticalBorderWidth}"/>
+    <Thickness x:Key="WindowBorderThickness" Left="3" Top="0" Right="3" Bottom="3"/>
+    <Thickness x:Key="WindowDialogBorderThickness" Top="{x:Static SystemParameters.ThickVerticalBorderWidth}" 
+               Left="{x:Static SystemParameters.ThickVerticalBorderWidth}" Right="{x:Static SystemParameters.ThickVerticalBorderWidth}" 
+               Bottom="{x:Static SystemParameters.ThickVerticalBorderWidth}"/>
 
     <CornerRadius x:Key="WindowCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
     <CornerRadius x:Key="TitleBarCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
@@ -20,73 +20,32 @@
     <system:Double x:Key="TitleBarButtonPressedOpacity">1</system:Double>
     <SolidColorBrush x:Key="TitleBarButtonBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TitleBarButtonBackgroundBrush" Color="Transparent"/>
-    
-    <system:Double x:Key="TitleBarMinButtonWidth">34</system:Double>
-    <system:Double x:Key="TitleBarMinButtonHeight">26</system:Double>
-    
+
+    <system:Double x:Key="TitleBarMinButtonWidth">32</system:Double>
+    <system:Double x:Key="TitleBarMinButtonHeight">32</system:Double>
+
     <Style x:Key="TitleBarMinButtonBorder" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Background" Value="{DynamicResource TitleBarButtonBackgroundBrush}"/>
     </Style>
-    
-    <Style x:Key="TitleBarMinButtonPath" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-        <Setter Property="Fill" Value="Transparent"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="Stretch" Value="None"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="Data" Value="M0,8 H8 M0,7 H8 M0,6 H8"/>
-    </Style>
-    
-    <system:Double x:Key="TitleBarMaxButtonWidth">34</system:Double>
-    <system:Double x:Key="TitleBarMaxButtonHeight">26</system:Double>
-    
+
+    <system:Double x:Key="TitleBarMaxButtonWidth">32</system:Double>
+    <system:Double x:Key="TitleBarMaxButtonHeight">32</system:Double>
+
     <Style x:Key="TitleBarMaxButtonBorder" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource TitleBarButtonBackgroundBrush}"/>
     </Style>
-    
-    <Style x:Key="TitleBarMaxButtonPath1" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="Stretch" Value="None"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="Data" Value="M0,0 H8 V8 H0 V0 M0,1 H8 M0,2 H8"/>
-    </Style>
-    
-    <Style x:Key="TitleBarMaxButtonPath2" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="Stretch" Value="None"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="Data" Value="M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8"/>
-    </Style>
-    
-    <system:Double x:Key="TitleBarCloseButtonWidth">34</system:Double>
-    <system:Double x:Key="TitleBarCloseButtonHeight">26</system:Double>
-    
+
+    <system:Double x:Key="TitleBarCloseButtonWidth">32</system:Double>
+    <system:Double x:Key="TitleBarCloseButtonHeight">32</system:Double>
+
     <Style x:Key="TitleBarCloseButtonBorder" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource TitleBarButtonBackgroundBrush}"/>
-    </Style>
-    
-    <Style x:Key="TitleBarCloseButtonPath1" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-        <Setter Property="StrokeThickness" Value="1.5"/>
-        <Setter Property="Stretch" Value="None"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="Data" Value="M0,0 L8,8"/>
-    </Style>
-    
-    <Style x:Key="TitleBarCloseButtonPath2" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-        <Setter Property="StrokeThickness" Value="1.5"/>
-        <Setter Property="Stretch" Value="None"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="Data" Value="M0,8 L8,0"/>
     </Style>
 
     <ControlTemplate x:Key="TitleBarButtonTemplate" TargetType="{x:Type Button}">
@@ -101,12 +60,12 @@
                     <Condition Property="IsPressed" Value="false"/>
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_border" Property="Background" Value="{DynamicResource AccentLightBrush}" />
-                <Setter Property="Effect" Value="{DynamicResource TitleBarButtonHoverEffect}"/>
+                <!--<Setter Property="Effect" Value="{DynamicResource TitleBarButtonHoverEffect}"/>-->
             </MultiTrigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="PART_border" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                <Setter TargetName="PART_border" Property="Background" Value="{DynamicResource GraphicsBrush}"/>
                 <!--<Setter TargetName="PART_border" Property="Opacity" Value="{DynamicResource TitleBarButtonPressedOpacity}" />-->
-                <Setter Property="Effect" Value="{DynamicResource TitleBarButtonPressedEffect}"/>
+                <!--<Setter Property="Effect" Value="{DynamicResource TitleBarButtonPressedEffect}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource PrimaryTextOpaqueBrush}"/>
@@ -121,8 +80,7 @@
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Opacity" Value="1"/>
-        <Setter Property="Template" Value="{StaticResource TitleBarButtonTemplate}">
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource TitleBarButtonTemplate}" />
     </Style>
 
     <Style x:Key="EWindowStyle" TargetType="{x:Type Window}">
@@ -132,7 +90,7 @@
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
-        <!--<Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />-->
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="ResizeMode" Value="CanResize" />
         <Setter Property="Template">
             <Setter.Value>
@@ -176,23 +134,31 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="{DynamicResource TitleBarRightGap}"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image x:Name="Icon" Grid.Column="0" HorizontalAlignment="Right" Margin="4,-7,0,7"
+                                            <Image x:Name="Icon" Grid.Column="0" HorizontalAlignment="Right" Margin="4,0,0,7"
                                                    Source="{Binding Path=Icon, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                                    MouseLeftButtonDown="IconMouseLeftButtonDown"/>
                                             <TextBlock x:Name="Caption" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                    Margin="4,0,0,0" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"
                                                    Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                            <Button x:Name="MinButton"  Grid.Column="2" VerticalAlignment="Top"
+
+                                            <Button x:Name="MinButton" Grid.Column="2" VerticalAlignment="Bottom"
                                                     Width="{DynamicResource TitleBarMinButtonWidth}" 
                                                     Height="{DynamicResource TitleBarMinButtonHeight}"
                                                     Style="{StaticResource FlatTitleBarButton}" ToolTip="Minimize"
                                                     Click="MinButtonClick">
                                                 <Grid>
                                                     <Border Style="{DynamicResource TitleBarMinButtonBorder}">
-                                                        <Path Style="{DynamicResource TitleBarMinButtonPath}"/>
+                                                        
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Style="{DynamicResource MinimizeIcon}"/>
+                                                            </Canvas>
+                                                        <!--<Grid>
+                                                            <Path Style="{DynamicResource MinimizeIcon}"/>
+                                                        </Grid>-->
                                                     </Border>
                                                 </Grid>
                                             </Button>
+
                                             <Button x:Name="MaxButton" Grid.Column="3" VerticalAlignment="Top"
                                                     Width="{DynamicResource TitleBarMaxButtonWidth}"
                                                     Height="{DynamicResource TitleBarMaxButtonHeight}"
@@ -200,22 +166,32 @@
                                                     Click="MaxButtonClick">
                                                 <Grid>
                                                     <Border Style="{DynamicResource TitleBarMaxButtonBorder}">
-                                                        <Path x:Name="MaxPath"
-                                                          Style="{DynamicResource TitleBarMaxButtonPath1}"/>
+                                                        
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path x:Name="MaxPath" Style="{DynamicResource MaximizeIcon}"/>
+                                                            </Canvas>
+                                                        
+                                                        <!--<Grid>
+                                                            <Path x:Name="MaxPath" Style="{DynamicResource MaximizeIcon}"/>
+                                                        </Grid>-->
                                                     </Border>
                                                 </Grid>
                                             </Button>
-                                            <Button x:Name="CloseButton" Grid.Column="4" VerticalAlignment="Top"
+
+                                            <Button x:Name="CloseButton" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Center"
                                                     Width="{DynamicResource TitleBarCloseButtonWidth}"
                                                     Height="{DynamicResource TitleBarCloseButtonHeight}"
                                                     ToolTip="Close" Style="{StaticResource FlatTitleBarButton}"
                                                     Click="CloseButtonClick">
                                                 <Grid>
                                                     <Border Style="{DynamicResource TitleBarCloseButtonBorder}">
-                                                        <Grid>
-                                                            <Path Style="{DynamicResource TitleBarCloseButtonPath1}"/>
-                                                            <Path Style="{DynamicResource TitleBarCloseButtonPath2}"/>
-                                                        </Grid>
+
+                                                        <Canvas Width="24" Height="24">
+                                                            <Path Style="{DynamicResource CloseIcon}" />
+                                                        </Canvas>
+                                                        <!--<Grid HorizontalAlignment="Center">
+                                                            <Path Style="{DynamicResource CloseIcon}" />
+                                                        </Grid>-->
                                                     </Border>
                                                 </Grid>
                                             </Button>
@@ -308,7 +284,7 @@
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{DynamicResource PrimaryTextBrush}"/>
                         </Trigger>
                         <Trigger Property="ewpfC:EWindow.WindowBorder" Value="MessageBox">
-                            <Setter TargetName="CloseButton" Property="IsEnabled" Value="False"/>
+                            <Setter TargetName="CloseButton" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
                             <Setter TargetName="PART_Border" Property="Effect" Value="{x:Null}"/>
                             <Setter TargetName="PART_Border" Property="BorderThickness" Value="{DynamicResource WindowDialogBorderThickness}"/>

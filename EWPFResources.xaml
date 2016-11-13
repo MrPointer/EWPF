@@ -1,13 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/EWindow.xaml" />
         <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
-        <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />        
+        <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
+
+        <!-- Icons -->
+        <ResourceDictionary Source="Icons/CloseIcon.xaml" />
+        <ResourceDictionary Source="Icons/MaximizeIcon.xaml" />
+        <ResourceDictionary Source="Icons/MinimizeIcon.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
 </ResourceDictionary>
