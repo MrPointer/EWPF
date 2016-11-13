@@ -92,7 +92,8 @@ namespace EWPF.Utility
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
             // ToDo: Extract text from language module
-            emsgBoxVM.PositiveText = "OK";
+            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
             emsgBox.Owner = i_OwnerWindow;
             emsgBox.ShowDialog();
             return MessageBoxResult.OK;
@@ -121,8 +122,9 @@ namespace EWPF.Utility
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
             // ToDo: Extract text from language module
-            emsgBoxVM.PositiveText = "OK";
-            emsgBoxVM.NegativeText = "Cancel";
+            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
+            emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.Cancel);
             emsgBox.Owner = i_OwnerWindow;
             var mboxResult = emsgBox.ShowDialog();
             return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.Cancel;
@@ -151,8 +153,9 @@ namespace EWPF.Utility
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
             // ToDo: Extract text from language module
-            emsgBoxVM.PositiveText = "Yes";
-            emsgBoxVM.NegativeText = "No";
+            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
+            emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
             emsgBox.Owner = i_OwnerWindow;
             var mboxResult = emsgBox.ShowDialog();
             return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.No;
