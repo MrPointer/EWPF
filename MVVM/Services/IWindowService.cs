@@ -19,6 +19,13 @@
         /// <param name="i_WindowResult">Result returned by this window.</param>
         void CloseWindow(bool? i_WindowResult);
 
+        /// <summary>
+        /// Requests the bound view's window to open a new window on top of it.
+        /// </summary>
+        /// <param name="i_Content">Usually used to indentify the window that should be opened - An enum is recommended.</param>
+        /// <param name="i_DataContext">Window's data context (optional - if needs to be passed at runtime).</param>
+        void OpenWindow(object i_Content, object i_DataContext = null);
+
         #endregion
 
         #region Properties
