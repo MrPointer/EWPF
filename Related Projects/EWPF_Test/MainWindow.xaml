@@ -88,6 +88,17 @@
         
         <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Header="Item Controls">           
             
+            <TabControl Margin="5">
+                
+                <TabItem Header="ListBox">
+                    <ListBox />
+                </TabItem>
+                <TabItem Header="ListView" >
+                    <ListView />
+                </TabItem>
+
+            </TabControl>
+            
         </GroupBox>
 
     </Grid>

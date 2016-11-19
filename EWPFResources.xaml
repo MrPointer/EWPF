@@ -7,6 +7,9 @@
         <ResourceDictionary Source="Styles/Button.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
+        <ResourceDictionary Source="Styles/TabControl.xaml" />
+        <ResourceDictionary Source="Styles/TabItem.xaml" />
+
         <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
 
         <!-- Icons -->
