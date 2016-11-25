@@ -26,27 +26,52 @@ namespace EWPF.Utility
         #region Methods
 
         /// <summary>
-        /// Displays a Windows-native OpenFileDialog with the given filter extensions.
+        /// Displays a Windows-native <see cref="OpenFileDialog"/> with the given filter extensions.
         /// <para/>
         /// It also can check for existance of a path supplied by the user, depending on the passed arguments.
         /// </summary>
         /// <param name="i_Extensions">List of extensions the dialog should look for.</param>
         /// <param name="i_DefaultExtension">Default extension displayed by the dialog.</param>
-        /// <param name="i_CheckPathExistance">Indicates weather the dialog should display a warning 
-        /// if the user specified a non-existing path.</param>
+        /// <param name="i_InitialLocation">Indicates weather the dialog will be displayed at the center of it's owner window or not.</param>
         /// <param name="i_OwnerWindow">Reference to the owner window which will display the dialog on top of it.</param>
+        /// <param name="i_IsPathChecked">Indicates weather the resolved path should be checked for validity, displaying warning if invalid.</param>
         /// <returns>FileInfo object representing the selected file or null if operation has been canceled.</returns>
-        public static FileInfo ShowOpenFileDialog(string i_Extensions, string i_DefaultExtension, bool i_CheckPathExistance,
-            Window i_OwnerWindow)
+        public static FileInfo ShowOpenFileDialog(string i_Extensions, string i_DefaultExtension,
+            string i_InitialLocation, Window i_OwnerWindow, bool i_IsPathChecked = false)
         {
             var fileDialog = new OpenFileDialog
             {
                 Filter = i_Extensions,
                 DefaultExt = i_DefaultExtension,
-                CheckPathExists = i_CheckPathExistance
+                CheckPathExists = i_IsPathChecked
             };
             var dialogResult = fileDialog.ShowDialog(i_OwnerWindow);
             return !dialogResult.Value ? null : new FileInfo(fileDialog.FileName);
+        }
+
+        /// <summary>
+        /// Displays a Windows-native <see cref="SaveFileDialog"/> with the given filter extensions.
+        /// <para/>
+        /// It also can check for existance of a path supplied by the user, depending on the passed arguments.
+        /// </summary>
+        /// <param name="i_ExtensionsFilter">List of extensions the dialog should filter.</param>
+        /// <param name="i_DefaultExtension">Default extension displayed by the dialog.</param>
+        /// <param name="i_InitialLocation">Indicates weather the dialog will be displayed at the center of it's owner window or not.</param>
+        /// <param name="i_OwnerWindow">Reference to the owner window which will display the dialog on top of it.</param>
+        /// <param name="i_IsPathChecked">Indicates weather the resolved path should be checked for validity, displaying warning if invalid.</param>
+        /// <returns>FileInfo object representing the selected file or null if operation has been canceled.</returns>
+        public static FileInfo ShowSaveFileDialog(string i_ExtensionsFilter, string i_DefaultExtension,
+            string i_InitialLocation, Window i_OwnerWindow, bool i_IsPathChecked = false)
+        {
+            var saveDialog = new SaveFileDialog()
+            {
+                Filter = i_ExtensionsFilter,
+                DefaultExt = i_DefaultExtension,
+                InitialDirectory = i_InitialLocation,
+                CheckPathExists = i_IsPathChecked
+            };
+            var dialogResult = saveDialog.ShowDialog(i_OwnerWindow);
+            return !dialogResult.Value ? null : new FileInfo(saveDialog.FileName);
         }
 
         #endregion

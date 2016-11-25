@@ -27,12 +27,22 @@ namespace EWPF.MVVM.Services
         bool? ShowDialog(string i_Caption, object i_Content, bool i_IsCenterOwner = true);
 
         /// <summary>
-        /// Shows an <see cref="OpenFileDialog"/>, native to the Windows operating system, filtering the results to the given extensions.
+        /// Displays an <see cref="OpenFileDialog"/>, native to the Windows operating system, filtering the results to the given extensions.
         /// </summary>
         /// <param name="i_FileExtenstions">File extensions to browse for.</param>
         /// <param name="i_DefaultExtension">Default file extension to browse for - The one that will be filtered at first.</param>
-        /// <returns><see cref="FileInfo"/> object containing the browsed file info.</returns>
-        FileInfo BrowseFile(string i_FileExtenstions, string i_DefaultExtension);
+        /// <param name="i_InitialLocation">Dialog's initial location - The default path which the dialog will resolve upon startup.</param>
+        /// <returns><see cref="FileInfo"/>FileInfo object containing the browsed file's info.</returns>
+        FileInfo BrowseFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation);
+
+        /// <summary>
+        /// Displays an <see cref="SaveFileDialog"/>, native to the Windows operating system, filtering the results to the given extensions.
+        /// </summary>
+        /// <param name="i_FileExtenstions">File extensions to save as.</param>
+        /// <param name="i_DefaultExtension">Default file extension to save as - The one that will be filtered at first.</param>
+        /// <param name="i_InitialLocation">Dialog's initial location - The default path which the dialog will resolve upon startup.</param>
+        /// <returns><see cref="FileInfo"/>FileInfo object containing the browsed file's info.</returns>
+        FileInfo SaveFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation);
 
         #endregion
 
