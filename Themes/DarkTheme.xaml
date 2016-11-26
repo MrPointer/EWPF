@@ -5,9 +5,10 @@
     <sys:String x:Key="ThemeName">Dark Theme</sys:String>
 
     <Color x:Key="PrimaryColor">#727173</Color>
+    <Color x:Key="PrimaryHighlightColor">#838284</Color>
     <Color x:Key="AccentColor">#59ABE3</Color>
     <Color x:Key="AccentLightColor">#62BCF9</Color>
-    <Color x:Key="AccentOpaqueColor">#404380AA</Color>
+    <Color x:Key="AccentOpaqueColor">#B14380AA</Color>
     <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
     <Color x:Key="PrimaryTextOpaqueColor">#73FFFFFF</Color>
     <Color x:Key="SecondaryTextColor">#BDBDBD</Color>
@@ -15,6 +16,7 @@
     <Color x:Key="GraphicsColor">#A1D428</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryHighlightBrush" Color="{StaticResource PrimaryHighlightColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLightColor}" />
     <SolidColorBrush x:Key="AccentOpaqueBrush" Color="{StaticResource AccentOpaqueColor}" />

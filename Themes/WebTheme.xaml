@@ -5,6 +5,7 @@
     <sys:String x:Key="ThemeName">Web Theme</sys:String>
 
     <Color x:Key="PrimaryColor">#FCFCFC</Color>
+    <Color x:Key="PrimaryHighlightColor">#ECECEC</Color>
     <Color x:Key="AccentColor">#6BB9F0</Color>
     <Color x:Key="AccentLightColor">#74C5FF</Color>
     <Color x:Key="AccentOpaqueColor">#406BB9F0</Color>
@@ -15,6 +16,7 @@
     <Color x:Key="GraphicsColor">#E26A6A</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryHighlightBrush" Color="{StaticResource PrimaryHighlightColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLightColor}" />
     <SolidColorBrush x:Key="AccentOpaqueBrush" Color="{StaticResource AccentOpaqueColor}" />

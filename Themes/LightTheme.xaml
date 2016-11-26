@@ -5,6 +5,7 @@
     <sys:String x:Key="ThemeName">Light Theme</sys:String>
 
     <Color x:Key="PrimaryColor">#FCFCFC</Color>
+    <Color x:Key="PrimaryHighlightColor">#ECECEC</Color>
     <Color x:Key="AccentColor">#89C4F4</Color>
     <Color x:Key="AccentLightColor">#A5D7FF</Color>
     <Color x:Key="AccentOpaqueColor">#4089C4F4</Color>
@@ -15,6 +16,7 @@
     <Color x:Key="GraphicsColor">#87D37C</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryHighlightBrush" Color="{StaticResource PrimaryHighlightColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLightColor}" />
     <SolidColorBrush x:Key="AccentOpaqueBrush" Color="{StaticResource AccentOpaqueColor}" />

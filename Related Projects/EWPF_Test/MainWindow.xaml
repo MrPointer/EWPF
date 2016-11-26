@@ -55,7 +55,7 @@
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="3">
                     <CheckBox Margin="3" Content="Option 1" />
-                    <CheckBox Margin="3" Content="Option 2" />
+                    <CheckBox Margin="3" Content="Option 2" IsEnabled="False" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="3">
                     <RadioButton Margin="3" Content="Option 1" />
