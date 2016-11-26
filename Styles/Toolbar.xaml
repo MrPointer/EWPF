@@ -26,13 +26,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentLightBrush}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource PrimaryHighlightBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>    
 
     <Style TargetType="{x:Type ToolBar}">
         
@@ -43,10 +43,10 @@
         <!-- Use triggers to solve a bug -->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="False">
-                <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
             </Trigger>
         </Style.Triggers>              
 
@@ -54,19 +54,19 @@
     
     <Style TargetType="{x:Type ToolBarTray}">
 
-        <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
 
     </Style>
 
     <Style TargetType="{x:Type ToolBarPanel}">
-        
-        <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
 
     </Style>
 
     <Style TargetType="{x:Type ToolBarOverflowPanel}">
 
-        <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
 
     </Style>
 
