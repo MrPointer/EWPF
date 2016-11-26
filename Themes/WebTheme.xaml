@@ -5,7 +5,7 @@
     <sys:String x:Key="ThemeName">Web Theme</sys:String>
 
     <Color x:Key="PrimaryColor">#FCFCFC</Color>
-    <Color x:Key="PrimaryHighlightColor">#ECECEC</Color>
+    <Color x:Key="PrimaryHighlightColor">#F2F2F2</Color>
     <Color x:Key="AccentColor">#6BB9F0</Color>
     <Color x:Key="AccentLightColor">#74C5FF</Color>
     <Color x:Key="AccentOpaqueColor">#406BB9F0</Color>

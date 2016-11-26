@@ -55,12 +55,12 @@
                                         
                                         <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)"
                                                                           Storyboard.TargetName="Border">
-                                            <EasingThicknessKeyFrame KeyTime="0:0:125" Value="1,1,1,0" />
+                                            <EasingThicknessKeyFrame KeyTime="0:0:0.125" Value="1,1,1,0" />
                                         </ThicknessAnimationUsingKeyFrames>
                                         
                                         <Int32AnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(Panel.ZIndex)">
-                                            <DiscreteInt32KeyFrame KeyTime="0:0:125" Value="100" />
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0.125" Value="100" />
                                         </Int32AnimationUsingKeyFrames>
                                         
                                     </Storyboard>
