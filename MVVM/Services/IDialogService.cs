@@ -19,12 +19,17 @@ namespace EWPF.MVVM.Services
         /// <summary>
         /// Shows an EWPF themed dialog on top of the visible window, filled with the given parameters.
         /// </summary>
+        /// <param name="i_Content">Dialog's content, which can be anything.</param>
         /// <param name="i_Caption">Dialog's title/caption.</param>
-        /// <param name="i_Content">Dialog's content, which can be anything.
-        /// The idea behind this design is to allow users to create data templates for different types.</param>
         /// <param name="i_IsCenterOwner">Indicates weather the dialog will be displayed at the center of it's owner window or not.</param>
         /// <returns>Dialog result as a nullable boolean.</returns>
-        bool? ShowDialog(string i_Caption, object i_Content, bool i_IsCenterOwner = true);
+        /// <remarks><para>The method's design provides multiple approaches towards its' implementation.</para>
+        /// <para>The recommended 'easy-to-implement' approach is to create an enum for various dialog types and pass them as
+        /// the sole argument to this method, parsing them later on the view with a 'switch-case' block.</para>
+        /// <para>Another possible approach is to pass some kind of a template, probably represented by a code since this method
+        /// is called from the view-model. The template will be the body of the dialog while the passed string will be its' title.</para>
+        /// </remarks>
+        bool? ShowDialog(object i_Content, string i_Caption = null, bool i_IsCenterOwner = true);
 
         /// <summary>
         /// Displays an <see cref="OpenFileDialog"/>, native to the Windows operating system, filtering the results to the given extensions.

@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Utility\DialogUtility.cs" />
     <Compile Include="Utility\MessageBoxUtility.cs" />
+    <Compile Include="Utility\WindowUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
