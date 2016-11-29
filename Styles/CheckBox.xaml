@@ -26,44 +26,44 @@
     </Style>
 
     <Style TargetType="{x:Type CheckBox}">
-        
+
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        
+
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
-        
+
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="5" />
-        
+
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">                   
-                    
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+
                     <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
-                        
+
                         <VisualStateManager.VisualStateGroups>
 
                             <VisualStateGroup x:Name="CommonStates">
-                                
+
                                 <VisualState x:Name="Normal" />
 
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        
+
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="checkBoxBorder" 
                                                                        Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryHighlightBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        
+
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="checkBoxBorder"
                                                                        Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource AccentLightBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        
+
                                     </Storyboard>
                                 </VisualState>
 
@@ -82,43 +82,43 @@
 
                                     </Storyboard>
                                 </VisualState>
-                                
+
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        
+
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="checkBoxBorder"
                                                                        Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource AccentOpaqueBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        
+
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter"
                                                                        Storyboard.TargetProperty="(TextElement.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        
+
                                     </Storyboard>
                                 </VisualState>
 
                             </VisualStateGroup>
-                            
+
                             <VisualStateGroup x:Name="CheckStates">
-                                
+
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1" Duration="0:0:0.125" />                                        
+                                                         From="0" To="1" Duration="0:0:0.125" />
                                     </Storyboard>
                                 </VisualState>
-                                
+
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Opacity"
                                                          From="1" To="0" Duration="0:0:0.125" />
                                     </Storyboard>
                                 </VisualState>
-                                
+
                             </VisualStateGroup>
-                            
+
                         </VisualStateManager.VisualStateGroups>
 
                         <Grid.ColumnDefinitions>
@@ -130,32 +130,42 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            
+
                             <Grid x:Name="markGrid">
                                 <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " 
                                       Fill="{DynamicResource GraphicsBrush}" Margin="1" Opacity="0" Stretch="None"/>
                                 <Rectangle x:Name="indeterminateMark" Fill="{DynamicResource GraphicsBrush}" Margin="2" Opacity="0"/>
                             </Grid>
-                            
+
                         </Border>
-                        
+
                         <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" 
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Margin="{TemplateBinding Padding}" 
                                           RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        
+
                     </Grid>
-                    
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasContent" Value="True">
                             <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
                             <Setter Property="Padding" Value="4,-1,0,0"/>
                         </Trigger>
+                        <Trigger Property="FlowDirection" Value="RightToLeft">
+                            <Setter TargetName="optionMark" Property="RenderTransformOrigin" Value="0.5, 0.5" />
+                            <Setter TargetName="optionMark" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
     </Style>
 
 </ResourceDictionary>

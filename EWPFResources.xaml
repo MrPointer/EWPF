@@ -6,6 +6,7 @@
         <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
+        <ResourceDictionary Source="Styles/TextBox.xaml" />
         <ResourceDictionary Source="Styles/CheckBox.xaml" />
         <ResourceDictionary Source="Styles/RadioButton.xaml" />
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />

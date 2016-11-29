@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" 
+        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" FlowDirection="RightToLeft"
         Style="{StaticResource EWindowStyle}">
 
     <Window.DataContext>
@@ -54,11 +54,11 @@
                          MaxLines="{Binding Path=TextboxContent.Length}"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="3">
-                    <CheckBox Margin="3" Content="Option 1" />
+                    <CheckBox Margin="0,3,3,3" Content="Option 1" />
                     <CheckBox Margin="3" Content="Option 2" IsEnabled="False" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="3">
-                    <RadioButton Margin="3" Content="Option 1" />
+                    <RadioButton Margin="0,3,3,3" Content="Option 1" />
                     <RadioButton Margin="3" Content="Option 2" />
                 </StackPanel>
 
