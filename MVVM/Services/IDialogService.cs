@@ -38,7 +38,7 @@ namespace EWPF.MVVM.Services
         /// <param name="i_DefaultExtension">Default file extension to browse for - The one that will be filtered at first.</param>
         /// <param name="i_InitialLocation">Dialog's initial location - The default path which the dialog will resolve upon startup.</param>
         /// <returns><see cref="FileInfo"/>FileInfo object containing the browsed file's info.</returns>
-        FileInfo BrowseFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation);
+        FileInfo BrowseFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation = null);
 
         /// <summary>
         /// Displays an <see cref="SaveFileDialog"/>, native to the Windows operating system, filtering the results to the given extensions.
@@ -47,7 +47,7 @@ namespace EWPF.MVVM.Services
         /// <param name="i_DefaultExtension">Default file extension to save as - The one that will be filtered at first.</param>
         /// <param name="i_InitialLocation">Dialog's initial location - The default path which the dialog will resolve upon startup.</param>
         /// <returns><see cref="FileInfo"/>FileInfo object containing the browsed file's info.</returns>
-        FileInfo SaveFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation);
+        FileInfo SaveFile(string i_FileExtenstions, string i_DefaultExtension, string i_InitialLocation = null);
 
         #endregion
 

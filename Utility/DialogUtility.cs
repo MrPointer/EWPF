@@ -45,6 +45,8 @@ namespace EWPF.Utility
                 DefaultExt = i_DefaultExtension,
                 CheckPathExists = i_IsPathChecked
             };
+            if (!string.IsNullOrEmpty(i_InitialLocation))
+                fileDialog.InitialDirectory = i_InitialLocation;
             var dialogResult = fileDialog.ShowDialog(i_OwnerWindow);
             return !dialogResult.Value ? null : new FileInfo(fileDialog.FileName);
         }
@@ -63,13 +65,14 @@ namespace EWPF.Utility
         public static FileInfo ShowSaveFileDialog(string i_ExtensionsFilter, string i_DefaultExtension,
             string i_InitialLocation, Window i_OwnerWindow, bool i_IsPathChecked = false)
         {
-            var saveDialog = new SaveFileDialog()
+            var saveDialog = new SaveFileDialog
             {
                 Filter = i_ExtensionsFilter,
                 DefaultExt = i_DefaultExtension,
-                InitialDirectory = i_InitialLocation,
                 CheckPathExists = i_IsPathChecked
             };
+            if (!string.IsNullOrEmpty(i_InitialLocation))
+                saveDialog.InitialDirectory = i_InitialLocation;
             var dialogResult = saveDialog.ShowDialog(i_OwnerWindow);
             return !dialogResult.Value ? null : new FileInfo(saveDialog.FileName);
         }
