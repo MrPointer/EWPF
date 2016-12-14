@@ -44,7 +44,20 @@ namespace EWPF.Styles
         /// <param name="i_WindowResult"></param>
         public void CloseWindow(bool? i_WindowResult)
         {
-            DialogResult = i_WindowResult;
+            switch (i_WindowResult)
+            {
+                case true:
+                    Result = EDialogResult.Positive;
+                    break;
+
+                case null:
+                    Result = EDialogResult.Neutral;
+                    break;
+
+                default:
+                    Result = EDialogResult.Negative;
+                    break;
+            }
             Close();
         }
 
@@ -61,5 +74,34 @@ namespace EWPF.Styles
         #endregion
 
         #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the dialog result of the message box as it should be, since <see cref="Window.DialogResult"/> returns only true or false,
+        /// which ignores a third 'neutral' state.
+        /// </summary>
+        public EDialogResult Result { get; private set; }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// An enum listing values of a custom dialog result.
+    /// </summary>
+    public enum EDialogResult
+    {
+        /// <summary>
+        /// Positive result - Yes/OK.
+        /// </summary>
+        Positive,
+        /// <summary>
+        /// Negative result - No/Cancel.
+        /// </summary>
+        Negative,
+        /// <summary>
+        /// Neutral result - Cancel.
+        /// </summary>
+        Neutral
     }
 }

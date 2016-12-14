@@ -86,14 +86,16 @@ namespace EWPF.Utility
             var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
             if (emsgBoxVM == null)
                 throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+
             emsgBoxVM.Title = i_Caption;
             emsgBoxVM.Content = i_Content;
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
-            // ToDo: Extract text from language module
+
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
+
             emsgBox.Owner = i_OwnerWindow;
             emsgBox.ShowDialog();
             return MessageBoxResult.OK;
@@ -116,18 +118,29 @@ namespace EWPF.Utility
             var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
             if (emsgBoxVM == null)
                 throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+
             emsgBoxVM.Title = i_Caption;
             emsgBoxVM.Content = i_Content;
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
-            // ToDo: Extract text from language module
+
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.Cancel);
+
             emsgBox.Owner = i_OwnerWindow;
-            var mboxResult = emsgBox.ShowDialog();
-            return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.Cancel;
+            emsgBox.ShowDialog();
+            var mboxResult = emsgBox.Result;
+            switch (mboxResult)
+            {
+                case EDialogResult.Positive:
+                    return MessageBoxResult.OK;
+                case EDialogResult.Negative:
+                    return MessageBoxResult.Cancel;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -147,18 +160,29 @@ namespace EWPF.Utility
             var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
             if (emsgBoxVM == null)
                 throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+
             emsgBoxVM.Title = i_Caption;
             emsgBoxVM.Content = i_Content;
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
-            // ToDo: Extract text from language module
+
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
+
             emsgBox.Owner = i_OwnerWindow;
-            var mboxResult = emsgBox.ShowDialog();
-            return mboxResult.HasValue && mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.No;
+            emsgBox.ShowDialog();
+            var mboxResult = emsgBox.Result;
+            switch (mboxResult)
+            {
+                case EDialogResult.Positive:
+                    return MessageBoxResult.Yes;
+                case EDialogResult.Negative:
+                    return MessageBoxResult.No;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -178,21 +202,32 @@ namespace EWPF.Utility
             var emsgBoxVM = emsgBox.DataContext as EMsgBoxViewModel;
             if (emsgBoxVM == null)
                 throw new InvalidCastException("Couldn't cast data context to EMsgBox view model.");
+
             emsgBoxVM.Title = i_Caption;
             emsgBoxVM.Content = i_Content;
             emsgBoxVM.MBoxFlowDirection = (i_Options & MessageBoxOptions.RtlReading) != 0
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
-            // ToDo: Extract text from language module
+
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
             emsgBoxVM.NeutralText = language.GetWord(DictionaryCode.Cancel);
+
             emsgBox.Owner = i_OwnerWindow;
-            var mboxResult = emsgBox.ShowDialog();
-            if (!mboxResult.HasValue)
-                return MessageBoxResult.Cancel;
-            return mboxResult.Value ? MessageBoxResult.Yes : MessageBoxResult.No;
+            emsgBox.ShowDialog();
+            var mboxResult = emsgBox.Result;
+            switch (mboxResult) // Convert custom result to an actual result
+            {
+                case EDialogResult.Positive:
+                    return MessageBoxResult.Yes;
+                case EDialogResult.Negative:
+                    return MessageBoxResult.No;
+                case EDialogResult.Neutral:
+                    return MessageBoxResult.Cancel;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion
