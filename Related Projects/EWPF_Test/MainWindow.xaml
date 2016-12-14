@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
-        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen" FlowDirection="RightToLeft"
+        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen"
         Style="{StaticResource EWindowStyle}">
 
     <Window.DataContext>

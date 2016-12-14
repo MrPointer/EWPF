@@ -13,6 +13,7 @@
         <ResourceDictionary Source="Styles/TabControl.xaml" />
         <ResourceDictionary Source="Styles/TabItem.xaml" />
         <ResourceDictionary Source="Styles/Toolbar.xaml" />
+        <ResourceDictionary Source="Styles/ComboBox.xaml" />
 
         <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
 
