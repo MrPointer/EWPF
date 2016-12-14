@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    
+
     <sys:String x:Key="ThemeName">Dark Theme</sys:String>
 
     <Color x:Key="PrimaryColor">#727173</Color>
@@ -14,6 +14,7 @@
     <Color x:Key="SecondaryTextColor">#BDBDBD</Color>
     <Color x:Key="DividerColor">#64B5F6</Color>
     <Color x:Key="GraphicsColor">#A1D428</Color>
+    <Color x:Key="GraphicsOpaqueColor">#B1A1D428</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
     <SolidColorBrush x:Key="PrimaryHighlightBrush" Color="{StaticResource PrimaryHighlightColor}" />
@@ -25,5 +26,6 @@
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}" />
     <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
     <SolidColorBrush x:Key="GraphicsBrush" Color="{StaticResource GraphicsColor}" />
+    <SolidColorBrush x:Key="GraphicsOpaqueBrush" Color="{StaticResource GraphicsOpaqueColor}" />
 
 </ResourceDictionary>

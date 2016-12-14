@@ -232,7 +232,7 @@
                                                MinWidth="{Binding ActualWidth, ElementName=templateRoot}">
 
                     <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource GraphicsBrush}" BorderThickness="1" 
-                            Background="{DynamicResource AccentBrush}">
+                            Background="{DynamicResource AccentLightBrush}">
                         <ScrollViewer x:Name="DropDownScrollViewer">
 
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
@@ -269,24 +269,29 @@
         </Grid>
 
         <ControlTemplate.Triggers>
+            
             <!--<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
                 <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
                 <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
             </Trigger>-->
-            <Trigger Property="HasItems" Value="false">
+            
+            <Trigger Property="HasItems" Value="False">
                 <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
             </Trigger>
+            
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsGrouping" Value="true"/>
+                    <Condition Property="IsGrouping" Value="True"/>
                     <!--<Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>-->
                 </MultiTrigger.Conditions>
-                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
             </MultiTrigger>
-            <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+            
+            <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="False">
                 <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
                 <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
             </Trigger>
+            
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -363,10 +368,13 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type ComboBox}">
+        
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        
         <Setter Property="Background" Value="{DynamicResource DividerBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -376,6 +384,7 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
 
         <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+        
         <Style.Triggers>
             <Trigger Property="IsEditable" Value="True">
                 <Setter Property="IsTabStop" Value="False"/>
@@ -383,6 +392,7 @@
                 <Setter Property="Template" Value="{StaticResource ComboBoxEditableTemplate}"/>
             </Trigger>
         </Style.Triggers>
+        
     </Style>
 
 </ResourceDictionary>

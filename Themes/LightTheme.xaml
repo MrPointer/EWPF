@@ -14,6 +14,7 @@
     <Color x:Key="SecondaryTextColor">#757575</Color>
     <Color x:Key="DividerColor">#BDC3C7</Color>
     <Color x:Key="GraphicsColor">#87D37C</Color>
+    <Color x:Key="GraphicsOpaqueColor">#B187D37C</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
     <SolidColorBrush x:Key="PrimaryHighlightBrush" Color="{StaticResource PrimaryHighlightColor}" />
@@ -25,5 +26,6 @@
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}" />
     <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
     <SolidColorBrush x:Key="GraphicsBrush" Color="{StaticResource GraphicsColor}" />
+    <SolidColorBrush x:Key="GraphicsOpaqueBrush" Color="{StaticResource GraphicsOpaqueColor}" />
 
 </ResourceDictionary>
