@@ -22,7 +22,6 @@
         <ResourceDictionary Source="Icons/CloseIcon.xaml" />
         <ResourceDictionary Source="Icons/MaximizeIcon.xaml" />
         <ResourceDictionary Source="Icons/MinimizeIcon.xaml" />
-        <ResourceDictionary Source="Icons/WarningIcon.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

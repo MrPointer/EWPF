@@ -25,11 +25,11 @@
         <Grid Margin="10">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" Margin="2,2,16,2" />
+            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" Margin="8,2,16,2" />
 
             <TextBlock Grid.Column="1" FontSize="16" Text="{Binding Path=Content}" />
 

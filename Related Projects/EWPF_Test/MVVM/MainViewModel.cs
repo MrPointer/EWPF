@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
+using EWPF.Utility;
 
 namespace EWPF_Test.MVVM
 {
@@ -51,13 +54,22 @@ namespace EWPF_Test.MVVM
             TextboxContent = "Hello World!";
             // Test Code!
             OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
+
+            // Set custom icons to message boxes
+            string iconsDirPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
+                "Icons" + Path.DirectorySeparatorChar;
+            string errorIconPath = iconsDirPath + "ErrorIcon.png";
+            string warningIconPath = iconsDirPath + "WarningIcon.png";
+            string questionIconPath = iconsDirPath + "QuestionIcon.png";
+            string informationIconPath = iconsDirPath + "InformationIcon.png";
+            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath, questionIconPath, informationIconPath);
         }
 
         #endregion
 
         #region Methods
 
-        #region Command Executions
+        #region Commands
 
         /// <summary>
         /// Shows a message box based on its' given type.
@@ -68,7 +80,7 @@ namespace EWPF_Test.MVVM
             if (MessageBoxService == null) return;
             MessageBoxService.Show(@"Test", @"Hello World! This is a sample content for a sample message box." +
             "\n" + "Did you like it? Please contribute the EWPF team online on github!",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
         #endregion
