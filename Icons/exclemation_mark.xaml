@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="exclemation_mark" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 0.890666,17.036L 0.890666,113.407C 0.890666,122.636 8.36934,130.12 17.5987,130.12C 26.828,130.12 34.3067,122.636 34.3067,113.407L 34.3067,17.036C 34.3067,7.80798 26.828,0.322632 17.5987,0.322632C 8.36934,0.322632 0.890666,7.80798 0.890666,17.036 Z "/>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 17.5987,147.464C 7.896,147.464 0,155.36 0,165.063C 0,174.771 7.896,182.667 17.5987,182.667C 27.3027,182.667 35.1973,174.771 35.1973,165.063C 35.1973,155.36 27.3027,147.464 17.5987,147.464 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

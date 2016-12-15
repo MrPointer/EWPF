@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using EWPF.MVVM.ViewModel;
 using EWPF.Styles;
@@ -18,14 +19,117 @@ namespace EWPF.Utility
         #region Fields
 
         private static LanguageCode sm_UsedLanguage;
+        private static IDictionary<string, string> sm_CustomIcons;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initialize static class to use native icons by default.
+        /// </summary>
+        static MessageBoxUtility()
+        {
+            UseNativeIcons = true;
+        }
+
         #endregion
 
         #region Methods
+
+        #region Icon-Related Methods
+
+        /// <summary>
+        /// Informs the message boxes to use custom icons based on the parameters.
+        /// </summary>
+        /// <param name="i_ErrorIcon">Path to an error icon.</param>
+        /// <param name="i_WarningIcon">Path to a warning icon.</param>
+        /// <param name="i_QuestionIcon">Path to a question icon.</param>
+        /// <param name="i_InformationIcon">Path to an information icon.</param>
+        public static void SetCustomIcons(string i_ErrorIcon, string i_WarningIcon, string i_QuestionIcon,
+            string i_InformationIcon)
+        {
+            sm_CustomIcons = new Dictionary<string, string>(4)
+            {
+                {IconStrings.ERROR, i_ErrorIcon},
+                {IconStrings.WARNING, i_WarningIcon},
+                {IconStrings.QUESTION, i_QuestionIcon},
+                {IconStrings.INFORMATION, i_InformationIcon}
+            };
+            UseNativeIcons = false;
+        }
+
+        /// <summary>
+        /// Resolves the correct icon path to use based on the given message box image.
+        /// It handles both native and custom icons.
+        /// </summary>
+        /// <param name="i_Image">Requested image to display as the icon.</param>
+        /// <returns></returns>
+        private static string ResolveIcon(MessageBoxImage i_Image)
+        {
+            if (UseNativeIcons) // Native icons should be used
+            {
+                switch (i_Image)
+                {
+                    case MessageBoxImage.None:
+                        return string.Empty;
+
+                    case MessageBoxImage.Hand:
+                        return IconStrings.ERROR;
+
+                    case MessageBoxImage.Question:
+                        return IconStrings.QUESTION;
+
+                    case MessageBoxImage.Exclamation:
+                        return IconStrings.WARNING;
+
+                    case MessageBoxImage.Asterisk:
+                        return IconStrings.INFORMATION;
+
+                    default:
+                        throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
+                }
+            }
+            // Custom icons are used
+            bool isValueRetrieved;
+            string iconPath;
+            switch (i_Image)
+            {
+                case MessageBoxImage.None:
+                    return string.Empty;
+
+                case MessageBoxImage.Hand:
+                    isValueRetrieved = sm_CustomIcons.TryGetValue(IconStrings.ERROR, out iconPath);
+                    if (isValueRetrieved)
+                        return iconPath;
+                    throw new KeyNotFoundException();
+
+                case MessageBoxImage.Question:
+                    isValueRetrieved = sm_CustomIcons.TryGetValue(IconStrings.QUESTION, out iconPath);
+                    if (isValueRetrieved)
+                        return iconPath;
+                    throw new KeyNotFoundException();
+
+                case MessageBoxImage.Exclamation:
+                    isValueRetrieved = sm_CustomIcons.TryGetValue(IconStrings.WARNING, out iconPath);
+                    if (isValueRetrieved)
+                        return iconPath;
+                    throw new KeyNotFoundException();
+
+                case MessageBoxImage.Asterisk:
+                    isValueRetrieved = sm_CustomIcons.TryGetValue(IconStrings.INFORMATION, out iconPath);
+                    if (isValueRetrieved)
+                        return iconPath;
+                    throw new KeyNotFoundException();
+
+                default:
+                    throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
+            }
+        }
+
+        #endregion
+
+        #region Show Methods
 
         /// <summary>
         /// Shows a EWPF-themed message box based on the given parameters.
@@ -92,6 +196,7 @@ namespace EWPF.Utility
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
+            emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
@@ -124,6 +229,7 @@ namespace EWPF.Utility
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
+            emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
@@ -166,6 +272,7 @@ namespace EWPF.Utility
             emsgBoxVM.MBoxFlowDirection = i_Options == MessageBoxOptions.RtlReading
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
+            emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
@@ -208,6 +315,7 @@ namespace EWPF.Utility
             emsgBoxVM.MBoxFlowDirection = (i_Options & MessageBoxOptions.RtlReading) != 0
                 ? FlowDirection.RightToLeft
                 : FlowDirection.LeftToRight;
+            emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
             var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
@@ -232,9 +340,11 @@ namespace EWPF.Utility
 
         #endregion
 
+        #endregion
+
         #region Properties
 
-
+        public static bool UseNativeIcons { get; set; }
 
         #endregion
     }

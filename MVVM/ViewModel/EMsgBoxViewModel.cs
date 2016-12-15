@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using EWPF.MVVM.Services;
+using EWPF.Styles;
 
 namespace EWPF.MVVM.ViewModel
 {
@@ -87,7 +89,18 @@ namespace EWPF.MVVM.ViewModel
 
         #region Other
 
-
+        /// <summary>
+        /// Sets the message box's icon to the image resolev from the given path.
+        /// <para />
+        /// Use one of the <see cref="IconStrings"/> values to specify native icons.
+        /// </summary>
+        /// <param name="i_IconPath">Path to an icon to display.</param>
+        public void SetIcon(string i_IconPath)
+        {
+            if (WindowService == null)
+                throw new NullReferenceException("Window service must be set");
+            WindowService.SetIcon(i_IconPath);
+        }
 
         #endregion
 

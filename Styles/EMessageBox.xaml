@@ -29,14 +29,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock FontSize="16" Text="{Binding Path=Content}" />
+            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" Margin="2,2,16,2" />
 
-            <Image Grid.Column="1" Stretch="Uniform" StretchDirection="Both" />
+            <TextBlock Grid.Column="1" FontSize="16" Text="{Binding Path=Content}" />
 
         </Grid>
 
         <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Right" Grid.IsSharedSizeScope="True">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition SharedSizeGroup="A" Width="*" />
                 <ColumnDefinition SharedSizeGroup="A" Width="*" />

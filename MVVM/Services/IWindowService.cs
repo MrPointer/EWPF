@@ -26,6 +26,12 @@
         /// <param name="i_DataContext">Window's data context (optional - if needs to be passed at runtime).</param>
         void OpenWindow(object i_Content, object i_DataContext = null);
 
+        /// <summary>
+        /// Sets the window's icon from the given path.
+        /// </summary>
+        /// <param name="i_IconPath">Path to an icon file, which could be any WPF-supported image format.</param>
+        void SetIcon(string i_IconPath);
+
         #endregion
 
         #region Properties
