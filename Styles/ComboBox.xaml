@@ -57,9 +57,10 @@
     <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
 
     <Style x:Key="ComboBoxToggleButton2" TargetType="{x:Type ToggleButton}">
-        <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="IsTabStop" Value="false"/>
-        <Setter Property="Focusable" Value="false"/>
+        
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="ClickMode" Value="Press"/>
 
         <Setter Property="Template">
@@ -68,7 +69,7 @@
 
                     <Border x:Name="templateRoot" BorderBrush="{DynamicResource PrimaryTextBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}" 
-                            Background="{DynamicResource AccentBrush}" SnapsToDevicePixels="true">
+                            Background="{DynamicResource AccentBrush}" SnapsToDevicePixels="True">
 
                         <VisualStateManager.VisualStateGroups>
 
@@ -368,19 +369,22 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type ComboBox}">
-        
+
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         
         <Setter Property="Background" Value="{DynamicResource DividerBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
         
+        
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="6,3,5,3"/>
+        
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="Padding" Value="6,3,5,3"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
 
         <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>

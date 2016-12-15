@@ -14,6 +14,7 @@
         <ResourceDictionary Source="Styles/TabItem.xaml" />
         <ResourceDictionary Source="Styles/Toolbar.xaml" />
         <ResourceDictionary Source="Styles/ComboBox.xaml" />
+        <ResourceDictionary Source="Styles/ComboBoxItem.xaml" />
 
         <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
 
