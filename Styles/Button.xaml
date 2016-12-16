@@ -19,7 +19,7 @@
                             Background="{TemplateBinding Background}" TextBlock.Foreground ="{TemplateBinding Foreground}"
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
 
-                        <VisualStateManager.VisualStateGroups>
+                        <!--<VisualStateManager.VisualStateGroups>
 
                             <VisualStateGroup x:Name="CommonStates">
 
@@ -49,9 +49,9 @@
 
                             </VisualStateGroup>
 
-                        </VisualStateManager.VisualStateGroups>
+                        </VisualStateManager.VisualStateGroups>-->
 
-                        <Border >
+                        <Border>
                             <ContentPresenter x:Name="ButtonCP" SnapsToDevicePixels="True" UseLayoutRounding="True" 
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -60,6 +60,19 @@
                         </Border>
 
                     </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource AccentLightBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource AccentOpaqueBrush}" />
+                            <Setter Property="BorderBrush" TargetName="ButtonBorder" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
 
                 </ControlTemplate>
             </Setter.Value>

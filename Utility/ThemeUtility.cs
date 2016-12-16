@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace EWPF.Utility
@@ -31,6 +30,11 @@ namespace EWPF.Utility
 
         #region Methods
 
+        /// <summary>
+        /// Loads the given EWPF built-in theme instead of the current one.
+        /// </summary>
+        /// <param name="i_Theme">EWPF built-in theme to load.</param>
+        /// <returns>True if loading has succeeded, false otherwise.</returns>
         public static bool LoadTheme(EWPFTheme i_Theme)
         {
             var appResourceDict = Application.Current.Resources;

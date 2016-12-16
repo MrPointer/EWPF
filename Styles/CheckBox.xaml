@@ -45,7 +45,7 @@
 
                     <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
 
-                        <VisualStateManager.VisualStateGroups>
+                        <!--<VisualStateManager.VisualStateGroups>
 
                             <VisualStateGroup x:Name="CommonStates">
 
@@ -75,10 +75,10 @@
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryHighlightBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
 
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="checkBoxBorder"
+                                        --><!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="checkBoxBorder"
                                                                        Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource AccentBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
+                                        </ObjectAnimationUsingKeyFrames>--><!--
 
                                     </Storyboard>
                                 </VisualState>
@@ -119,7 +119,7 @@
 
                             </VisualStateGroup>
 
-                        </VisualStateManager.VisualStateGroups>
+                        </VisualStateManager.VisualStateGroups>-->
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -148,10 +148,49 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        
                         <Trigger Property="HasContent" Value="True">
                             <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
                             <Setter Property="Padding" Value="4,-1,0,0"/>
                         </Trigger>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{DynamicResource PrimaryHighlightBrush}" />
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{DynamicResource AccentLightBrush}" />
+                        </Trigger>
+                        
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{DynamicResource PrimaryHighlightBrush}" />
+                        </Trigger>
+                        
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{DynamicResource AccentOpaqueBrush}" />
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" 
+                                    Value="{DynamicResource PrimaryTextOpaqueBrush}" />
+                        </Trigger>
+                        
+                        <Trigger Property="IsChecked" Value="True">
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Opacity"
+                                                         From="0" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Opacity"
+                                                         From="1" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            
+                        </Trigger>
+                        
                         <Trigger Property="FlowDirection" Value="RightToLeft">
                             <Setter TargetName="optionMark" Property="RenderTransformOrigin" Value="0.5, 0.5" />
                             <Setter TargetName="optionMark" Property="RenderTransform">
