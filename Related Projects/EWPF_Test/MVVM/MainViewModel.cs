@@ -26,6 +26,9 @@ namespace EWPF_Test.MVVM
         private const string cm_TEXT_BOX_CONTENT_PROPERTY_NAME = "TextboxContent";
         private string m_TextboxContent;
 
+        private const string cm_ACTIVE_THEME_PROPERTY_NAME = "ActiveTheme";
+        private EWPFTheme m_ActiveTheme;
+
         /// <summary>
         /// Used to test a deep-hierarchy searching method defined in the base class.
         /// </summary>
@@ -54,6 +57,8 @@ namespace EWPF_Test.MVVM
             TextboxContent = "Hello World!";
             // Test Code!
             OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
+
+            GetStartupTheme();
 
             // Set custom icons to message boxes
             string iconsDirPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
@@ -87,7 +92,23 @@ namespace EWPF_Test.MVVM
 
         #region Other
 
+        /// <summary>
+        /// Applies a new theme based on the <see cref="ActiveTheme"/> property.
+        /// </summary>
+        private void ApplyTheme()
+        {
+            ThemeUtility.LoadTheme(ActiveTheme);
+        }
 
+        /// <summary>
+        /// Finds the active theme on startup and updates the <see cref="ActiveTheme"/> 
+        /// property to display it in the bound view's ComboBox.
+        /// </summary>
+        private void GetStartupTheme()
+        {
+            m_ActiveTheme = ThemeUtility.GetCurrentEWPFTheme();
+            ActiveTheme = m_ActiveTheme;
+        }
 
         #endregion
 
@@ -108,6 +129,21 @@ namespace EWPF_Test.MVVM
                 if (m_TextboxContent != null && m_TextboxContent == value) return;
                 m_TextboxContent = value;
                 OnPropertyChanged(cm_TEXT_BOX_CONTENT_PROPERTY_NAME, this);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the active theme.
+        /// </summary>
+        public EWPFTheme ActiveTheme
+        {
+            get { return m_ActiveTheme; }
+            set
+            {
+                if (m_ActiveTheme == value) return;
+                m_ActiveTheme = value;
+                OnPropertyChanged(cm_ACTIVE_THEME_PROPERTY_NAME, this);
+                ApplyTheme();
             }
         }
 

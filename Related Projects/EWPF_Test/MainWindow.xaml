@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
+        xmlns:ewpfutl="clr-namespace:EWPF.Utility;assembly=EWPF"
         xmlns:vm="clr-namespace:EWPF_Test.MVVM"
         Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen"
         Style="{StaticResource EWindowStyle}">
@@ -62,12 +63,8 @@
                     <RadioButton Margin="3" Content="Option 2" />
                 </StackPanel>
 
-                <ComboBox Grid.Row="2" Grid.Column="0" Margin="3">
-                    <ComboBox.Items>
-                        <ComboBoxItem Content="Selection 1" />
-                        <ComboBoxItem Content="Selection 2" />
-                    </ComboBox.Items>
-                </ComboBox>
+                <ComboBox Grid.Row="2" Grid.Column="0" Margin="3" ItemsSource="{Binding Source={StaticResource ThemesEnum}}"
+                          SelectedItem="{Binding Path=ActiveTheme, Mode=TwoWay}" />
                 <Slider Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="3" Minimum="0" Maximum="5" />
 
                 <PasswordBox Grid.Row="3" Grid.Column="0" Margin="3" VerticalContentAlignment="Center" Password="sample password" />
@@ -87,23 +84,23 @@
         </GroupBox>
 
         <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Header="Item Controls">
-            
+
             <Grid Margin="5">
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <ToolBarTray Orientation="Vertical">
-                    
+
                     <ToolBar>
-                        
+
                         <Button Content="New" />
                         <Button Content="Open" />
 
                     </ToolBar>
-                    
+
                     <ToolBar>
 
                         <Button Content="Save" />
@@ -111,7 +108,7 @@
                         <Button Content="Save As" />
 
                     </ToolBar>
-                    
+
                 </ToolBarTray>
 
                 <TabControl Grid.Column="1" Margin="5,0">

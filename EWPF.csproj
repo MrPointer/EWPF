@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Utility\DialogUtility.cs" />
     <Compile Include="Utility\MessageBoxUtility.cs" />
+    <Compile Include="Utility\ThemeUtility.cs" />
     <Compile Include="Utility\WindowUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -105,11 +106,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialogs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Converters\ConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\ObjectDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

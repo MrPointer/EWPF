@@ -2,21 +2,28 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <!-- Control Templates -->
         <ResourceDictionary Source="Styles/EWindow.xaml" />
         <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
         <ResourceDictionary Source="Styles/TextBox.xaml" />
         <ResourceDictionary Source="Styles/CheckBox.xaml" />
-        <ResourceDictionary Source="Styles/RadioButton.xaml" />
-        <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
+        <ResourceDictionary Source="Styles/RadioButton.xaml" />        
         <ResourceDictionary Source="Styles/TabControl.xaml" />
         <ResourceDictionary Source="Styles/TabItem.xaml" />
         <ResourceDictionary Source="Styles/Toolbar.xaml" />
         <ResourceDictionary Source="Styles/ComboBox.xaml" />
         <ResourceDictionary Source="Styles/ComboBoxItem.xaml" />
+        
+        <!-- Custom Controls -->
+        <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
 
+        <!-- Converters -->
         <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
+        
+        <!--Advanced Dictionaries -->
+        <ResourceDictionary Source="Dictionaries/ObjectDictionary.xaml" />
 
         <!-- Icons -->
         <ResourceDictionary Source="Icons/CloseIcon.xaml" />
