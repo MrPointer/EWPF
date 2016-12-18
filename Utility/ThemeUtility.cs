@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace EWPF.Utility
 {
@@ -24,7 +28,7 @@ namespace EWPF.Utility
 
         private const string cm_THEME_FILE_EXTENSION = "xaml";
 
-        private static IDictionary<string, string> sm_ThemeIcons;
+        private static readonly IDictionary<string, string> m_ThemeIcons;
 
         #endregion
 
@@ -35,12 +39,14 @@ namespace EWPF.Utility
         /// </summary>
         static ThemeUtility()
         {
-            sm_ThemeIcons = new Dictionary<string, string>();
+            m_ThemeIcons = new Dictionary<string, string>();
         }
 
         #endregion
 
         #region Methods
+
+        #region Loaders
 
         /// <summary>
         /// Loads the given EWPF built-in theme instead of the current one.
@@ -128,14 +134,64 @@ namespace EWPF.Utility
         /// Load theme's special bounded icons into an internal dictionary, 
         /// storing keys as the icon's file name without the extension, and the values as the icon's full path.
         /// <para />
-        /// The icons could be retrieved later using a !---------METHOD TO COMPLETE---------!
+        /// The icons could be retrieved later using either <see cref="GetIconPath"/> or <see cref="GetIcon"/> methods.
         /// </summary>
         /// <param name="i_IconsDirectoryPath">Path to the parent directory of all theme's icons.</param>
+        /// <param name="i_AcceptedExtensions"></param>
         /// <returns>True if icons were loaded successfully, false otherwise.</returns>
-        public static bool LoadThemeIcons(string i_IconsDirectoryPath = null)
+        public static void LoadThemeIcons(string i_IconsDirectoryPath, IEnumerable<string> i_AcceptedExtensions)
         {
-            // ToDo: Implement later
-            return false;
+            if (string.IsNullOrEmpty(i_IconsDirectoryPath))
+                throw new ArgumentException(@"Icons' directory path can't be null or empty");
+
+            var dirInfo = new DirectoryInfo(i_IconsDirectoryPath);
+            if (!dirInfo.Exists)
+                throw new ArgumentException(@"Given path doesn't exist on the file system");
+
+            // Clear the current icons dictionary and add all files in the folder that match one of the given extensions
+            m_ThemeIcons.Clear();
+            var dirFiles = dirInfo.EnumerateFiles();
+            // ToDo: Check if LINQ expression can be parallel
+            var iconFiles = dirFiles.Where(i_Info => i_AcceptedExtensions.Contains(i_Info.Extension.ToLower()));
+            foreach (var iconFile in iconFiles)
+            {
+                string fileNameWithoutExt = Regex.Match(iconFile.Name, @"(.+?)(\.[^.]*$|$)").Value;
+                // ToDo: Try to compress file's path
+                m_ThemeIcons.Add(fileNameWithoutExt, iconFile.FullName);
+            }
+        }
+
+        #endregion
+
+        #region Getters
+
+        /// <summary>
+        /// Searches the given icon name in the internal icons dictionary, and returns its' full path on the file system if found.
+        /// </summary>
+        /// <param name="i_IconName">Icon's name - Must match the icon's name on the file system without extension.</param>
+        /// <returns>Icon's full path on the file system.</returns>
+        public static string GetIconPath(string i_IconName)
+        {
+            if (string.IsNullOrEmpty(i_IconName))
+                throw new ArgumentException(@"Icon name can't be null or empty");
+
+            string iconPath;
+            bool isIconExist = m_ThemeIcons.TryGetValue(i_IconName, out iconPath);
+            if (!isIconExist)
+                throw new KeyNotFoundException("Given icon name doesn't exist in the themes' icons - " +
+                                               "Assert the given name is equal to the icon's file name without extension");
+            return iconPath;
+        }
+
+        /// <summary>
+        /// Searches the given icon name in the internal icons dictionary, and returns it as an <see cref="ImageSource"/> object.
+        /// </summary>
+        /// <param name="i_IconName">Icon's name - Must match the icon's name on the file system without extension.</param>
+        /// <returns><see cref="BitmapSource"/> object representing the icon.</returns>
+        public static ImageSource GetIcon(string i_IconName)
+        {
+            string iconFullPath = GetIconPath(i_IconName);
+            return new BitmapImage(new Uri(iconFullPath));
         }
 
         /// <summary>
@@ -164,6 +220,8 @@ namespace EWPF.Utility
                                         "Please use the appropriate method.");
             }
         }
+
+        #endregion
 
         #region Helper Methods
 
