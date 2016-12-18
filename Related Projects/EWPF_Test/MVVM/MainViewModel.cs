@@ -65,10 +65,15 @@ namespace EWPF_Test.MVVM
             // Set custom icons to message boxes
             string iconsDirPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
                 "Icons" + Path.DirectorySeparatorChar;
-            string errorIconPath = iconsDirPath + "ErrorIcon.png";
-            string warningIconPath = iconsDirPath + "WarningIcon.png";
-            string questionIconPath = iconsDirPath + "QuestionIcon.png";
-            string informationIconPath = iconsDirPath + "InformationIcon.png";
+            ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
+            //string errorIconPath = iconsDirPath + "ErrorIcon.png";
+            //string warningIconPath = iconsDirPath + "WarningIcon.png";
+            //string questionIconPath = iconsDirPath + "QuestionIcon.png";
+            //string informationIconPath = iconsDirPath + "InformationIcon.png";
+            string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
+            string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
+            string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
+            string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
             MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath, questionIconPath, informationIconPath);
         }
 

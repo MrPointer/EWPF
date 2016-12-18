@@ -153,10 +153,11 @@ namespace EWPF.Utility
             m_ThemeIcons.Clear();
             var dirFiles = dirInfo.EnumerateFiles();
             // ToDo: Check if LINQ expression can be parallel
-            var iconFiles = dirFiles.Where(i_Info => i_AcceptedExtensions.Contains(i_Info.Extension.ToLower()));
+            var acceptedExtensionsCopy = i_AcceptedExtensions as List<string> ?? i_AcceptedExtensions.ToList();
+            var iconFiles = dirFiles.Where(i_Info => acceptedExtensionsCopy.Contains(i_Info.Extension.ToLower()));
             foreach (var iconFile in iconFiles)
             {
-                string fileNameWithoutExt = Regex.Match(iconFile.Name, @"(.+?)(\.[^.]*$|$)").Value;
+                string fileNameWithoutExt = Regex.Match(iconFile.Name, @"(.+)(?=(\.))").Value;
                 // ToDo: Try to compress file's path
                 m_ThemeIcons.Add(fileNameWithoutExt, iconFile.FullName);
             }
@@ -250,7 +251,7 @@ namespace EWPF.Utility
         /// </summary>
         private static void FillCommonExtensions()
         {
-            var extenstionList = new List<string> { "bmp", "jpg", "jpeg", "gif", "png", "ico" };
+            var extenstionList = new List<string> { ".bmp", ".jpg", ".jpeg", ".gif", ".png", ".ico" };
             CommonIconExtensions = extenstionList.AsReadOnly();
         }
 
