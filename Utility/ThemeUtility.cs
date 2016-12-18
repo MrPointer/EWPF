@@ -40,6 +40,7 @@ namespace EWPF.Utility
         static ThemeUtility()
         {
             m_ThemeIcons = new Dictionary<string, string>();
+            FillCommonExtensions();
         }
 
         #endregion
@@ -244,13 +245,25 @@ namespace EWPF.Utility
             return null; // Not a single dictionary is a theme dictionary
         }
 
+        /// <summary>
+        /// Fills the <see cref="CommonIconExtensions"/> property with hard-coded values.
+        /// </summary>
+        private static void FillCommonExtensions()
+        {
+            var extenstionList = new List<string> { "bmp", "jpg", "jpeg", "gif", "png", "ico" };
+            CommonIconExtensions = extenstionList.AsReadOnly();
+        }
+
         #endregion
 
         #endregion
 
         #region Properties
 
-
+        /// <summary>
+        /// Gets an <see cref="IEnumerable{T}"/> of strings representing all commonly used extensions for icon/image files.
+        /// </summary>
+        public static IEnumerable<string> CommonIconExtensions { get; private set; }
 
         #endregion
     }
