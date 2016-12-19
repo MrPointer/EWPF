@@ -344,6 +344,9 @@ namespace EWPF.Utility
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets a boolean indicating weather Windows-native icons should be displayed in the message boxes.
+        /// </summary>
         public static bool UseNativeIcons { get; set; }
 
         #endregion

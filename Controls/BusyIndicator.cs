@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +7,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Logger;
-using Path = System.IO.Path;
 
 namespace EWPF.Controls
 {
@@ -32,7 +30,7 @@ namespace EWPF.Controls
         private Binding m_StrokeBinding;
         private Binding m_OpacityBinding;
 
-        private static bool m_IsInitialized;
+        private static bool sm_IsInitialized;
 
         #endregion
 
@@ -123,8 +121,8 @@ namespace EWPF.Controls
         /// </summary>
         static BusyIndicator()
         {
-            if (!Log.IsDefaultPathSet) // Set logging path if not set yet
-                Log.SetDefaultPath(Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath, "EWPF_Logger.log"));
+            //if (!Log.IsDefaultPathSet) // Set logging path if not set yet
+            //    Log.SetDefaultPath(Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath, "EWPF_Logger.log"));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyIndicator), new FrameworkPropertyMetadata(typeof(BusyIndicator)));
         }
 
@@ -173,7 +171,7 @@ namespace EWPF.Controls
                 if (instance == null)
                     return;
                 instance.m_AngleBetweenPoints = 360.0 / (int)i_EventArgs.NewValue;
-                if (!m_IsInitialized) return; // Do not proceed if control is not yet initialized
+                if (!sm_IsInitialized) return; // Do not proceed if control is not yet initialized
                 instance.InvalidateCanvas();
             }
             catch (Exception ex)
@@ -230,7 +228,7 @@ namespace EWPF.Controls
                 if (IsAnimated)
                     StartAnimation();
 
-                m_IsInitialized = true;
+                sm_IsInitialized = true;
             }
             catch (Exception ex)
             {
@@ -560,6 +558,12 @@ namespace EWPF.Controls
     /// </summary>
     public class PointIndexToOpacityConverter : IValueConverter
     {
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value produced by the binding source.</param>
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             if (!(i_Value is int) || !(i_Parameter is int))
@@ -570,6 +574,12 @@ namespace EWPF.Controls
             return opacityValue;
         }
 
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value that is produced by the binding target.</param>
+        /// <param name="i_TargetType">The type to convert to.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
@@ -586,12 +596,24 @@ namespace EWPF.Controls
     /// </summary>
     public class BoolToAccelerationRatioConverter : IValueConverter
     {
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value produced by the binding source.</param>
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            bool isAccelerated = (bool)i_Value;
+            bool isAccelerated = i_Value != null && (bool)i_Value;
             return isAccelerated ? 0.4 : 0;
         }
 
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value that is produced by the binding target.</param>
+        /// <param name="i_TargetType">The type to convert to.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();
@@ -608,12 +630,24 @@ namespace EWPF.Controls
     /// </summary>
     public class BoolToDecelerationRatioConverter : IValueConverter
     {
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value produced by the binding source.</param>
+        /// <param name="i_TargetType">The type of the binding target property.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object Convert(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
-            bool isDecelerated = (bool)i_Value;
+            bool isDecelerated = i_Value != null && (bool)i_Value;
             return isDecelerated ? 0.6 : 0;
         }
 
+        /// <summary>Converts a value. </summary>
+        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="i_Value">The value that is produced by the binding target.</param>
+        /// <param name="i_TargetType">The type to convert to.</param>
+        /// <param name="i_Parameter">The converter parameter to use.</param>
+        /// <param name="i_Culture">The culture to use in the converter.</param>
         public object ConvertBack(object i_Value, Type i_TargetType, object i_Parameter, CultureInfo i_Culture)
         {
             throw new NotImplementedException();

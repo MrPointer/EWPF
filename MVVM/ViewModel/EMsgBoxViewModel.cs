@@ -67,18 +67,30 @@ namespace EWPF.MVVM.ViewModel
 
         #region Command Executions
 
+        /// <summary>
+        /// Handles a 'click' event on the positive button by setting bound window's result to true.
+        /// </summary>
+        /// <param name="i_State">Irrelevant.</param>
         private void HandlePositive(object i_State)
         {
             if (WindowService == null) return;
             WindowService.CloseWindow(true);
         }
 
+        /// <summary>
+        /// Handles a 'click' event on the negative button by setting bound window's result to false.
+        /// </summary>
+        /// <param name="i_State">Irrelevant.</param>
         private void HandleNegative(object i_State)
         {
             if (WindowService == null) return;
             WindowService.CloseWindow(false);
         }
 
+        /// <summary>
+        /// Handles a 'click' event on the neutral button by setting bound window's result to null.
+        /// </summary>
+        /// <param name="i_State">Irrelevant.</param>
         private void HandleNeutral(object i_State)
         {
             if (WindowService == null) return;

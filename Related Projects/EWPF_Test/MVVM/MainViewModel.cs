@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
