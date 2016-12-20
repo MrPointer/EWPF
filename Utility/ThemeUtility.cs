@@ -78,7 +78,7 @@ namespace EWPF.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("i_Theme", i_Theme, @"Unexpected theme type");
+                    throw new ArgumentOutOfRangeException(nameof(i_Theme), i_Theme, @"Unexpected theme type");
             }
             var loadedThemeDictionary = new ResourceDictionary { Source = themeUri };
             appResourceDict.MergedDictionaries.Remove(themeDictionary);
@@ -113,9 +113,9 @@ namespace EWPF.Utility
             {
                 loadedDictionary = XamlReader.Load(fileStream) as ResourceDictionary;
                 if (loadedDictionary == null)
-                    throw new InvalidCastException("Coludn't cast loaded XAML root element to a ResourceDictionary");
+                    throw new InvalidCastException("Couldn't cast loaded XAML root element to a ResourceDictionary");
             }
-            // Check that the loaded resource dictionary is actually a EWPF-constrainted theme.
+            // Check that the loaded resource dictionary is actually a EWPF-constrained theme.
             string themeName = loadedDictionary[cm_THEME_NAME_KEY] as string;
             if (string.IsNullOrEmpty(themeName))
                 return false;
