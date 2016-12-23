@@ -31,7 +31,7 @@ namespace EWPF.MVVM
         /// <summary>
         /// Notify that numerous properties' values has changed.
         /// </summary>
-        /// <param name="i_PropertiesNames">IEnumerable of strings containing the peroperties' names as listed in code.</param>
+        /// <param name="i_PropertiesNames">IEnumerable of strings containing the properties' names as listed in code.</param>
         /// <param name="i_InvokerViewModel">Reference to the invoking class.</param>
         void OnPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_InvokerViewModel = null);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace EWPF.MVVM
 {
@@ -29,81 +29,9 @@ namespace EWPF.MVVM
 
         #endregion
 
-        #region Methods
+        #region Methods        
 
-        /// <summary>
-        /// Verifies that a given property name matches a real, public, instance property on this object. 
-        /// </summary>
-        /// <param name="i_PropertyName">The property name to verify</param>
-        /// <param name="i_Invoker"></param>
-        [Conditional("DEBUG")]
-        [DebuggerStepThrough]
-        private void VerifyPropertyName(string i_PropertyName, object i_Invoker)
-        {
-            if (i_Invoker == null)
-                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
-
-            if (TypeDescriptor.GetProperties(i_Invoker)[i_PropertyName] != null) // Property found
-                return;
-
-            // Property may be missing DIRECTLY on the given object, but is actually referred to as an inner property
-
-            PropertyDescriptor seekedPropertyDescriptor = null; // Will store the property we're searching for
-            string parentPropertyName; // Stores the name of the property before the "." character/s
-            bool isLastChildProperty = false; // Indicates weather the tested inner property is the last in "hierarchy"
-            bool isPropertyExist = true;
-
-            do
-            {
-                // Take all chars until first dot, excluded
-                parentPropertyName = i_PropertyName.Substring(0, i_PropertyName.IndexOf('.'));
-
-                // Try to get the parent property descriptor - If fail, fail everything
-                if (i_Invoker != null) // Given view model object is used
-                    seekedPropertyDescriptor = TypeDescriptor.GetProperties(i_Invoker)[parentPropertyName];
-                else if (seekedPropertyDescriptor != null) // Inner property is used
-                    seekedPropertyDescriptor = seekedPropertyDescriptor.GetChildProperties()[parentPropertyName];
-
-                if (seekedPropertyDescriptor == null) // Property not found
-                    isPropertyExist = false;
-                else // Property found
-                {
-                    // Remove the previously subbed string from the original one
-                    i_PropertyName = i_PropertyName.Remove(0, parentPropertyName.Length + 1);
-                    isLastChildProperty = !i_PropertyName.Contains(".");
-                    if (isLastChildProperty) // We've reached the end of the hierarchy
-                    {
-                        seekedPropertyDescriptor = seekedPropertyDescriptor.GetChildProperties()[i_PropertyName];
-                        isPropertyExist = seekedPropertyDescriptor != null; // Check if property exists
-                    }
-                    i_Invoker = null;
-                }
-            } while (isPropertyExist && !isLastChildProperty);
-
-            if (isPropertyExist) return;
-            string msg = "Invalid property name: " + i_PropertyName;
-            if (ThrowOnInvalidPropertyName)
-                throw new Exception(msg);
-            Debug.Fail(msg);
-        }
-
-        /// <summary>
-        /// Fires multiple notifications to the WPF binding system for each property name in a given collection of properties.
-        /// It also validates each property before firing the notification.
-        /// </summary>
-        /// <param name="i_PropertiesNames">Collection of property names as IEnumerable</param>
-        /// <param name="i_InvokerViewModel">The View Model instance that requested the notification</param>
-        private void OnManyPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_InvokerViewModel)
-        {
-            if (i_InvokerViewModel == null) i_InvokerViewModel = this;
-            if (PropertyChanged == null)
-                return;
-            foreach (string property in i_PropertiesNames)
-            {
-                VerifyPropertyName(property, i_InvokerViewModel);
-                PropertyChanged(i_InvokerViewModel, new PropertyChangedEventArgs(property));
-            }
-        }
+        #region Implementation of INotifyPropertiesChanged
 
         /// <summary>
         /// Fires a notification to the WPF binding system, telling it a given property has changed it's value.
@@ -114,7 +42,7 @@ namespace EWPF.MVVM
         {
             if (i_InvokerViewModel == null)
                 i_InvokerViewModel = this;
-            VerifyPropertyName(i_PropertyName, i_InvokerViewModel);            
+            IsPropertyNameValid(i_PropertyName, i_InvokerViewModel);
             PropertyChanged?.Invoke(i_InvokerViewModel, new PropertyChangedEventArgs(i_PropertyName));
         }
 
@@ -137,6 +65,95 @@ namespace EWPF.MVVM
         {
             OnManyPropertiesChanged(i_PropertiesNames, i_InvokerViewModel);
         }
+
+        #endregion
+
+        #region Validation
+
+        /// <summary>
+        /// Verifies that a given property name matches a real, public, instance property on this object. 
+        /// </summary>
+        /// <param name="i_PropertyName">Property name to verify.</param>
+        /// <param name="i_Invoker">Reference to the view model storing the given property.</param>
+        internal bool IsPropertyNameValid(string i_PropertyName, BaseViewModel i_Invoker)
+        {
+            if (string.IsNullOrEmpty(i_PropertyName))
+                throw new ArgumentException(@"Property name can;t be null or empty", nameof(i_PropertyName));
+            if (i_Invoker == null)
+                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
+
+            if (TypeDescriptor.GetProperties(i_Invoker)[i_PropertyName] != null) // Property found
+                return true;
+
+            // Property may be missing DIRECTLY on the given object, but is actually referred to as an inner property
+            // If given string has a dot (.) in it, this might be the case, otherwise, it's not valid
+            if (!Regex.IsMatch(i_PropertyName, @"\."))
+                return false;
+
+            string splitPropertyName = i_PropertyName;
+            var invokingViewModel = i_Invoker;
+
+            PropertyDescriptor seekedPropertyDescriptor = null; // Will store the property we're searching for
+            string parentPropertyName; // Stores the name of the property before the "." character/s
+            bool isLastChildProperty = false; // Indicates weather the tested inner property is the last in "hierarchy"
+            bool isPropertyExist = true;
+
+            do
+            {
+                // Take all chars until first dot, excluded
+                parentPropertyName = i_PropertyName.Substring(0, i_PropertyName.IndexOf('.'));
+
+                // Try to get the parent property descriptor - If fail, fail everything
+                if (invokingViewModel != null)
+                    seekedPropertyDescriptor = TypeDescriptor.GetProperties(invokingViewModel)[parentPropertyName];
+                seekedPropertyDescriptor = seekedPropertyDescriptor?.GetChildProperties()[parentPropertyName];
+
+                if (seekedPropertyDescriptor == null) // Property not found
+                    isPropertyExist = false; // Could write return, but preferred the 'logical' method instead
+
+                else // Property found
+                {
+                    // Remove the previously subbed string from the original one
+                    splitPropertyName = splitPropertyName.Remove(0, parentPropertyName.Length + 1);
+                    isLastChildProperty = !Regex.IsMatch(i_PropertyName, @"\.");
+                    if (isLastChildProperty) // We've reached the end of the hierarchy
+                    {
+                        seekedPropertyDescriptor = seekedPropertyDescriptor.GetChildProperties()[splitPropertyName];
+                        isPropertyExist = seekedPropertyDescriptor != null; // Check if property exists
+                    }
+                    invokingViewModel = null;
+                }
+            } while (isPropertyExist && !isLastChildProperty);
+
+            return isPropertyExist;
+        }
+
+        #endregion
+
+        #region Helper
+
+        /// <summary>
+        /// Fires multiple notifications to the WPF binding system for each property name in a given collection of properties.
+        /// It also validates each property before firing the notification.
+        /// </summary>
+        /// <param name="i_PropertiesNames">Collection of property names as IEnumerable</param>
+        /// <param name="i_Invoker">The View Model instance that requested the notification</param>
+        internal void OnManyPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_Invoker)
+        {
+            if (i_PropertiesNames == null)
+                throw new ArgumentNullException(nameof(i_PropertiesNames), @"Collection of properties can't be null");
+            if (i_Invoker == null)
+                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
+
+            foreach (string property in i_PropertiesNames)
+            {
+                bool isNameVerified = IsPropertyNameValid(property, i_Invoker);
+                if (!isNameVerified) continue;
+                PropertyChanged?.Invoke(i_Invoker, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        #endregion
 
         #endregion
 

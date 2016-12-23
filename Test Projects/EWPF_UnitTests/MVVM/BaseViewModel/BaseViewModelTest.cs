@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using NUnit.Framework;
 
@@ -27,6 +28,55 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
 
         #region Methods
 
+        #region Verify Property Name
+
+        [Test]
+        public void VerifyPropertyName_NullInvoker_ThrowsArgumentNullException()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentNullException>(() => testVM.IsPropertyNameValid(cm_TESTABLE_PROPERTY_NAME, null));
+        }
+
+        [Test]
+        public void VerifyPropertyName_NullOrEmptyName_ThrowsArgumentExcpetion()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid(null, testVM));
+            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid(string.Empty, testVM));
+        }
+
+        [Test]
+        public void VerifyPropertyName_DirectExistingProperty_ReturnsTrue()
+        {
+            var testVM = MakeTestViewModel();
+            bool isVerified = testVM.IsPropertyNameValid(cm_TESTABLE_PROPERTY_NAME, testVM);
+            Assert.True(isVerified);
+        }
+
+        [Test]
+        public void VerifyPropertyName_DirectNonExistingProperty_ReturnsFalse()
+        {
+            var testVM = MakeTestViewModel();
+            bool isVerified = testVM.IsPropertyNameValid("NonExistent", testVM);
+            Assert.False(isVerified);
+        }
+
+        [Test]
+        public void VerifyPropertyName_IndirectExistingProperty_ReturnsTrue()
+        {
+
+        }
+
+        [Test]
+        public void VerifyPropertyName_IndirectNonExistingProperty_ReturnsFalse()
+        {
+
+        }
+
+        #endregion
+
+        #region On Property Changed
+
         [Test]
         public void OnPropertyChanged_NullInvoker_NotFailing()
         {
@@ -51,6 +101,42 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
             testVM.TestProperty = "Hello Unit Test";
             Assert.False(testVM.HasPropertyChanged);
         }
+
+        #endregion
+
+        #region On Properties Changed
+
+        [Test]
+        public void OnManyPropertiesChanged_NullCollection_ThrowsArgumentNullException()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentNullException>(() => testVM.OnManyPropertiesChanged(null, testVM));
+        }
+
+        [Test]
+        public void OnManyPropertiesChanged_NullInvoker_ThrowsArgumentNullException()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentNullException>(() => testVM.OnManyPropertiesChanged(new List<string>(), null));
+        }
+
+        [Test]
+        public void OnManyPropertiesChanged_ExistingSingleItemCollection_NotFailing()
+        {
+            var testVM = MakeTestViewModel();
+            var propertyNames = new List<string> { cm_TESTABLE_PROPERTY_NAME };
+            Assert.DoesNotThrow(() => testVM.OnManyPropertiesChanged(propertyNames, testVM));
+        }
+
+        [Test]
+        public void OnManyPropertiesChanged_NonExistingSingleItemCollection_NotFailing()
+        {
+            var testVM = MakeTestViewModel();
+            var propertyNames = new List<string> { "NonExisting" };
+            Assert.DoesNotThrow(() => testVM.OnManyPropertiesChanged(propertyNames, testVM));
+        }
+
+        #endregion
 
         #region Factory Methods
 
