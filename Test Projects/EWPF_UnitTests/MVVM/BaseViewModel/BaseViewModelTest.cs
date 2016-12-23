@@ -17,6 +17,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         #region Fields
 
         private const string cm_TESTABLE_PROPERTY_NAME = "TestProperty";
+        private const string cm_NESTED_TESTABLE_PROPERTY_NAME = "NestedProperty";
 
         #endregion
 
@@ -64,13 +65,19 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         [Test]
         public void VerifyPropertyName_IndirectExistingProperty_ReturnsTrue()
         {
-
+            var testVM = MakeTestViewModel();
+            const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + "Property";
+            bool isValid = testVM.IsPropertyNameValid(nestedPropertyName, testVM);
+            Assert.True(isValid);
         }
 
         [Test]
         public void VerifyPropertyName_IndirectNonExistingProperty_ReturnsFalse()
         {
-
+            var testVM = MakeTestViewModel();
+            const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + "NonExisting";
+            bool isValid = testVM.IsPropertyNameValid(nestedPropertyName, testVM);
+            Assert.False(isValid);
         }
 
         #endregion
@@ -105,6 +112,32 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         #endregion
 
         #region On Properties Changed
+
+        [Test]
+        public void OnPropertiesChanged_NullCollection_ThrowsArgumentNullException()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentNullException>(() => testVM.OnPropertiesChanged(null, testVM));
+            Assert.Catch<ArgumentNullException>(() => testVM.OnPropertiesChanged(testVM, null));
+        }
+
+        [Test]
+        public void OnPropertiesChanged_NullInvoker_ParamsVersion_ThrowsArgumentNullException()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.Catch<ArgumentNullException>(() => testVM.OnPropertiesChanged(null));
+        }
+
+        [Test]
+        public void OnPropertiesChanged_NullInvoker_EnumerableVersion_NotFailing()
+        {
+            var testVM = MakeTestViewModel();
+            Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(new List<string>(), null));
+        }
+
+        #endregion
+
+        #region On Many Properties Changed
 
         [Test]
         public void OnManyPropertiesChanged_NullCollection_ThrowsArgumentNullException()

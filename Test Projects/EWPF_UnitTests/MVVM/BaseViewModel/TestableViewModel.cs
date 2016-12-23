@@ -30,6 +30,8 @@
         private const string cm_TEST_PROPERTY_NAME = "TestProperty";
         private object m_TestProperty;
 
+        private TestableNestedObject m_NestedObject = new TestableNestedObject();
+
         #endregion
 
         #endregion
@@ -72,6 +74,19 @@
                 if (Equals(m_TestProperty, value)) return;
                 m_TestProperty = value;
                 HasPropertyChanged = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="TestableNestedObject.Property"/> nested property of the <see cref="TestableNestedObject"/> object.
+        /// </summary>
+        public TestableNestedObject NestedProperty
+        {
+            get { return m_NestedObject; }
+            set
+            {
+                if (Equals(m_NestedObject, value)) return;
+                m_NestedObject = value;
             }
         }
 

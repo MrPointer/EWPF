@@ -53,6 +53,10 @@ namespace EWPF.MVVM
         /// <param name="i_PropertiesNames">Collection of property names as an array of strings</param>
         public void OnPropertiesChanged(BaseViewModel i_InvokerViewModel, params string[] i_PropertiesNames)
         {
+            if (i_InvokerViewModel == null)
+                throw new ArgumentNullException(nameof(i_InvokerViewModel),
+                    @"Invoker can't be null - Must be set to the view model's instance");
+
             OnManyPropertiesChanged(i_PropertiesNames, i_InvokerViewModel);
         }
 
@@ -63,6 +67,8 @@ namespace EWPF.MVVM
         /// <param name="i_InvokerViewModel">The View Model instance that requested the notification</param>
         public void OnPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_InvokerViewModel = null)
         {
+            if (i_InvokerViewModel == null)
+                i_InvokerViewModel = this;
             OnManyPropertiesChanged(i_PropertiesNames, i_InvokerViewModel);
         }
 
@@ -78,7 +84,7 @@ namespace EWPF.MVVM
         internal bool IsPropertyNameValid(string i_PropertyName, BaseViewModel i_Invoker)
         {
             if (string.IsNullOrEmpty(i_PropertyName))
-                throw new ArgumentException(@"Property name can;t be null or empty", nameof(i_PropertyName));
+                throw new ArgumentException(@"Property name can't be null or empty", nameof(i_PropertyName));
             if (i_Invoker == null)
                 throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
 
@@ -88,7 +94,11 @@ namespace EWPF.MVVM
             // Property may be missing DIRECTLY on the given object, but is actually referred to as an inner property
             // If given string has a dot (.) in it, this might be the case, otherwise, it's not valid
             if (!Regex.IsMatch(i_PropertyName, @"\."))
+            {
+                if (ThrowOnInvalidPropertyName)
+                    throw new ArgumentException(@"Given property name is direct but invalid", nameof(i_PropertyName));
                 return false;
+            }
 
             string splitPropertyName = i_PropertyName;
             var invokingViewModel = i_Invoker;
@@ -106,7 +116,8 @@ namespace EWPF.MVVM
                 // Try to get the parent property descriptor - If fail, fail everything
                 if (invokingViewModel != null)
                     seekedPropertyDescriptor = TypeDescriptor.GetProperties(invokingViewModel)[parentPropertyName];
-                seekedPropertyDescriptor = seekedPropertyDescriptor?.GetChildProperties()[parentPropertyName];
+                else
+                    seekedPropertyDescriptor = seekedPropertyDescriptor?.GetChildProperties()[parentPropertyName];
 
                 if (seekedPropertyDescriptor == null) // Property not found
                     isPropertyExist = false; // Could write return, but preferred the 'logical' method instead
@@ -115,7 +126,7 @@ namespace EWPF.MVVM
                 {
                     // Remove the previously subbed string from the original one
                     splitPropertyName = splitPropertyName.Remove(0, parentPropertyName.Length + 1);
-                    isLastChildProperty = !Regex.IsMatch(i_PropertyName, @"\.");
+                    isLastChildProperty = !Regex.IsMatch(splitPropertyName, @"\.");
                     if (isLastChildProperty) // We've reached the end of the hierarchy
                     {
                         seekedPropertyDescriptor = seekedPropertyDescriptor.GetChildProperties()[splitPropertyName];
@@ -125,7 +136,10 @@ namespace EWPF.MVVM
                 }
             } while (isPropertyExist && !isLastChildProperty);
 
-            return isPropertyExist;
+            if (isPropertyExist) return true;
+            if (ThrowOnInvalidPropertyName)
+                throw new ArgumentException(@"Given property name is nested but invalid", nameof(i_PropertyName));
+            return false;
         }
 
         #endregion
@@ -160,7 +174,7 @@ namespace EWPF.MVVM
         #region Properties
 
         /// <summary>
-        /// Indicates weather to throw an exception in case when a given property name isn't valid or just fail the whole debug operation.
+        /// Indicates weather to throw an exception in case when a given property name isn't valid or just return false.
         /// </summary>
         public bool ThrowOnInvalidPropertyName { get; set; }
 
