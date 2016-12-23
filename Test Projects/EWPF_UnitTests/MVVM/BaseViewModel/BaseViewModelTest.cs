@@ -125,7 +125,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         public void OnPropertiesChanged_NullInvoker_ParamsVersion_ThrowsArgumentNullException()
         {
             var testVM = MakeTestViewModel();
-            Assert.Catch<ArgumentNullException>(() => testVM.OnPropertiesChanged(null));
+            Assert.Catch<ArgumentNullException>(() => testVM.OnPropertiesChanged(null, string.Empty));
         }
 
         [Test]
