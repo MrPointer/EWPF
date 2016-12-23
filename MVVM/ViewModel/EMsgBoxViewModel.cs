@@ -73,8 +73,7 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandlePositive(object i_State)
         {
-            if (WindowService == null) return;
-            WindowService.CloseWindow(true);
+            WindowService?.CloseWindow(true);
         }
 
         /// <summary>
@@ -83,8 +82,7 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandleNegative(object i_State)
         {
-            if (WindowService == null) return;
-            WindowService.CloseWindow(false);
+            WindowService?.CloseWindow(false);
         }
 
         /// <summary>
@@ -93,8 +91,7 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandleNeutral(object i_State)
         {
-            if (WindowService == null) return;
-            WindowService.CloseWindow(null);
+            WindowService?.CloseWindow(null);
         }
 
         #endregion

@@ -40,12 +40,15 @@ namespace EWPF.MVVM
         [DebuggerStepThrough]
         private void VerifyPropertyName(string i_PropertyName, object i_Invoker)
         {
+            if (i_Invoker == null)
+                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
+
             if (TypeDescriptor.GetProperties(i_Invoker)[i_PropertyName] != null) // Property found
                 return;
 
             // Property may be missing DIRECTLY on the given object, but is actually referred to as an inner property
 
-            PropertyDescriptor seekedPropertyDescriptor = null; // Will store the property we're seraching for
+            PropertyDescriptor seekedPropertyDescriptor = null; // Will store the property we're searching for
             string parentPropertyName; // Stores the name of the property before the "." character/s
             bool isLastChildProperty = false; // Indicates weather the tested inner property is the last in "hierarchy"
             bool isPropertyExist = true;
@@ -93,7 +96,8 @@ namespace EWPF.MVVM
         private void OnManyPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_InvokerViewModel)
         {
             if (i_InvokerViewModel == null) i_InvokerViewModel = this;
-            if (PropertyChanged == null) return;
+            if (PropertyChanged == null)
+                return;
             foreach (string property in i_PropertiesNames)
             {
                 VerifyPropertyName(property, i_InvokerViewModel);
@@ -108,10 +112,10 @@ namespace EWPF.MVVM
         /// <param name="i_InvokerViewModel">The View Model instance that requested the notification</param>
         public void OnPropertyChanged(string i_PropertyName, BaseViewModel i_InvokerViewModel = null)
         {
-            VerifyPropertyName(i_PropertyName, i_InvokerViewModel);
-            if (i_InvokerViewModel == null) i_InvokerViewModel = this;
-            if (PropertyChanged != null)
-                PropertyChanged(i_InvokerViewModel, new PropertyChangedEventArgs(i_PropertyName));
+            if (i_InvokerViewModel == null)
+                i_InvokerViewModel = this;
+            VerifyPropertyName(i_PropertyName, i_InvokerViewModel);            
+            PropertyChanged?.Invoke(i_InvokerViewModel, new PropertyChangedEventArgs(i_PropertyName));
         }
 
         /// <summary>
