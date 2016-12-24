@@ -77,6 +77,25 @@ namespace EWPF.MVVM
         #region Validation
 
         /// <summary>
+        /// Sets a new given value to the given property the 'MVVM' way.
+        /// <para />
+        /// It checks for equality first and only if they're unequal - It assigns the new value.
+        /// </summary>
+        /// <typeparam name="T">Type of the property (and value) to set.</typeparam>
+        /// <param name="i_PropertyToSet">Reference to the property that should be set. Ref is used to keep it permanent.</param>
+        /// <param name="i_NewValueToAssign">Reference to the value that should be assigned. Must not be null.</param>
+        /// <returns>True if a new value has been set, false otherwise.</returns>
+        internal bool SetValue<T>(ref T i_PropertyToSet, T i_NewValueToAssign)
+        {
+            if (i_NewValueToAssign == null)
+                throw new ArgumentNullException(nameof(i_NewValueToAssign), @"Can't ever assign a null value - This is WPF!");
+            if (i_PropertyToSet.Equals(i_NewValueToAssign))
+                return false;
+            i_PropertyToSet = i_NewValueToAssign;
+            return true;
+        }
+
+        /// <summary>
         /// Verifies that a given property name matches a real, public, instance property on this object. 
         /// </summary>
         /// <param name="i_PropertyName">Property name to verify.</param>
