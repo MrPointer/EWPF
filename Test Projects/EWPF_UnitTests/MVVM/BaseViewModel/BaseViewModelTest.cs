@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using NUnit.Framework;
 
 namespace EWPF_UnitTests.MVVM.BaseViewModel
@@ -135,6 +134,23 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
             Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(new List<string>(), null));
         }
 
+        [Test]
+        public void OnPropertiesChanged_ExistingMultipleItemCollection_ParamsVersion_NotFailing()
+        {
+            var testVM = MakeTestViewModel();
+            const string testPropertyName = nameof(testVM.TestProperty);
+            const string nestedPropertyName = nameof(testVM.NestedProperty);
+            Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(testVM, testPropertyName, nestedPropertyName));
+        }
+
+        [Test]
+        public void OnPropertiesChanged_ExistingMultipleItemCollection_EnumerableVersion_NotFailing()
+        {
+            var testVM = MakeTestViewModel();
+            var singleItemList = new List<string> { nameof(testVM.TestProperty), nameof(testVM.NestedProperty) };
+            Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(singleItemList, testVM));
+        }
+
         #endregion
 
         #region On Many Properties Changed
@@ -154,7 +170,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void OnManyPropertiesChanged_ExistingSingleItemCollection_NotFailing()
+        public void OnManyPropertiesChanged_SingleExistingItemCollection_NotFailing()
         {
             var testVM = MakeTestViewModel();
             var propertyNames = new List<string> { cm_TESTABLE_PROPERTY_NAME };
@@ -162,11 +178,20 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void OnManyPropertiesChanged_NonExistingSingleItemCollection_NotFailing()
+        public void OnManyPropertiesChanged_SingleNonExistingItemCollection_ThrowsArgumentException()
         {
             var testVM = MakeTestViewModel();
             var propertyNames = new List<string> { "NonExisting" };
-            Assert.DoesNotThrow(() => testVM.OnManyPropertiesChanged(propertyNames, testVM));
+            Assert.Catch<ArgumentException>(() => testVM.OnManyPropertiesChanged(propertyNames, testVM));
+        }
+
+        [Test]
+        public void OnManyPropertiesChanged_SomeExistingSomeNotCollection_ThrowsArgumentException()
+        {
+            var testVM = MakeTestViewModel();
+            const string testPropertyName = nameof(testVM.TestProperty);
+            const string nonExistingPropertyName = "NonExisting";
+            Assert.Catch<ArgumentException>(() => testVM.OnPropertiesChanged(testVM, testPropertyName, nonExistingPropertyName));
         }
 
         #endregion

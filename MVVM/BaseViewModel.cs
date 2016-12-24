@@ -162,7 +162,8 @@ namespace EWPF.MVVM
             foreach (string property in i_PropertiesNames)
             {
                 bool isNameVerified = IsPropertyNameValid(property, i_Invoker);
-                if (!isNameVerified) continue;
+                if (!isNameVerified)
+                    throw new ArgumentException(@"One of the properties' name is invalid", nameof(i_PropertiesNames));
                 PropertyChanged?.Invoke(i_Invoker, new PropertyChangedEventArgs(property));
             }
         }
