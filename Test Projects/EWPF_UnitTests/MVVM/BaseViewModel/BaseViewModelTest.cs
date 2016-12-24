@@ -76,7 +76,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
             var testVM = MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 2 };
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
             Assert.False(isValueSet);
         }
 
@@ -96,7 +96,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
             var testVM = MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 3, 5 };
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
             Assert.True(isValueSet);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EWPF.MVVM
@@ -89,7 +90,31 @@ namespace EWPF.MVVM
         {
             if (i_NewValueToAssign == null)
                 throw new ArgumentNullException(nameof(i_NewValueToAssign), @"Can't ever assign a null value - This is WPF!");
+
             if (i_PropertyToSet.Equals(i_NewValueToAssign))
+                return false;
+            i_PropertyToSet = i_NewValueToAssign;
+            return true;
+        }
+
+        /// <summary>
+        /// Sets a new given collection value to the given collection property, the 'MVVM' way.
+        /// <para />
+        /// It checks for equality first and only if they're unequal - It assigns the new value.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="IEnumerable{T}"/> being set.</typeparam>
+        /// <typeparam name="TS">Type of the elements the <see cref="IEnumerable{T}"/> type holds.</typeparam>
+        /// <param name="i_PropertyToSet">Reference to the property that should be set. Ref is used to keep it permanent.</param>
+        /// <param name="i_NewValueToAssign">Reference to the value that should be assigned. Must not be null.</param>
+        /// <param name="i_Comparer">Reference to a comparer that is capable of comparing two values of the TS type.</param>
+        /// <returns>True if a new value has been set, false otherwise.</returns>
+        internal bool SetCollectionValue<T, TS>(ref T i_PropertyToSet, T i_NewValueToAssign, IEqualityComparer<TS> i_Comparer = null)
+            where T : IEnumerable<TS>
+        {
+            if (i_NewValueToAssign == null)
+                throw new ArgumentNullException(nameof(i_NewValueToAssign), @"Can't ever assign a null value - This is WPF!");
+
+            if (i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
                 return false;
             i_PropertyToSet = i_NewValueToAssign;
             return true;
