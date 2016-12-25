@@ -23,6 +23,8 @@ namespace EWPFLang
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Exception" /> class with a specified error message.</summary>
         /// <param name="i_Message">The message that describes the error. </param>
+        /// <param name="i_ExpectedCode">Expected dictionary code that caused the parsing error as a string, 
+        /// as it appears in the file.</param>
         public LanguageParseException(string i_Message, string i_ExpectedCode)
             : base(i_Message)
         {

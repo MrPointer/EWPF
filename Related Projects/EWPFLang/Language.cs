@@ -1,4 +1,6 @@
-﻿namespace EWPFLang
+﻿using EWPFLang.ELang;
+
+namespace EWPFLang
 {
     /// <summary>
     /// A class representing a language parsed from a user-defined file.

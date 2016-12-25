@@ -41,14 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConstantValues.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="ELanguage.cs" />
+    <Compile Include="ELang\Enums.cs" />
+    <Compile Include="ELang\ELanguage.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LanguageParseException.cs" />
-    <Compile Include="LanguageRepository.cs" />
-    <Compile Include="LanguageXmlReader.cs" />
+    <Compile Include="ELang\LanguageRepository.cs" />
+    <Compile Include="ELang\LanguageXmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordNotFoundExcpetion.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Custom\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

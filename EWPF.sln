@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWPF", "EWPF.csproj", "{A041388B-9279-48F8-A64D-445CF42E5663}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "..\Logger\Logger.csproj", "{5A217DE7-F729-4615-BFA7-EFADC37D837D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWPF_UnitTests", "Test Projects\EWPF_UnitTests\EWPF_UnitTests.csproj", "{7CFDE15C-671B-4C5B-B84F-54AD0143EC8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELang_UnitTests", "Test Projects\ELang_UnitTests\ELang_UnitTests.csproj", "{813C60AD-41AF-449B-BEB9-003EB30F4EA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7CFDE15C-671B-4C5B-B84F-54AD0143EC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CFDE15C-671B-4C5B-B84F-54AD0143EC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CFDE15C-671B-4C5B-B84F-54AD0143EC8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{813C60AD-41AF-449B-BEB9-003EB30F4EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{813C60AD-41AF-449B-BEB9-003EB30F4EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{813C60AD-41AF-449B-BEB9-003EB30F4EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{813C60AD-41AF-449B-BEB9-003EB30F4EA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

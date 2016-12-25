@@ -4,6 +4,7 @@ using System.Windows;
 using EWPF.MVVM.ViewModel;
 using EWPF.Styles;
 using EWPFLang;
+using EWPFLang.ELang;
 
 namespace EWPF.Utility
 {
