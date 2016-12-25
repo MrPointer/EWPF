@@ -43,6 +43,8 @@
     <Compile Include="ConstantValues.cs" />
     <Compile Include="ELang\Enums.cs" />
     <Compile Include="ELang\ELanguage.cs" />
+    <Compile Include="ELang\IELanguageNameResolver.cs" />
+    <Compile Include="ELang\IELanguageReader.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LanguageParseException.cs" />
     <Compile Include="ELang\LanguageRepository.cs" />

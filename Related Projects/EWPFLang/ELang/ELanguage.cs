@@ -10,6 +10,8 @@ namespace EWPFLang.ELang
     /// </summary>
     public class ELanguage
     {
+        private IDictionary<DictionaryCode, string> m_Dictionary;
+
         #region Events
 
 
@@ -30,9 +32,10 @@ namespace EWPFLang.ELang
         }
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-        public ELanguage(LanguageCode i_Code)
+        public ELanguage(LanguageCode i_Code, IELanguageReader i_Reader)
         {
             Code = i_Code;
+            LanguageReader = i_Reader;
         }
 
         #endregion
@@ -40,60 +43,17 @@ namespace EWPFLang.ELang
         #region Methods
 
         /// <summary>
-        /// Loads a language from a XML file on the local file system.
+        /// Loads a language from a file on the local file system.
         /// </summary>
-        /// <param name="i_XmlParentDirectory">Path of the language file's folder.</param>
-        public void LoadDictionaryFromXml(string i_XmlParentDirectory)
+        /// <param name="i_LanguageFileParentDirectory">Path of the language file's folder.</param>
+        public void LoadDictionaryFromFile(string i_LanguageFileParentDirectory)
         {
-            string fileName = string.Empty;
-            switch (Code)
-            {
-                case LanguageCode.EnglishUs:
-                    fileName = "EnglishUS";
-                    break;
+            if (Code == LanguageCode.None)
+                throw new InvalidOperationException("Language code must be set to load a dictionary");
 
-                case LanguageCode.EnglishUk:
-                    break;
-
-                case LanguageCode.French:
-                    break;
-
-                case LanguageCode.Italian:
-                    break;
-
-                case LanguageCode.Spanish:
-                    break;
-
-                case LanguageCode.Hebrew:
-                    fileName = "Hebrew";
-                    break;
-
-                case LanguageCode.Deutch:
-                    break;
-
-                case LanguageCode.Russian:
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            var loadedDictionary = LanguageXmlReader.Instance.LoadLanguageFile(
-                i_XmlParentDirectory + Path.DirectorySeparatorChar + fileName + ".xml");
-            FillDictionary(loadedDictionary);
-        }
-
-        /// <summary>
-        /// Fills language's dictionary object with the given dictionary.
-        /// </summary>
-        /// <param name="i_InputDictionary">Dictionary containing all translations.</param>
-        public void FillDictionary(IDictionary<DictionaryCode, string> i_InputDictionary)
-        {
-            if (i_InputDictionary == null)
-                throw new ArgumentNullException("i_InputDictionary", @"Input dictionary can't be null");
-            if (!i_InputDictionary.Any()) // Empty dictionary
-                throw new ArgumentException(@"Input dictionary must contain at least one value");
-
-            Dictionary = i_InputDictionary;
+            string fileName = Code.ToString();
+            Dictionary = LanguageReader.LoadLanguageFile(i_LanguageFileParentDirectory +
+                Path.DirectorySeparatorChar + fileName);
         }
 
         /// <summary>
@@ -120,12 +80,29 @@ namespace EWPFLang.ELang
         /// <summary>
         /// Represents language's dictionary, containing words translated to the requested language.
         /// </summary>
-        public IDictionary<DictionaryCode, string> Dictionary { get; private set; }
+        public IDictionary<DictionaryCode, string> Dictionary
+        {
+            get { return m_Dictionary; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value), @"Input dictionary can't be null");
+                if (!value.Any()) // Empty dictionary
+                    throw new ArgumentException(@"Input dictionary must contain at least one value");
+
+                m_Dictionary = value;
+            }
+        }
 
         /// <summary>
         /// Describes the language code of this language object.
         /// </summary>
         public LanguageCode Code { get; set; }
+
+        /// <summary>
+        /// Gets a reference to language reader object, used to read a language file to memory.
+        /// </summary>
+        public IELanguageReader LanguageReader { get; }
 
         #endregion
     }

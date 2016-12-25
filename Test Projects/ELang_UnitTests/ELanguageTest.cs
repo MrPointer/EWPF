@@ -30,7 +30,7 @@ namespace ELang_UnitTests
         public void FillDictionary_NullInputDictionary_ThrowsArgumentNullException()
         {
             var elanguage = LanguageFactory.MakeELanguage();
-            Assert.Catch<ArgumentNullException>(() => elanguage.FillDictionary(null));
+            Assert.Catch<ArgumentNullException>(() => elanguage.Dictionary = null);
         }
 
         #endregion
@@ -39,6 +39,6 @@ namespace ELang_UnitTests
 
 
 
-#endregion
+        #endregion
     }
 }

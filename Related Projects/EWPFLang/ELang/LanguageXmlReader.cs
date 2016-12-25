@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace EWPFLang.ELang
@@ -7,7 +8,7 @@ namespace EWPFLang.ELang
     /// <summary>
     /// A singleton class used to read language XML files to memory.
     /// </summary>
-    public class LanguageXmlReader
+    public class LanguageXmlReader : IELanguageReader
     {
         #region Events
 
@@ -35,15 +36,23 @@ namespace EWPFLang.ELang
 
         #region Methods
 
+        #region Implementation of ILanguageReader
+
         /// <summary>
-        /// Reads a language's dictionary from the given XML file.
+        /// Loads a language from the given file path, and constructs a dictionary object from it.
+        /// <para />
+        /// The language dictionary has <see cref="DictionaryCode"/> codes as keys, and their translations as values.
         /// </summary>
-        /// <param name="i_FilePath">Language file's path.</param>
-        /// <returns>Dictionary of words' codes as keys and words' translations as values.</returns>
-        internal IDictionary<DictionaryCode, string> LoadLanguageFile(string i_FilePath)
+        /// <param name="i_FilePath">Path to the language file on the local file system.</param>
+        /// <returns>Language dictionary object.</returns>
+        public IDictionary<DictionaryCode, string> LoadLanguageFile(string i_FilePath)
         {
             if (string.IsNullOrEmpty(i_FilePath))
-                throw new ArgumentException(@"Language file's path cant be null or empty", i_FilePath);
+                throw new ArgumentException(@"Language file's path cant be null or empty", nameof(i_FilePath));
+
+            bool hasExtension = Regex.IsMatch(i_FilePath, @"\.xml$");
+            if (!hasExtension) // File path should be appended with the '.xml' extension
+                i_FilePath += ".xml";
 
             var dictionary = new Dictionary<DictionaryCode, string>();
 
@@ -65,6 +74,8 @@ namespace EWPFLang.ELang
 
         #endregion
 
+        #endregion
+
         #region Properties
 
         #region Singleton
@@ -72,10 +83,7 @@ namespace EWPFLang.ELang
         /// <summary>
         /// The singleton instance.
         /// </summary>
-        public static LanguageXmlReader Instance
-        {
-            get { return m_Instance.Value; }
-        }
+        public static LanguageXmlReader Instance => m_Instance.Value;
 
         #endregion
 

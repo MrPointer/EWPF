@@ -5,6 +5,7 @@
     /// </summary>
     public enum LanguageCode
     {
+        None,
         EnglishUs,
         EnglishUk,
         French,
@@ -24,5 +25,16 @@
         No,
         Cancel,
         OK
+    }
+
+    /// <summary>
+    /// An enum representing all available types for language storage, mostly on the local file system.
+    /// </summary>
+    public enum LanguageStorageType
+    {
+        /// <summary>
+        /// XML files.
+        /// </summary>
+        Xml
     }
 }

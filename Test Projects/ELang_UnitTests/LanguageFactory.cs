@@ -28,9 +28,9 @@ namespace ELang_UnitTests
             return new ELanguage();
         }
 
-        public static ELanguage MakeELanguage(LanguageCode i_LanguageCode)
+        public static ELanguage MakeELanguage(LanguageCode i_LanguageCode, IELanguageReader i_LanguageReader)
         {
-            return new ELanguage(i_LanguageCode);
+            return new ELanguage(i_LanguageCode, i_LanguageReader);
         }
 
         #endregion

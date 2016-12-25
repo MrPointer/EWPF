@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EWPFLang.ELang
 {
@@ -29,6 +30,23 @@ namespace EWPFLang.ELang
         #region Methods
 
         /// <summary>
+        /// Initializes the repository by setting the <see cref="LanguageReader"/> to the requested implementation.
+        /// </summary>
+        /// <param name="i_StorageType">Represents how the language files to be loaded are stored.</param>
+        public static void Initialize(LanguageStorageType i_StorageType)
+        {
+            switch (i_StorageType)
+            {
+                case LanguageStorageType.Xml:
+                    LanguageReader = LanguageXmlReader.Instance;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(i_StorageType), i_StorageType, null);
+            }
+        }
+
+        /// <summary>
         /// Gets the requested language along with its' dictionary of translated words.
         /// <para/>
         /// If the language has already been requested once, it will just return a reference to its' object, 
@@ -43,8 +61,13 @@ namespace EWPFLang.ELang
             bool isLanguageLoaded = m_Languages.TryGetValue(i_Code, out languageObject);
             if (isLanguageLoaded)
                 return languageObject;
-            languageObject = new ELanguage(i_Code);
-            languageObject.LoadDictionaryFromXml(ConstantValues.DefaultELanguagesFolderPath);
+
+            if (LanguageReader == null)
+                throw new InvalidOperationException("Language reader must be set to load a new language, " +
+                                                    "please use the " + nameof(Initialize) + " method.");
+
+            languageObject = new ELanguage(i_Code, LanguageReader);
+            languageObject.LoadDictionaryFromFile(ConstantValues.DefaultELanguagesFolderPath);
             m_Languages.Add(i_Code, languageObject);
             return languageObject;
         }
@@ -53,7 +76,10 @@ namespace EWPFLang.ELang
 
         #region Properties
 
-
+        /// <summary>
+        /// Gets or sets the language reader used to read new languages.
+        /// </summary>
+        public static IELanguageReader LanguageReader { get; set; }
 
         #endregion
     }
