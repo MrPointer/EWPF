@@ -1,4 +1,6 @@
-﻿namespace EWPF_UnitTests.MVVM.BaseViewModel
+﻿using EWPF_UnitTests.MVVM.BaseViewModel;
+
+namespace EWPF_UnitTests.MVVM
 {
     /// <summary>
     /// A testable view model created for running unit test against.
