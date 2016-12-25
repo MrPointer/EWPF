@@ -1,4 +1,6 @@
-﻿using EWPFLang.ELang;
+﻿using System;
+using System.Collections.Generic;
+using EWPFLang.ELang;
 
 namespace ELang_UnitTests
 {
@@ -31,6 +33,29 @@ namespace ELang_UnitTests
         public static ELanguage MakeELanguage(LanguageCode i_LanguageCode, IELanguageReader i_LanguageReader)
         {
             return new ELanguage(i_LanguageCode, i_LanguageReader);
+        }
+
+        public static IDictionary<DictionaryCode, string> MakeLanguageDictionary(int i_NumberOfWords)
+        {
+            var dict = new Dictionary<DictionaryCode, string>();
+            switch (i_NumberOfWords)
+            {
+                case 0:
+                    return dict;
+
+                case 1:
+                    dict.Add(DictionaryCode.Yes, "Yes");
+                    break;
+
+                case 2:
+                    dict.Add(DictionaryCode.Yes, "Yes");
+                    dict.Add(DictionaryCode.No, "No");
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+            return dict;
         }
 
         #endregion

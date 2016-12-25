@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ELanguageRepositoryTest.cs" />
     <Compile Include="ELanguageTest.cs" />
     <Compile Include="Fakes\TestableELanguageReader.cs" />
     <Compile Include="LanguageFactory.cs" />

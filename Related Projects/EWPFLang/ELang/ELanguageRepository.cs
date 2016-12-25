@@ -6,7 +6,7 @@ namespace EWPFLang.ELang
     /// <summary>
     /// A static class used to provide users a language object of their choosing.
     /// </summary>
-    public static class LanguageRepository
+    public static class ELanguageRepository
     {
         #region Events
 
@@ -14,15 +14,16 @@ namespace EWPFLang.ELang
 
         #region Fields
 
-        private static readonly Dictionary<LanguageCode, ELanguage> m_Languages;
+        // Internal to make it visible to unit tests.
+        internal static readonly Dictionary<LanguageCode, ELanguage> Languages;
 
         #endregion
 
         #region Constructors
 
-        static LanguageRepository()
+        static ELanguageRepository()
         {
-            m_Languages = new Dictionary<LanguageCode, ELanguage>();
+            Languages = new Dictionary<LanguageCode, ELanguage>();
         }
 
         #endregion
@@ -53,12 +54,12 @@ namespace EWPFLang.ELang
         /// otherwise it will be loaded from an XML file.
         /// </summary>
         /// <param name="i_Code">Code of the language to get.</param>
+        /// <param name="i_LanguagesDirectoryPath">Path of the parent directory of all language files.</param>
         /// <returns>Language object containing its' translated dictionary.</returns>
-        public static ELanguage GetLanguage(LanguageCode i_Code)
+        public static ELanguage GetLanguageFromFile(LanguageCode i_Code, string i_LanguagesDirectoryPath = null)
         {
             ELanguage languageObject;
-
-            bool isLanguageLoaded = m_Languages.TryGetValue(i_Code, out languageObject);
+            bool isLanguageLoaded = Languages.TryGetValue(i_Code, out languageObject);
             if (isLanguageLoaded)
                 return languageObject;
 
@@ -67,9 +68,19 @@ namespace EWPFLang.ELang
                                                     "please use the " + nameof(Initialize) + " method.");
 
             languageObject = new ELanguage(i_Code, LanguageReader);
-            languageObject.LoadDictionaryFromFile(ConstantValues.DefaultELanguagesFolderPath);
-            m_Languages.Add(i_Code, languageObject);
+            languageObject.LoadDictionaryFromFile(i_LanguagesDirectoryPath ?? ConstantValues.DefaultELanguagesFolderPath);
+            Languages.Add(i_Code, languageObject);
             return languageObject;
+        }
+
+        /// <summary>
+        /// Terminates the class by resetting it's state to the one present before calling any method on it.
+        /// Use this class only for unit tests!
+        /// </summary>
+        internal static void Terminate()
+        {
+            Languages.Clear();
+            LanguageReader = null;
         }
 
         #endregion

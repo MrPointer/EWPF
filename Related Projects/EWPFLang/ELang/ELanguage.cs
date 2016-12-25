@@ -68,9 +68,6 @@ namespace EWPFLang.ELang
         /// <returns>Word's value translated to the object's language.</returns>
         public string GetWord(DictionaryCode i_WordCode)
         {
-            if (Dictionary == null || !Dictionary.Any()) // Dictionary unavailable
-                throw new InvalidOperationException("Cant get a word from a language that has no dictionary assigned to it");
-
             string wordValue;
             bool isWordFound = Dictionary.TryGetValue(i_WordCode, out wordValue);
             if (!isWordFound) // Word not found in dictionary

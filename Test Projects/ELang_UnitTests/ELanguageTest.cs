@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ELang_UnitTests.Fakes;
+using EWPFLang;
 using EWPFLang.ELang;
 using NUnit.Framework;
 
@@ -73,7 +74,31 @@ namespace ELang_UnitTests
 
         #region Get Word
 
+        [Test]
+        public void GetWord_NonExistingWord_ThrowsWordNotFoundException()
+        {
+            var testableReader = new TestableELanguageReader
+            {
+                DictionaryToReturn = LanguageFactory.MakeLanguageDictionary(1)
+            };
+            var elang = LanguageFactory.MakeELanguage(LanguageCode.EnglishUs, testableReader);
+            elang.LoadDictionaryFromFile("Test");
+            Assert.Catch<WordNotFoundExcpetion>(() => elang.GetWord(DictionaryCode.No));
+        }
 
+        [Test]
+        public void GetWord_ExistingWord_ReturnsExpectedWord()
+        {
+            const string expectedTranslation = "Yes";
+            var testableReader = new TestableELanguageReader
+            {
+                DictionaryToReturn = LanguageFactory.MakeLanguageDictionary(1)
+            };
+            var elang = LanguageFactory.MakeELanguage(LanguageCode.EnglishUs, testableReader);
+            elang.LoadDictionaryFromFile("Test");
+            string retreivedWord = elang.GetWord(DictionaryCode.Yes);
+            StringAssert.AreEqualIgnoringCase(retreivedWord, expectedTranslation);
+        }
 
         #endregion
 

@@ -199,7 +199,7 @@ namespace EWPF.Utility
                 : FlowDirection.LeftToRight;
             emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
-            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            var language = ELanguageRepository.GetLanguageFromFile(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
 
             emsgBox.Owner = i_OwnerWindow;
@@ -232,7 +232,7 @@ namespace EWPF.Utility
                 : FlowDirection.LeftToRight;
             emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
-            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            var language = ELanguageRepository.GetLanguageFromFile(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.OK);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.Cancel);
 
@@ -275,7 +275,7 @@ namespace EWPF.Utility
                 : FlowDirection.LeftToRight;
             emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
-            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            var language = ELanguageRepository.GetLanguageFromFile(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
 
@@ -318,7 +318,7 @@ namespace EWPF.Utility
                 : FlowDirection.LeftToRight;
             emsgBoxVM.SetIcon(ResolveIcon(i_Image));
 
-            var language = LanguageRepository.GetLanguage(sm_UsedLanguage);
+            var language = ELanguageRepository.GetLanguageFromFile(sm_UsedLanguage);
             emsgBoxVM.PositiveText = language.GetWord(DictionaryCode.Yes);
             emsgBoxVM.NegativeText = language.GetWord(DictionaryCode.No);
             emsgBoxVM.NeutralText = language.GetWord(DictionaryCode.Cancel);
