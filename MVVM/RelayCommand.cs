@@ -14,19 +14,19 @@ namespace EWPF.MVVM
 
         #region Fields
 
-        /// <summary>
-        /// Stores the method to execute when the command should be performed.
-        /// </summary>
-        private readonly Action<object> m_WhatToDo;
-
-        /// <summary>
-        /// Stores the method to check validity of execution when the command should be performed.
-        /// </summary> 
-        private readonly Predicate<object> m_WhenToDo;
+        private EventHandler m_InternalCanExecuteChanged;
 
         #endregion
 
         #region Constructors
+
+        /// <summary> 
+        /// Constructs a new <see cref="RelayCommand"/> object, with all properties defaulting to null.
+        /// </summary>
+        public RelayCommand()
+        {
+
+        }
 
         /// <summary>
         /// Constructs a new RelayCommand object based on the given Action and Predicate parameters.
@@ -35,8 +35,8 @@ namespace EWPF.MVVM
         /// <param name="i_WhenToDo">Predicate to check to determine weather the command is eligable to execute.</param>
         public RelayCommand(Action<object> i_WhatToDo, Predicate<object> i_WhenToDo = null)
         {
-            m_WhatToDo = i_WhatToDo;
-            m_WhenToDo = i_WhenToDo;
+            WhatToDo = i_WhatToDo;
+            WhenToDo = i_WhenToDo;
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace EWPF.MVVM
         /// <returns>True if a predicate exists and its' output is also true, false otherwise.</returns>
         public bool CanExecute(object i_Parameter)
         {
-            return m_WhenToDo != null && m_WhenToDo(i_Parameter);
+            return WhenToDo != null && WhenToDo(i_Parameter);
         }
 
         /// <summary>
@@ -59,7 +59,9 @@ namespace EWPF.MVVM
         /// <param name="i_Parameter">Extra data required for the action.</param>
         public void Execute(object i_Parameter)
         {
-            m_WhatToDo(i_Parameter);
+            if (WhatToDo == null)
+                throw new NullReferenceException("Action to be executed can't be null");
+            WhatToDo(i_Parameter);
         }
 
         /// <summary>
@@ -67,12 +69,25 @@ namespace EWPF.MVVM
         /// </summary>
         public void RaiseCanExecuteChanged()
         {
-            CommandManager.InvalidateRequerySuggested();
+            //CommandManager.InvalidateRequerySuggested();
+            if (WhenToDo == null) return;
+            var handler = m_InternalCanExecuteChanged;
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the action to execute when the command should be performed.
+        /// </summary>
+        public Action<object> WhatToDo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the predicate to check to determine weather when the command should be performed.
+        /// </summary> 
+        public Predicate<object> WhenToDo { get; set; }
 
         /// <summary>
         /// A subscription to this event also subscribes to <see cref="CommandManager.RequerySuggested"/>, 
@@ -82,10 +97,12 @@ namespace EWPF.MVVM
         {
             add
             {
+                m_InternalCanExecuteChanged += value;
                 CommandManager.RequerySuggested += value;
             }
             remove
             {
+                m_InternalCanExecuteChanged -= value;
                 CommandManager.RequerySuggested -= value;
             }
         }

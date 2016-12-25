@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\BaseViewModel\BaseViewModelTest.cs" />
+    <Compile Include="MVVM\BaseViewModel\RelayCommandTest.cs" />
     <Compile Include="MVVM\BaseViewModel\TestableNestedObject.cs" />
     <Compile Include="MVVM\EMsgBoxVMTest.cs" />
+    <Compile Include="MVVM\MvvmFactory.cs" />
     <Compile Include="MVVM\TestableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThemeUtilityTest.cs" />
