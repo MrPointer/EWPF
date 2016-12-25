@@ -71,32 +71,12 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void SetValue_EqualCollectionsByVal_ReturnsFalse()
-        {
-            var testVM = MakeTestViewModel();
-            var propertyToSet = new List<byte> { 1, 2 };
-            var valueToAssign = new List<byte> { 1, 2 };
-            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
-            Assert.False(isValueSet);
-        }
-
-        [Test]
         public void SetValue_UnequalByValue_ReturnsTrue()
         {
             var testVM = MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 5;
             bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
-            Assert.True(isValueSet);
-        }
-
-        [Test]
-        public void SetValue_UnequalCollectionByVal_ReturnsTrue()
-        {
-            var testVM = MakeTestViewModel();
-            var propertyToSet = new List<byte> { 1, 2 };
-            var valueToAssign = new List<byte> { 1, 3, 5 };
-            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
             Assert.True(isValueSet);
         }
 
@@ -112,17 +92,51 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
 
         #endregion
 
-        #region Verify Property Name
+        #region Set Collection Value
 
         [Test]
-        public void VerifyPropertyName_NullInvoker_ThrowsArgumentNullException()
+        public void SetValue_NullValue_ThrowsNullArgumentException()
+        {
+            var testVM = MakeTestViewModel();
+            IEnumerable<byte> propertyToTest = null;
+            IEnumerable<byte> valueToAssign = null;
+            Assert.Catch<ArgumentNullException>(() =>
+            testVM.SetCollectionValue<IEnumerable<byte>, byte>(ref propertyToTest, valueToAssign));
+        }
+
+        [Test]
+        public void SetValue_EqualCollectionsByVal_ReturnsFalse()
+        {
+            var testVM = MakeTestViewModel();
+            var propertyToSet = new List<byte> { 1, 2 };
+            var valueToAssign = new List<byte> { 1, 2 };
+            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
+            Assert.False(isValueSet);
+        }
+
+        [Test]
+        public void SetValue_UnequalCollectionByVal_ReturnsTrue()
+        {
+            var testVM = MakeTestViewModel();
+            var propertyToSet = new List<byte> { 1, 2 };
+            var valueToAssign = new List<byte> { 1, 3, 5 };
+            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
+            Assert.True(isValueSet);
+        }
+
+        #endregion
+
+        #region Is Property Name Value
+
+        [Test]
+        public void IsPropertyNameValid_NullInvoker_ThrowsArgumentNullException()
         {
             var testVM = MakeTestViewModel();
             Assert.Catch<ArgumentNullException>(() => testVM.IsPropertyNameValid(cm_TESTABLE_PROPERTY_NAME, null));
         }
 
         [Test]
-        public void VerifyPropertyName_NullOrEmptyName_ThrowsArgumentExcpetion()
+        public void IsPropertyNameValid_NullOrEmptyName_ThrowsArgumentExcpetion()
         {
             var testVM = MakeTestViewModel();
             Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid(null, testVM));
@@ -130,7 +144,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void VerifyPropertyName_DirectExistingProperty_ReturnsTrue()
+        public void IsPropertyNameValid_DirectExistingProperty_ReturnsTrue()
         {
             var testVM = MakeTestViewModel();
             bool isVerified = testVM.IsPropertyNameValid(cm_TESTABLE_PROPERTY_NAME, testVM);
@@ -138,7 +152,7 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void VerifyPropertyName_DirectNonExistingProperty_ReturnsFalse()
+        public void IsPropertyNameValid_DirectNonExistingProperty_ReturnsFalse()
         {
             var testVM = MakeTestViewModel();
             bool isVerified = testVM.IsPropertyNameValid("NonExistent", testVM);
@@ -146,7 +160,15 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void VerifyPropertyName_IndirectExistingProperty_ReturnsTrue()
+        public void IsPropertyNameValid_DirectNonExistingProperty_ThrowRequested_ThrowsArgumentExcpetion()
+        {
+            var testVM = MakeTestViewModel();
+            testVM.ThrowOnInvalidPropertyName = true;
+            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid("NonExistant", testVM));
+        }
+
+        [Test]
+        public void IsPropertyNameValid_IndirectExistingProperty_ReturnsTrue()
         {
             var testVM = MakeTestViewModel();
             const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + "Property";
@@ -155,12 +177,31 @@ namespace EWPF_UnitTests.MVVM.BaseViewModel
         }
 
         [Test]
-        public void VerifyPropertyName_IndirectNonExistingProperty_ReturnsFalse()
+        public void IsPropertyNameValid_DeepIndirectNonExistingProperty_ReturnsFalse()
+        {
+            var testVM = MakeTestViewModel();
+            const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + nameof(testVM.NestedProperty.Property) +
+                "." + "NonExistant";
+            bool isValid = testVM.IsPropertyNameValid(nestedPropertyName, testVM);
+            Assert.False(isValid);
+        }
+
+        [Test]
+        public void IsPropertyNameValid_IndirectNonExistingProperty_ReturnsFalse()
         {
             var testVM = MakeTestViewModel();
             const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + "NonExisting";
             bool isValid = testVM.IsPropertyNameValid(nestedPropertyName, testVM);
             Assert.False(isValid);
+        }
+
+        [Test]
+        public void IsPropertyNameValid_IndirectNonExistingProperty_ThrowRequested_ThrowsArgumentExcpetion()
+        {
+            var testVM = MakeTestViewModel();
+            testVM.ThrowOnInvalidPropertyName = true;
+            const string nestedPropertyName = nameof(testVM.NestedProperty) + "." + "NonExisting";
+            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid(nestedPropertyName, testVM));
         }
 
         #endregion
