@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ELanguageTest.cs" />
+    <Compile Include="Fakes\TestableELanguageReader.cs" />
     <Compile Include="LanguageFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

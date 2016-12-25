@@ -48,10 +48,15 @@ namespace EWPFLang.ELang
         /// <param name="i_LanguageFileParentDirectory">Path of the language file's folder.</param>
         public void LoadDictionaryFromFile(string i_LanguageFileParentDirectory)
         {
+            if (string.IsNullOrEmpty(i_LanguageFileParentDirectory))
+                throw new ArgumentException(@"Language file's path can't be null or empty", i_LanguageFileParentDirectory);
             if (Code == LanguageCode.None)
                 throw new InvalidOperationException("Language code must be set to load a dictionary");
+            if (LanguageReader == null)
+                throw new InvalidOperationException("Language reader must be set to load a language");
 
             string fileName = Code.ToString();
+
             Dictionary = LanguageReader.LoadLanguageFile(i_LanguageFileParentDirectory +
                 Path.DirectorySeparatorChar + fileName);
         }
