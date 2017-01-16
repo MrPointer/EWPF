@@ -250,4 +250,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Custom Ignores
 /Related Projects/EWPF_Test/Languages
+/Themes/*.png
