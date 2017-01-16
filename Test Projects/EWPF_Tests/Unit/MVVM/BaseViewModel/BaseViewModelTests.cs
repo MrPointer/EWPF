@@ -6,7 +6,7 @@ using NUnit.Framework.Constraints;
 namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 {
     [TestFixture]
-    public class BaseViewModelTest
+    public class BaseViewModelTests
     {
         #region Events
 

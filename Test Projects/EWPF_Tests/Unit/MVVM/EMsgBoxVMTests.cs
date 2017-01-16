@@ -3,7 +3,7 @@
 namespace EWPF_Tests.Unit.MVVM
 {
     [TestFixture]
-    public class EMsgBoxVMTest
+    public class EMsgBoxVMTests
     {
         #region Events
 

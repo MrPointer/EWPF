@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace EWPF_Tests.Unit
 {
     [TestFixture]
-    public class ThemeUtilityTest
+    public class ThemeUtilityTests
     {
         #region Events
 

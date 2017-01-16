@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 {
     [TestFixture]
-    public class RelayCommandTest
+    public class RelayCommandTests
     {
         #region Events
 
