@@ -1,4 +1,4 @@
-﻿namespace EWPF_UnitTests.MVVM.BaseViewModel
+﻿namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 {
     /// <summary>
     /// A class representing an object that's used to test nested properties on the view model.

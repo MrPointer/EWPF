@@ -1,7 +1,7 @@
 ﻿using System;
 using EWPF.MVVM;
 
-namespace EWPF_UnitTests.MVVM
+namespace EWPF_Tests.Unit.MVVM
 {
     /// <summary>
     /// A static factory class providing static methods to make instances of MVVM-related objects using a factory.

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace EWPF_UnitTests.MVVM
+namespace EWPF_Tests.Unit.MVVM
 {
     [TestFixture]
     public class EMsgBoxVMTest

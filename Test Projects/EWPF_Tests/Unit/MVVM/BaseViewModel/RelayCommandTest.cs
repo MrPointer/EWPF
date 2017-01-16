@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace EWPF_UnitTests.MVVM.BaseViewModel
+namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 {
     [TestFixture]
     public class RelayCommandTest

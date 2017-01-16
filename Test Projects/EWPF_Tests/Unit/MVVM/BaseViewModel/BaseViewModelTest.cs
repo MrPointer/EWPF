@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
-namespace EWPF_UnitTests.MVVM.BaseViewModel
+namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 {
     [TestFixture]
     public class BaseViewModelTest

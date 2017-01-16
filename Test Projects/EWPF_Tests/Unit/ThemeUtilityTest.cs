@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using EWPF.Utility;
 using NUnit.Framework;
 
-namespace EWPF_UnitTests
+namespace EWPF_Tests.Unit
 {
     [TestFixture]
     public class ThemeUtilityTest
