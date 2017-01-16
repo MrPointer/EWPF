@@ -21,14 +21,14 @@ namespace EWPF.Utility
 
         #region Fields
 
-        private const string cm_THEME_NAME_KEY = "ThemeName";
+        internal const string THEME_NAME_KEY = "ThemeName";
         private const string cm_LIGHT_THEME_NAME = "Light Theme";
         private const string cm_DARK_THEME_NAME = "Dark Theme";
         private const string cm_WEB_THEME_NAME = "Web Theme";
 
         private const string cm_THEME_FILE_EXTENSION = "xaml";
 
-        private static readonly IDictionary<string, string> m_ThemeIcons;
+        private static readonly IDictionary<string, string> sm_ThemeIcons;
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace EWPF.Utility
         /// </summary>
         static ThemeUtility()
         {
-            m_ThemeIcons = new Dictionary<string, string>();
+            sm_ThemeIcons = new Dictionary<string, string>();
             FillCommonExtensions();
         }
 
@@ -56,7 +56,7 @@ namespace EWPF.Utility
         /// <returns>True if theme has been loaded successfully, false otherwise.</returns>
         public static bool LoadTheme(EWPFTheme i_Theme)
         {
-            var appResourceDict = Application.Current.Resources;
+            var appResourceDict = ApplicationDictionary ?? Application.Current.Resources;
             var themeDictionary = GetCurrentTheme();
             if (themeDictionary == null) // Theme dictionary doesn't exist
                 return false;
@@ -66,15 +66,18 @@ namespace EWPF.Utility
             switch (i_Theme)
             {
                 case EWPFTheme.Light:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute);
+                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/LightTheme.xaml",
+                        UriKind.RelativeOrAbsolute);
                     break;
 
                 case EWPFTheme.Dark:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute);
+                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml",
+                        UriKind.RelativeOrAbsolute);
                     break;
 
                 case EWPFTheme.Web:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/WebTheme.xaml", UriKind.RelativeOrAbsolute);
+                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/WebTheme.xaml",
+                        UriKind.RelativeOrAbsolute);
                     break;
 
                 default:
@@ -116,7 +119,7 @@ namespace EWPF.Utility
                     throw new InvalidCastException("Couldn't cast loaded XAML root element to a ResourceDictionary");
             }
             // Check that the loaded resource dictionary is actually a EWPF-constrained theme.
-            string themeName = loadedDictionary[cm_THEME_NAME_KEY] as string;
+            string themeName = loadedDictionary[THEME_NAME_KEY] as string;
             if (string.IsNullOrEmpty(themeName))
                 return false;
 
@@ -125,7 +128,7 @@ namespace EWPF.Utility
             if (currentTheme == null)
                 return false;
 
-            var appResourceDictionary = Application.Current.Resources;
+            var appResourceDictionary = ApplicationDictionary ?? Application.Current.Resources;
             appResourceDictionary.MergedDictionaries.Remove(currentTheme);
             appResourceDictionary.MergedDictionaries.Insert(0, loadedDictionary);
             return true;
@@ -140,7 +143,8 @@ namespace EWPF.Utility
         /// <param name="i_IconsDirectoryPath">Path to the parent directory of all theme's icons.</param>
         /// <param name="i_AcceptedExtensions"></param>
         /// <returns>True if icons were loaded successfully, false otherwise.</returns>
-        public static void LoadThemeIcons(string i_IconsDirectoryPath, IEnumerable<string> i_AcceptedExtensions)
+        public static void LoadThemeIcons(string i_IconsDirectoryPath,
+            IEnumerable<string> i_AcceptedExtensions)
         {
             if (string.IsNullOrEmpty(i_IconsDirectoryPath))
                 throw new ArgumentException(@"Icons' directory path can't be null or empty");
@@ -150,7 +154,7 @@ namespace EWPF.Utility
                 throw new ArgumentException(@"Given path doesn't exist on the file system");
 
             // Clear the current icons dictionary and add all files in the folder that match one of the given extensions
-            m_ThemeIcons.Clear();
+            sm_ThemeIcons.Clear();
             var dirFiles = dirInfo.EnumerateFiles();
             // ToDo: Check if LINQ expression can be parallel
             var acceptedExtensionsCopy = i_AcceptedExtensions as List<string> ?? i_AcceptedExtensions.ToList();
@@ -159,7 +163,7 @@ namespace EWPF.Utility
             {
                 string fileNameWithoutExt = Regex.Match(iconFile.Name, @"(.+)(?=(\.))").Value;
                 // ToDo: Try to compress file's path
-                m_ThemeIcons.Add(fileNameWithoutExt, iconFile.FullName);
+                sm_ThemeIcons.Add(fileNameWithoutExt, iconFile.FullName);
             }
         }
 
@@ -178,7 +182,7 @@ namespace EWPF.Utility
                 throw new ArgumentException(@"Icon name can't be null or empty");
 
             string iconPath;
-            bool isIconExist = m_ThemeIcons.TryGetValue(i_IconName, out iconPath);
+            bool isIconExist = sm_ThemeIcons.TryGetValue(i_IconName, out iconPath);
             if (!isIconExist)
                 throw new KeyNotFoundException("Given icon name doesn't exist in the themes' icons - " +
                                                "Assert the given name is equal to the icon's file name without extension");
@@ -208,7 +212,7 @@ namespace EWPF.Utility
             if (currentTheme == null)
                 throw new Exception("No theme has been found in the app at all");
 
-            string themeName = currentTheme[cm_THEME_NAME_KEY] as string;
+            string themeName = currentTheme[THEME_NAME_KEY] as string;
             switch (themeName)
             {
                 case cm_LIGHT_THEME_NAME:
@@ -233,12 +237,12 @@ namespace EWPF.Utility
         /// <returns>Active theme represented as a full <see cref="ResourceDictionary"/> object.</returns>
         private static ResourceDictionary GetCurrentTheme()
         {
-            var appResourceDict = Application.Current.Resources;
+            var appResourceDict = ApplicationDictionary ?? Application.Current.Resources;
 
             // Find the theme dictionary out of all dictionaries
             foreach (var resourceDictionary in appResourceDict.MergedDictionaries)
             {
-                string themeName = resourceDictionary[cm_THEME_NAME_KEY] as string;
+                string themeName = resourceDictionary[THEME_NAME_KEY] as string;
                 if (string.IsNullOrEmpty(themeName))
                     continue;
                 return resourceDictionary;
@@ -265,6 +269,13 @@ namespace EWPF.Utility
         /// Gets an <see cref="IEnumerable{T}"/> of strings representing all commonly used extensions for icon/image files.
         /// </summary>
         public static IEnumerable<string> CommonIconExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a reference to the application's main resource dictionary.
+        /// <para />
+        /// This property should not be used outside Unit Testing!
+        /// </summary>
+        public static ResourceDictionary ApplicationDictionary { get; set; }
 
         #endregion
     }

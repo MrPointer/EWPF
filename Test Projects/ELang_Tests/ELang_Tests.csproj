@@ -7,8 +7,8 @@
     <ProjectGuid>{813C60AD-41AF-449B-BEB9-003EB30F4EA6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ELang_UnitTests</RootNamespace>
-    <AssemblyName>ELang_UnitTests</AssemblyName>
+    <RootNamespace>ELang_Tests</RootNamespace>
+    <AssemblyName>ELang_Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
