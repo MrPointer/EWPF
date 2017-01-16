@@ -22,7 +22,7 @@ using System.Runtime.CompilerServices;
 [assembly: ComVisible(false)]
 
 // Give the Unit Testing assembly access to all of this library's internals.
-[assembly: InternalsVisibleTo("EWPF_UnitTests")]
+[assembly: InternalsVisibleTo("EWPF_Tests")]
 
 //In order to begin building localizable applications, set 
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file
