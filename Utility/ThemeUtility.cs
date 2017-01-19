@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using EWPF.Themes;
 
 namespace EWPF.Utility
 {
@@ -62,27 +63,30 @@ namespace EWPF.Utility
                 return false;
 
             // Load a new theme based on it's type
-            Uri themeUri;
+            string themeUriString;
             switch (i_Theme)
             {
                 case EWPFTheme.Light:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/LightTheme.xaml",
-                        UriKind.RelativeOrAbsolute);
+                    themeUriString = ThemeUri.LightTheme;
                     break;
 
                 case EWPFTheme.Dark:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml",
-                        UriKind.RelativeOrAbsolute);
+                    themeUriString = ThemeUri.DarkTheme;
                     break;
 
                 case EWPFTheme.Web:
-                    themeUri = new Uri("pack://application:,,,/EWPF;component/Themes/WebTheme.xaml",
-                        UriKind.RelativeOrAbsolute);
+                    themeUriString = ThemeUri.WebTheme;
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(i_Theme), i_Theme, @"Unexpected theme type");
+                    throw new ArgumentOutOfRangeException(nameof(i_Theme),
+                        i_Theme, @"Unexpected theme type");
             }
+
+            if (!Uri.CheckSchemeName(themeUriString))
+                throw new UriFormatException(i_Theme + " Theme URI is invalid");
+            var themeUri = new Uri(themeUriString, UriKind.RelativeOrAbsolute);
+
             var loadedThemeDictionary = new ResourceDictionary { Source = themeUri };
             appResourceDict.MergedDictionaries.Remove(themeDictionary);
             appResourceDict.MergedDictionaries.Insert(0, loadedThemeDictionary);
