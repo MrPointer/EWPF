@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using EWPF.MVVM.Services;
 
 namespace EWPF.Utility
@@ -32,6 +33,8 @@ namespace EWPF.Utility
         /// <param name="i_WindowResult">Window's dialog result.</param>
         public static void CloseWindow(Window i_Window, bool? i_WindowResult)
         {
+            if (i_Window == null)
+                throw new ArgumentNullException(nameof(i_Window), @"Given window can't be null");
             i_Window.DialogResult = i_WindowResult;
             i_Window.Close();
         }
