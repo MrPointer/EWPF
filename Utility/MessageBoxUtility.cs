@@ -47,8 +47,8 @@ namespace EWPF.Utility
         /// <param name="i_WarningIcon">Path to a warning icon.</param>
         /// <param name="i_QuestionIcon">Path to a question icon.</param>
         /// <param name="i_InformationIcon">Path to an information icon.</param>
-        public static void SetCustomIcons(string i_ErrorIcon, string i_WarningIcon, string i_QuestionIcon,
-            string i_InformationIcon)
+        public static void SetCustomIcons(string i_ErrorIcon, string i_WarningIcon, 
+            string i_QuestionIcon, string i_InformationIcon)
         {
             sm_CustomIcons = new Dictionary<string, string>(4)
             {
@@ -88,7 +88,7 @@ namespace EWPF.Utility
                         return IconStrings.INFORMATION;
 
                     default:
-                        throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
+                        throw new ArgumentOutOfRangeException(nameof(i_Image), i_Image, null);
                 }
             }
             // Custom icons are used
@@ -124,7 +124,7 @@ namespace EWPF.Utility
                     throw new KeyNotFoundException();
 
                 default:
-                    throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
+                    throw new ArgumentOutOfRangeException(nameof(i_Image), i_Image, null);
             }
         }
 
@@ -170,7 +170,7 @@ namespace EWPF.Utility
                         i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 default: // Should never happen
-                    throw new ArgumentOutOfRangeException("i_Button", i_Button, null);
+                    throw new ArgumentOutOfRangeException(nameof(i_Button), i_Button, null);
             }
         }
 

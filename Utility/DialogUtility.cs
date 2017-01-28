@@ -28,7 +28,7 @@ namespace EWPF.Utility
         /// <summary>
         /// Displays a Windows-native <see cref="OpenFileDialog"/> with the given filter extensions.
         /// <para/>
-        /// It also can check for existance of a path supplied by the user, depending on the passed arguments.
+        /// It also can check for existence of a path supplied by the user, depending on the passed arguments.
         /// </summary>
         /// <param name="i_Extensions">List of extensions the dialog should look for.</param>
         /// <param name="i_DefaultExtension">Default extension displayed by the dialog.</param>
@@ -54,7 +54,7 @@ namespace EWPF.Utility
         /// <summary>
         /// Displays a Windows-native <see cref="SaveFileDialog"/> with the given filter extensions.
         /// <para/>
-        /// It also can check for existance of a path supplied by the user, depending on the passed arguments.
+        /// It also can check for existence of a path supplied by the user, depending on the passed arguments.
         /// </summary>
         /// <param name="i_ExtensionsFilter">List of extensions the dialog should filter.</param>
         /// <param name="i_DefaultExtension">Default extension displayed by the dialog.</param>
