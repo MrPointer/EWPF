@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\EWindow.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\MBoxNButtonPositonConverter.cs" />
     <Compile Include="Converters\MBoxPButtonPositionConverter.cs" />
     <Compile Include="Converters\StringsToColumnConverter.cs" />

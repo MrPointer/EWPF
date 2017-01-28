@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Unit\Converters\InverseBoolTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\BaseViewModelTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\RelayCommandTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\TestableNestedObject.cs" />
