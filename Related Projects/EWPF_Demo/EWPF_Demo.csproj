@@ -102,6 +102,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Logger\Logger.csproj">
+      <Project>{5a217de7-f729-4615-bfa7-efadc37d837d}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\EWPF.csproj">
       <Project>{a041388b-9279-48f8-a64d-445cf42e5663}</Project>
       <Name>EWPF</Name>

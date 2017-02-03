@@ -5,6 +5,7 @@ using System.Windows.Input;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
+using EWPFLang.ELang;
 
 namespace EWPF_Demo.MVVM
 {
@@ -55,24 +56,24 @@ namespace EWPF_Demo.MVVM
         public MainViewModel()
         {
             TextboxContent = "Hello World!";
-            // Test Code!
             OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
 
             GetStartupTheme();
 
             // Set custom icons to message boxes
-            string iconsDirPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
+            string iconsDirPath = Path.GetFullPath(Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
                 "Icons" + Path.DirectorySeparatorChar;
+
             ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
-            //string errorIconPath = iconsDirPath + "ErrorIcon.png";
-            //string warningIconPath = iconsDirPath + "WarningIcon.png";
-            //string questionIconPath = iconsDirPath + "QuestionIcon.png";
-            //string informationIconPath = iconsDirPath + "InformationIcon.png";
+
             string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
             string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
             string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
             string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
-            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath, questionIconPath, informationIconPath);
+
+            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath, 
+                questionIconPath, informationIconPath);            
         }
 
         #endregion
@@ -88,8 +89,10 @@ namespace EWPF_Demo.MVVM
         private void ShowMessageBox(object i_State)
         {
             if (MessageBoxService == null) return;
-            MessageBoxService.Show(@"Test", @"Hello World! This is a sample content for a sample message box." +
-            "\n" + "Did you like it? Please contribute the EWPF team online on github!",
+            MessageBoxService.Show(@"Test",
+                @"Hello World! This is a sample content for a sample message box." 
+                + Environment.NewLine +
+                "Did you like it? Please contribute the EWPF team online on Github!",
                 MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
@@ -161,7 +164,8 @@ namespace EWPF_Demo.MVVM
         /// </summary>
         public ICommand ButtonClickCommand
         {
-            get { return m_ButtonClickCommand ?? (m_ButtonClickCommand = new RelayCommand(ShowMessageBox, i_O => true)); }
+            get { return m_ButtonClickCommand ?? (m_ButtonClickCommand = 
+                    new RelayCommand(ShowMessageBox, i_O => true)); }
         }
 
         #endregion
@@ -169,7 +173,8 @@ namespace EWPF_Demo.MVVM
         #region Other
 
         /// <summary>
-        /// Gets or sets a reference to a meesage box service used to show message boxes on top of the bound view.
+        /// Gets or sets a reference to a message box service used to show message boxes 
+        /// on top of the bound view.
         /// </summary>
         public IMessageBoxService MessageBoxService { get; set; }
 
