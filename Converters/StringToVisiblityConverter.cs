@@ -13,7 +13,8 @@ namespace EWPF.Converters
         #region Methods
 
         /// <summary>Converts a string to a visibility state of a WPF element.</summary>
-        /// <returns><see cref="Visibility.Collapsed"/> if string is null or empty, <see cref="Visibility.Visible"/> otherwise.</returns>
+        /// <returns><see cref="Visibility.Collapsed"/> if string is null or empty, 
+        /// <see cref="Visibility.Visible"/> otherwise.</returns>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
