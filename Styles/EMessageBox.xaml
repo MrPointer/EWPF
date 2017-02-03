@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ewpfc="clr-namespace:EWPF.Controls"
         xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
-        Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" 
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         FlowDirection="{Binding Path=MBoxFlowDirection}" ewpfc:EWindow.WindowBorder="MessageBox"
         Style="{StaticResource EWindowStyle}">
 
@@ -29,13 +30,15 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" Margin="8,2,16,2" />
+            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" 
+                   Margin="8,2,16,2" />
 
             <TextBlock Grid.Column="1" FontSize="16" Text="{Binding Path=Content}" />
 
         </Grid>
 
-        <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Right" Grid.IsSharedSizeScope="True">
+        <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Right" 
+              Grid.IsSharedSizeScope="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition SharedSizeGroup="A" Width="*" />
@@ -51,7 +54,8 @@
                 </Style>
             </Grid.Resources>
 
-            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" Command="{Binding Path=PositiveCommand}">
+            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" 
+                    Command="{Binding Path=PositiveCommand}">
 
                 <Grid.Column>
                     <MultiBinding Converter="{StaticResource MBoxButtonPositionConverter}">
@@ -61,12 +65,17 @@
                 </Grid.Column>
 
             </Button>
-            <Button x:Name="NegativeButton" Content="{Binding Path=NegativeText}"
-                    Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource MBoxNButtonPositonConverter}}"
+            <Button x:Name="NegativeButton" 
+                    Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, 
+                            Converter={StaticResource MBoxNButtonPositonConverter}}"
                     Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}"
+                    Content="{Binding Path=NegativeText}"
                     Command="{Binding Path=NegativeCommand}"/>
-            <Button x:Name="NeutralButton" Grid.Column="2" Content="{Binding Path=NeutralText}" 
-                    Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisiblity}}"
+            
+            <Button x:Name="NeutralButton" Grid.Column="2" 
+                    Visibility="{Binding Path=NeutralText, 
+                                Converter={StaticResource StringToVisiblity}}"
+                    Content="{Binding Path=NeutralText}" 
                     Command="{Binding Path=NeutralCommand}"/>
 
         </Grid>
