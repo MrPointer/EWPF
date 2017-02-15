@@ -4,6 +4,7 @@
     <Style TargetType="{x:Type TextBox}">
         
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
 
     </Style>

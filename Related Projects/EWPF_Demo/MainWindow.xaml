@@ -1,38 +1,48 @@
-﻿<Window x:Class="EWPF_Demo.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
-        xmlns:mvvm="clr-namespace:EWPF_Demo.MVVM"
-        Title="MainWindow" Height="425" Width="625" WindowStartupLocation="CenterScreen"
-        Style="{StaticResource EWindowStyle}">
+﻿<Window
+    x:Class="EWPF_Demo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
+    xmlns:mvvm="clr-namespace:EWPF_Demo.MVVM"
+    Title="MainWindow"
+    Width="625"
+    Height="425"
+    Style="{StaticResource EWindowStyle}"
+    WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <mvvm:MainViewModel />
     </Window.DataContext>
 
-    <Window.Resources>
-
-    </Window.Resources>
+    <Window.Resources />
 
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <GroupBox Margin="5" Header="Progress Bars">
 
-            <ewpfc:BusyIndicator x:Name="BusyIndicator" IsAccelerated="True" Points="18" IsAnimated="False" />
+            <ewpfc:BusyIndicator
+                x:Name="BusyIndicator"
+                IsAccelerated="True"
+                IsAnimated="False"
+                Points="18" />
 
         </GroupBox>
 
-        <GroupBox Grid.Row="0" Grid.Column="1" Margin="5" Header="Common Controls">
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="5"
+            Header="Common Controls">
 
             <Grid>
 
@@ -44,37 +54,79 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock VerticalAlignment="Center" Margin="3" Text="Please enter some text:" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Padding="3" 
-                         Text="{Binding Path=TextboxContent}"
-                         MaxLines="{Binding Path=TextboxContent.Length}"/>
+                <TextBlock
+                    Margin="3"
+                    VerticalAlignment="Center"
+                    Text="Please enter some text:" />
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="3"
+                    Padding="3"
+                    MaxLines="{Binding Path=TextboxContent.Length}"
+                    Text="{Binding Path=TextboxContent}" />
 
-                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="3">
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="3"
+                    Orientation="Horizontal">
                     <CheckBox Margin="0,3,3,3" Content="Option 1" />
-                    <CheckBox Margin="3" Content="Option 2" IsEnabled="False" />
+                    <CheckBox
+                        Margin="3"
+                        Content="Option 2"
+                        IsEnabled="False" />
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="3">
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="3"
+                    Orientation="Horizontal">
                     <RadioButton Margin="0,3,3,3" Content="Option 1" />
                     <RadioButton Margin="3" Content="Option 2" />
                 </StackPanel>
 
-                <ComboBox Grid.Row="2" Grid.Column="0" Margin="3" ItemsSource="{Binding Source={StaticResource ThemesEnum}}"
-                          SelectedItem="{Binding Path=ActiveTheme, Mode=TwoWay}" />
-                <Slider Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="3" Minimum="0" Maximum="5" />
+                <ComboBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="3"
+                    ItemsSource="{Binding Source={StaticResource ThemesEnum}}"
+                    SelectedItem="{Binding Path=ActiveTheme, Mode=TwoWay}" />
+                <Slider
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="3"
+                    VerticalAlignment="Center"
+                    Maximum="5"
+                    Minimum="0" />
 
-                <PasswordBox Grid.Row="3" Grid.Column="0" Margin="3" VerticalContentAlignment="Center" Password="sample password" />
+                <PasswordBox
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="3"
+                    VerticalContentAlignment="Center"
+                    Password="sample password" />
 
-                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Orientation="Horizontal">
 
-                    <Button x:Name="MainBtn" Margin="3" IsEnabled="True"
-                            Content="Click me to see a message box"
-                            Command="{Binding Path=ButtonClickCommand}"/>
+                    <Button
+                        x:Name="MainBtn"
+                        Margin="3"
+                        Command="{Binding Path=ButtonClickCommand}"
+                        Content="Click me to see a message box"
+                        IsEnabled="True" />
 
-                    <Button Margin="3" IsEnabled="False" Content="Disabled Button" />
+                    <Button
+                        Margin="3"
+                        Content="Disabled Button"
+                        IsEnabled="False" />
 
                 </StackPanel>
 
@@ -82,7 +134,12 @@
 
         </GroupBox>
 
-        <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Header="Item Controls">
+        <GroupBox
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="5"
+            Header="Item Controls">
 
             <Grid Margin="5">
 
@@ -115,7 +172,7 @@
                     <TabItem Header="ListBox">
                         <ListBox />
                     </TabItem>
-                    <TabItem Header="ListView" >
+                    <TabItem Header="ListView">
                         <ListView />
                     </TabItem>
 
