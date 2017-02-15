@@ -83,7 +83,7 @@ namespace EWPF.Utility
                         i_Theme, @"Unexpected theme type");
             }
 
-            if (!Uri.CheckSchemeName(themeUriString))
+            if (!Uri.IsWellFormedUriString(themeUriString, UriKind.RelativeOrAbsolute))
                 throw new UriFormatException(i_Theme + " Theme URI is invalid");
             var themeUri = new Uri(themeUriString, UriKind.RelativeOrAbsolute);
 
