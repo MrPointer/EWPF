@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <!--  Control Templates  -->
+
+        <!--#region Control Templates-->
+
         <ResourceDictionary Source="Styles/EWindow.xaml" />
         <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
@@ -14,20 +16,36 @@
         <ResourceDictionary Source="Styles/Toolbar.xaml" />
         <ResourceDictionary Source="Styles/ComboBox.xaml" />
         <ResourceDictionary Source="Styles/ComboBoxItem.xaml" />
+        <ResourceDictionary Source="Styles/ListBox.xaml" />
+        <ResourceDictionary Source="Styles/ListView.xaml" />
 
-        <!--  Custom Controls  -->
+        <!--#endregion-->
+
+        <!--#region Custom Controls-->
+
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
 
-        <!--  Converters  -->
+        <!--#endregion-->
+
+        <!--#region Converters-->
+
         <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
 
-        <!--  Advanced Dictionaries  -->
+        <!--#endregion-->
+
+        <!--#region Advanced Dictionaries-->
+
         <ResourceDictionary Source="Dictionaries/ObjectDictionary.xaml" />
 
-        <!--  Icons  -->
+        <!--#endregion-->
+
+        <!--#region Icons-->
+
         <ResourceDictionary Source="Icons/CloseIcon.xaml" />
         <ResourceDictionary Source="Icons/MaximizeIcon.xaml" />
         <ResourceDictionary Source="Icons/MinimizeIcon.xaml" />
+
+        <!--#endregion-->
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
