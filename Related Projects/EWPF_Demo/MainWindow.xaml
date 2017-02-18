@@ -117,7 +117,7 @@
                     Orientation="Horizontal">
 
                     <Button
-                        x:Name="MainBtn"
+                        x:Name="MainButton"
                         Margin="3"
                         Command="{Binding Path=ButtonClickCommand}"
                         Content="Click me to see a message box"
@@ -170,10 +170,18 @@
                 <TabControl Grid.Column="1" Margin="5,0">
 
                     <TabItem Header="ListBox">
-                        <ListBox />
+                        <ListBox>
+                            <ListBox.Items>
+                                <ListBoxItem Content="Item 1" />
+                                <ListBoxItem Content="Item 2" />
+                            </ListBox.Items>
+                        </ListBox>
                     </TabItem>
                     <TabItem Header="ListView">
-                        <ListView />
+                        <ListView>
+                            <ListViewItem Content="Item 1" />
+                            <ListViewItem Content="Item 2" />
+                        </ListView>
                     </TabItem>
 
                 </TabControl>

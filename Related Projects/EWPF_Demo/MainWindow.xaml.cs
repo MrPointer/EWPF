@@ -52,12 +52,12 @@ namespace EWPF_Demo
                     Thread.Sleep(2000);
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        MainBtn.IsEnabled = true;
+                        MainButton.IsEnabled = true;
                     }));
                     Thread.Sleep(5000);
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        MainBtn.IsEnabled = false;
+                        MainButton.IsEnabled = false;
                     }));
                 }
             });
