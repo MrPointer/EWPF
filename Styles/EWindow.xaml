@@ -5,6 +5,7 @@
     xmlns:ewpfC="clr-namespace:EWPF.Controls"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!--#region Defines-->
     <Thickness
         x:Key="WindowBorderThickness"
         Bottom="1"
@@ -52,7 +53,9 @@
 
     <system:Double x:Key="TitleBarMinButtonWidth">32</system:Double>
     <system:Double x:Key="TitleBarMinButtonHeight">32</system:Double>
+    <!--#endregion-->
 
+    <!--#region Border Defines-->
     <Style x:Key="TitleBarMinButtonBorder" TargetType="{x:Type Border}">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
@@ -76,7 +79,9 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Background" Value="{DynamicResource TitleBarButtonBackgroundBrush}" />
     </Style>
+    <!--#endregion-->
 
+    <!--#region Title Bar Button-->
     <ControlTemplate x:Key="TitleBarButtonTemplate" TargetType="{x:Type Button}">
         <Grid>
             <Border x:Name="PART_border" Background="Transparent" />
@@ -89,16 +94,12 @@
                     <Condition Property="IsPressed" Value="false" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_border" Property="Background" Value="{DynamicResource AccentLightBrush}" />
-                <!--<Setter Property="Effect" Value="{DynamicResource TitleBarButtonHoverEffect}"/>-->
             </MultiTrigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter TargetName="PART_border" Property="Background" Value="{DynamicResource GraphicsBrush}" />
-                <!--<Setter TargetName="PART_border" Property="Opacity" Value="{DynamicResource TitleBarButtonPressedOpacity}" />-->
-                <!--<Setter Property="Effect" Value="{DynamicResource TitleBarButtonPressedEffect}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                <!--<Setter TargetName="PART_border" Property="Opacity" Value="{DynamicResource TitleBarButtonDisabledOpacity}" />-->
                 <Setter Property="Opacity" Value="1" />
             </Trigger>
         </ControlTemplate.Triggers>
@@ -111,6 +112,7 @@
         <Setter Property="Opacity" Value="1" />
         <Setter Property="Template" Value="{StaticResource TitleBarButtonTemplate}" />
     </Style>
+    <!--#endregion-->
 
     <Style x:Key="EWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
@@ -197,6 +199,7 @@
                                                 Foreground="{DynamicResource PrimaryTextBrush}"
                                                 Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
 
+                                            <!--#region Buttons-->
                                             <Button
                                                 x:Name="MinButton"
                                                 Grid.Column="2"
@@ -254,6 +257,7 @@
                                                     </Border>
                                                 </Grid>
                                             </Button>
+                                            <!--#endregion-->
                                         </Grid>
                                     </Border>
                                     <AdornerDecorator>

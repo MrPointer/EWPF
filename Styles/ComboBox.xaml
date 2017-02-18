@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
+    <!--#region Focus Visual-->
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -17,51 +18,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
 
-    <LinearGradientBrush x:Key="ComboBox.Static.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#FFF0F0F0" />
-        <GradientStop Offset="1.0" Color="#FFE5E5E5" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ComboBox.Static.Border" Color="#FFACACAC" />
-    <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3" />
-    <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph" Color="#FF000000" />
-    <LinearGradientBrush x:Key="ComboBox.MouseOver.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#FFECF4FC" />
-        <GradientStop Offset="1.0" Color="#FFDCECFC" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF7EB4EA" />
-    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Border" Color="#FF7EB4EA" />
-    <LinearGradientBrush x:Key="ComboBox.MouseOver.Editable.Button.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#FFEBF4FC" />
-        <GradientStop Offset="1.0" Color="#FFDCECFC" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Border" Color="#FF7EB4EA" />
-    <SolidColorBrush x:Key="ComboBox.Pressed.Glyph" Color="#FF000000" />
-    <LinearGradientBrush x:Key="ComboBox.Pressed.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#FFDAECFC" />
-        <GradientStop Offset="1.0" Color="#FFC4E0FC" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ComboBox.Pressed.Border" Color="#FF569DE5" />
-    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Border" Color="#FF569DE5" />
-    <LinearGradientBrush x:Key="ComboBox.Pressed.Editable.Button.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#FFDAEBFC" />
-        <GradientStop Offset="1.0" Color="#FFC4E0FC" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Border" Color="#FF569DE5" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Glyph" Color="#FFBFBFBF" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Background" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Border" Color="#FFD9D9D9" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Border" Color="#FFBFBFBF" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060" />
-
+    <!--#region Toggle Button-->
     <Style x:Key="ComboBoxToggleButton2" TargetType="{x:Type ToggleButton}">
 
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -79,84 +38,6 @@
                         BorderBrush="{DynamicResource PrimaryTextBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
-
-                        <!--<VisualStateManager.VisualStateGroups>
-
-                            <VisualStateGroup x:Name="CommonStates">
-
-                                <VisualState x:Name="Normal" />
-
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="arrow" Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryTextBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource AccentLightBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryTextBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="arrow" Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.125" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.125" Value="{DynamicResource AccentLightBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.125" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="Disabled" >
-                                    <Storyboard>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="arrow" Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="arrow" Storyboard.TargetProperty="Opacity">
-                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="75" />
-                                        </DoubleAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource AccentLightBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="templateRoot"
-                                                                       Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="templateRoot" Storyboard.TargetProperty="Opacity">
-                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="75" />
-                                        </DoubleAnimationUsingKeyFrames>
-
-                                    </Storyboard>
-                                </VisualState>
-
-                            </VisualStateGroup>
-
-                        </VisualStateManager.VisualStateGroups>-->
 
                         <Border
                             x:Name="splitBorder"
@@ -253,7 +134,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
 
+    <!--#region Standard ComboBox Template-->
     <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
 
         <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
@@ -339,11 +222,6 @@
 
         <ControlTemplate.Triggers>
 
-            <!--<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
-                <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
-                <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
-            </Trigger>-->
-
             <Trigger Property="HasItems" Value="False">
                 <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
             </Trigger>
@@ -363,9 +241,11 @@
 
         </ControlTemplate.Triggers>
     </ControlTemplate>
+    <!--#endregion-->
 
     <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF" />
 
+    <!--#region Editable Text Box-->
     <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="AllowDrop" Value="true" />
@@ -387,7 +267,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
 
+    <!--#region Editable ComboBox Template-->
     <ControlTemplate x:Key="ComboBoxEditableTemplate" TargetType="{x:Type ComboBox}">
         <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
             <Grid.ColumnDefinitions>
@@ -482,6 +364,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+    <!--#endregion-->
 
     <Style TargetType="{x:Type ComboBox}">
 
