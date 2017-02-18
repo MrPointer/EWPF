@@ -1,12 +1,16 @@
-﻿<Window x:Class="EWPF.Styles.EMessageBox"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ewpfc="clr-namespace:EWPF.Controls"
-        xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
-        Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" 
-        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
-        FlowDirection="{Binding Path=MBoxFlowDirection}" ewpfc:EWindow.WindowBorder="MessageBox"
-        Style="{StaticResource EWindowStyle}">
+﻿<Window
+    x:Class="EWPF.Styles.EMessageBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ewpfc="clr-namespace:EWPF.Controls"
+    xmlns:vm="clr-namespace:EWPF.MVVM.ViewModel"
+    Title="{Binding Path=Title}"
+    ewpfc:EWindow.WindowBorder="MessageBox"
+    FlowDirection="{Binding Path=MBoxFlowDirection}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Style="{StaticResource EWindowStyle}"
+    WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
         <ResourceDictionary Source="../EWPFResources.xaml" />
@@ -30,32 +34,43 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="IconImage" Stretch="None" StretchDirection="Both" 
-                   Margin="8,2,16,2" />
+            <Image
+                x:Name="IconImage"
+                Margin="8,2,16,2"
+                Stretch="None"
+                StretchDirection="Both" />
 
-            <TextBlock Grid.Column="1" FontSize="16" Text="{Binding Path=Content}" />
+            <TextBlock
+                Grid.Column="1"
+                FontSize="16"
+                Text="{Binding Path=Content}" />
 
         </Grid>
 
-        <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Right" 
-              Grid.IsSharedSizeScope="True">
+        <Grid
+            Grid.Row="1"
+            Margin="10"
+            HorizontalAlignment="Right"
+            Grid.IsSharedSizeScope="True">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="A" Width="*" />
-                <ColumnDefinition SharedSizeGroup="A" Width="*" />
-                <ColumnDefinition SharedSizeGroup="A" Width="*" />
+                <ColumnDefinition Width="*" SharedSizeGroup="A" />
+                <ColumnDefinition Width="*" SharedSizeGroup="A" />
+                <ColumnDefinition Width="*" SharedSizeGroup="A" />
             </Grid.ColumnDefinitions>
 
             <Grid.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
                     <Setter Property="Margin" Value="1,0" />
                     <Setter Property="FontSize" Value="16" />
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                 </Style>
             </Grid.Resources>
 
-            <Button x:Name="PositiveButton" Content="{Binding Path=PositiveText}" 
-                    Command="{Binding Path=PositiveCommand}">
+            <Button
+                x:Name="PositiveButton"
+                Command="{Binding Path=PositiveCommand}"
+                Content="{Binding Path=PositiveText}">
 
                 <Grid.Column>
                     <MultiBinding Converter="{StaticResource MBoxButtonPositionConverter}">
@@ -65,18 +80,19 @@
                 </Grid.Column>
 
             </Button>
-            <Button x:Name="NegativeButton" 
-                    Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, 
-                            Converter={StaticResource MBoxNButtonPositonConverter}}"
-                    Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}"
-                    Content="{Binding Path=NegativeText}"
-                    Command="{Binding Path=NegativeCommand}"/>
-            
-            <Button x:Name="NeutralButton" Grid.Column="2" 
-                    Visibility="{Binding Path=NeutralText, 
-                                Converter={StaticResource StringToVisiblity}}"
-                    Content="{Binding Path=NeutralText}" 
-                    Command="{Binding Path=NeutralCommand}"/>
+            <Button
+                x:Name="NegativeButton"
+                Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource MBoxNButtonPositonConverter}}"
+                Command="{Binding Path=NegativeCommand}"
+                Content="{Binding Path=NegativeText}"
+                Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}" />
+
+            <Button
+                x:Name="NeutralButton"
+                Grid.Column="2"
+                Command="{Binding Path=NeutralCommand}"
+                Content="{Binding Path=NeutralText}"
+                Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisiblity}}" />
 
         </Grid>
 

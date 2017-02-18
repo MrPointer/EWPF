@@ -13,18 +13,25 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:BusyIndicator}">
 
-                    <Viewbox Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}}, 
-                                    Path=Width}" 
-                             Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}},
-                                    Path=Height}"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Margin="20">
+                    <Viewbox
+                        Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}}, Path=Width}"
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:BusyIndicator}}, Path=Height}"
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
 
-                        <Grid Background="Transparent" ToolTip="{TemplateBinding ToolTip}" 
-                              HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            ToolTip="{TemplateBinding ToolTip}">
 
-                            <Canvas x:Name="PART_Canvas" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Width="100" Height="100"
+                            <Canvas
+                                x:Name="PART_Canvas"
+                                Width="100"
+                                Height="100"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 RenderTransformOrigin="0.5,0.5">
 
                                 <Canvas.RenderTransform>
