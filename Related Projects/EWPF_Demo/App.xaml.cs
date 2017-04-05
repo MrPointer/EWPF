@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using EWPFLang.ELang;
-using Logger;
+using MPLogger;
 
 namespace EWPF_Demo
 {
