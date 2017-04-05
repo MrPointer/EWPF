@@ -29,6 +29,8 @@ namespace EWPF.Themes
         /// </summary>
         public static string WebTheme = "pack://application:,,,/EWPF;component/Themes/WebTheme.xaml";
 
+        public static string WebTheme2 = "pack://application:,,,/EWPF;component/Themes/WebTheme2.xaml";
+
         #endregion
 
         #region Constructors

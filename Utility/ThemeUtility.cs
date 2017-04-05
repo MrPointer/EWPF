@@ -78,6 +78,10 @@ namespace EWPF.Utility
                     themeUriString = ThemeUri.WebTheme;
                     break;
 
+                    case EWPFTheme.Web2:
+                    themeUriString = ThemeUri.WebTheme2;
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(i_Theme),
                         i_Theme, @"Unexpected theme type");
@@ -300,6 +304,7 @@ namespace EWPF.Utility
         /// <summary>
         /// Web Theme 1.
         /// </summary>
-        Web
+        Web,
+        Web2
     }
 }
