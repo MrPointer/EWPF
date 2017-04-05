@@ -7,6 +7,7 @@
         <ResourceDictionary Source="Styles/EWindow.xaml" />
         <ResourceDictionary Source="Styles/GroupBox.xaml" />
         <ResourceDictionary Source="Styles/Button.xaml" />
+        <ResourceDictionary Source="Styles/FloatingButton.xaml" />
         <ResourceDictionary Source="Styles/Textblock.xaml" />
         <ResourceDictionary Source="Styles/TextBox.xaml" />
         <ResourceDictionary Source="Styles/CheckBox.xaml" />

@@ -5,7 +5,6 @@ using System.Windows.Input;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
-using EWPFLang.ELang;
 
 namespace EWPF_Demo.MVVM
 {
