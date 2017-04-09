@@ -16,11 +16,11 @@
 
                     <Border
                         x:Name="ButtonBorder"
-                        Margin="{TemplateBinding Margin}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        TextBlock.Foreground="{TemplateBinding Foreground}">
+                        TextBlock.Foreground="{TemplateBinding Foreground}"
+                        TextBlock.TextAlignment="Center">
 
                         <Border>
                             <ContentPresenter
