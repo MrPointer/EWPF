@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using EWPF.Utility;
-using NUnit.Framework;
 using System.Windows;
 using EWPF.Themes;
+using EWPF.Utility;
+using NUnit.Framework;
 
-namespace EWPF_Tests.Unit
+namespace EWPF_Tests.Unit.Utility
 {
     [TestFixture]
     public class ThemeUtilityTests

@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
+using EWPF.MVVM.Services;
 using Microsoft.Win32;
 
 namespace EWPF.Utility
@@ -24,6 +28,67 @@ namespace EWPF.Utility
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Displays the requested dialog on top of the current <see cref="Window"/>. <br />
+        /// This method searches through all of the <see cref="Type"/>s in the executing <see cref="Assembly"/>, 
+        /// looking for a type that has the <see cref="DialogAttribute"/> registered to it, 
+        /// and if it does, it compares the given <paramref name="i_DialogName"/> to its registered name. <br />
+        /// The search could be optimized to search just in a specific namespace by passing the namespace name 
+        /// as an argument.
+        /// </summary>
+        /// <param name="i_DialogName">Name of the dialog to search, registered in its <see cref="DialogAttribute"/>.</param>
+        /// <param name="i_Namespace">Name of the specific namespace to search in. 
+        /// Default is null, meaning the whole <see cref="Assembly"/> will be searched.</param>
+        /// <returns>Dialog result of the opened dialog.</returns>
+        /// <exception cref="ArgumentException">If the string arguments are empty or contain only whitespaces, 
+        /// or if the requested dialog isn't found.</exception>
+        /// <exception cref="InvalidCastException">If the requested dialog is found but is not 
+        /// of a <see cref="Window"/> type.</exception>
+        public static bool? ShowDialog(string i_DialogName, string i_Namespace = null)
+        {
+            // First, check arguments validity
+            if (i_DialogName == null)
+                throw new ArgumentNullException(nameof(i_DialogName), @"Dialog name can't be null");
+            if (string.IsNullOrWhiteSpace(i_DialogName))
+            {
+                throw new ArgumentException(@"Dialog name can't be empty or contain only whitespaces",
+                    nameof(i_DialogName));
+            }
+            if (i_Namespace != null && string.IsNullOrWhiteSpace(i_Namespace))
+            {
+                throw new ArgumentException(@"Namespace can't be empty or contain only whitespaces",
+                    nameof(i_Namespace));
+            }
+
+            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Type requestedDialogType = null;
+            foreach (var assembly in allAssemblies)
+            {
+                requestedDialogType = assembly.GetTypes()
+                    .Where(i_Type => i_Namespace == null || i_Type.IsClass && i_Type.Namespace == i_Namespace)
+                    .FirstOrDefault(i_Type =>
+                    {
+                        var customAttributes = i_Type.GetCustomAttributes(typeof(DialogAttribute), false);
+                        if (customAttributes.Length == 0)
+                            return false;
+                        var currentDialogAttribute = customAttributes[0] as DialogAttribute;
+                        return currentDialogAttribute?.Name == i_DialogName;
+                    });
+                if (requestedDialogType != null) // Has been found in the current assembly
+                    break;
+            }
+
+            if (requestedDialogType == null)
+            {
+                throw new ArgumentException(@"Given dialog name doesn't exist in this assembly, check spelling",
+                    nameof(i_DialogName));
+            }
+            var dialogInstance = Activator.CreateInstance(requestedDialogType) as Window;
+            if (dialogInstance == null)
+                throw new InvalidCastException("Couldn't cast the created dialog instance to a Window object");
+            return dialogInstance.ShowDialog();
+        }
 
         /// <summary>
         /// Displays a Windows-native <see cref="OpenFileDialog"/> with the given filter extensions.

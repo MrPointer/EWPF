@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Windows;
 using EWPF.Utility;
-using Moq;
 using NUnit.Framework;
 
-namespace EWPF_Tests.Unit
+namespace EWPF_Tests.Unit.Utility
 {
     [TestFixture]
     public class WindowUtilityTests
@@ -32,9 +30,9 @@ namespace EWPF_Tests.Unit
         [Test]
         public void CloseWindow_NullWindowParam_ThrowsArgumentNullException()
         {            
-            var catchedException = Assert.Catch<ArgumentNullException>(
+            var exception = Assert.Catch<ArgumentNullException>(
                 () => WindowUtility.CloseWindow(null, true));
-            StringAssert.Contains("can't be null", catchedException.Message);
+            StringAssert.Contains("can't be null", exception.Message);
         }
 
         #endregion

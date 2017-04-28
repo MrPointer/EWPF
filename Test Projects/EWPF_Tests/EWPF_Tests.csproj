@@ -68,8 +68,9 @@
     <Compile Include="Unit\MVVM\MvvmFactory.cs" />
     <Compile Include="Unit\MVVM\TestableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\ThemeUtilityTests.cs" />
-    <Compile Include="Unit\WindowUtilityTests.cs" />
+    <Compile Include="Unit\Utility\DialogUtilityTests.cs" />
+    <Compile Include="Unit\Utility\ThemeUtilityTests.cs" />
+    <Compile Include="Unit\Utility\WindowUtilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\EWPF.csproj">
