@@ -31,22 +31,27 @@ namespace EWPF.Utility
 
         /// <summary>
         /// Displays the requested dialog on top of the current <see cref="Window"/>. <br />
-        /// This method searches through all of the <see cref="Type"/>s in the executing <see cref="Assembly"/>, 
-        /// looking for a type that has the <see cref="DialogAttribute"/> registered to it, 
-        /// and if it does, it compares the given <paramref name="i_DialogName"/> to its registered name. <br />
-        /// The search could be optimized to search just in a specific namespace by passing the namespace name 
-        /// as an argument.
+        /// This method searches through all of the <see cref="Type"/>s in all of the <see cref="Assembly"/>s 
+        /// under the current <see cref="AppDomain"/>,
+        /// looking for a type that has the <see cref="DialogAttribute"/> registered to it. <br />
+        /// If it does fine one, it then compares the given <paramref name="i_DialogName"/> 
+        /// to the name registered within its <see cref="DialogAttribute"/>. <br />
+        /// The search could be optimized to search just in a specific namespace by passing its name, 
+        /// and even further optimized to search in a specific assembly by passing its name.
         /// </summary>
         /// <param name="i_DialogName">Name of the dialog to search, registered in its <see cref="DialogAttribute"/>.</param>
         /// <param name="i_Namespace">Name of the specific namespace to search in. 
-        /// Default is null, meaning the whole <see cref="Assembly"/> will be searched.</param>
+        ///     Default is null, meaning the whole <see cref="Assembly"/> will be searched.</param>
+        /// <param name="i_AssemblyName">Name of the specific assembly to search in.</param>
         /// <returns>Dialog result of the opened dialog.</returns>
         /// <exception cref="ArgumentException">If the string arguments are empty or contain only whitespaces, 
         /// or if the requested dialog isn't found.</exception>
         /// <exception cref="InvalidCastException">If the requested dialog is found but is not 
         /// of a <see cref="Window"/> type.</exception>
-        public static bool? ShowDialog(string i_DialogName, string i_Namespace = null)
+        public static bool? ShowDialog(string i_DialogName, string i_Namespace = null, string i_AssemblyName = null)
         {
+            // Reserve optimization flags for later use
+            bool useNamespaceOptimization = false, useAssemblyOptimization = false;
             // First, check arguments validity
             if (i_DialogName == null)
                 throw new ArgumentNullException(nameof(i_DialogName), @"Dialog name can't be null");
@@ -55,18 +60,28 @@ namespace EWPF.Utility
                 throw new ArgumentException(@"Dialog name can't be empty or contain only whitespaces",
                     nameof(i_DialogName));
             }
-            if (i_Namespace != null && string.IsNullOrWhiteSpace(i_Namespace))
+            if (i_Namespace != null)
             {
-                throw new ArgumentException(@"Namespace can't be empty or contain only whitespaces",
-                    nameof(i_Namespace));
+                if (string.IsNullOrWhiteSpace(i_Namespace))
+                    throw new ArgumentException(@"Namespace can't be empty or contain only whitespaces",
+                        nameof(i_Namespace));
+                useNamespaceOptimization = true;
+            }
+            if (i_AssemblyName != null)
+            {
+                if (string.IsNullOrWhiteSpace(i_AssemblyName))
+                    throw new ArgumentException(@"Assembly name can't be empty or contain only whitespaces",
+                        nameof(i_AssemblyName));
+                useAssemblyOptimization = true;
             }
 
-            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(i_Assembly => !useAssemblyOptimization || i_Assembly.FullName == i_AssemblyName);
             Type requestedDialogType = null;
             foreach (var assembly in allAssemblies)
             {
                 requestedDialogType = assembly.GetTypes()
-                    .Where(i_Type => i_Namespace == null || i_Type.IsClass && i_Type.Namespace == i_Namespace)
+                    .Where(i_Type => !useNamespaceOptimization || i_Type.IsClass && i_Type.Namespace == i_Namespace)
                     .FirstOrDefault(i_Type =>
                     {
                         var customAttributes = i_Type.GetCustomAttributes(typeof(DialogAttribute), false);

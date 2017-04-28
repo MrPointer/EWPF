@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
-using Moq;
 using NUnit.Framework;
 
 namespace EWPF_Tests.Unit.Utility
@@ -32,6 +30,8 @@ namespace EWPF_Tests.Unit.Utility
         #endregion
 
         #region Methods
+
+        #region Show Dialog
 
         [Test]
         public void ShowDialog_NullDialogName_ThrowsArgumentNullException()
@@ -64,6 +64,20 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
+        public void ShowDialog_EmptyOrWhitespaceAssemblyName_ThrowsArgumentException()
+        {
+            const string cDialogName = "abc";
+            const string cNamespace = "def";
+            var caughtException = Assert.Catch<ArgumentException>(
+                () => DialogUtility.ShowDialog(cDialogName, cNamespace,string.Empty));
+            StringAssert.Contains("can't be empty", caughtException.Message);
+
+            caughtException = Assert.Catch<ArgumentException>(
+                () => DialogUtility.ShowDialog(cDialogName, cNamespace," "));
+            StringAssert.Contains("contain only whitespaces", caughtException.Message);
+        }
+
+        [Test]
         public void ShowDialog_NonExistingDialogName_ThrowsArgumentException()
         {
             const string cNonExistingDialogName = "abc";
@@ -71,7 +85,7 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
-        public void ShowDialog_ExistingDialogNameNotWindowType_ThrowsInvalidCastException()
+        public void ShowDialog_ExistingDialogName_NotWindowType_ThrowsInvalidCastException()
         {
             const string cExistingDialogName = "fakeDialogNonWindow";
             var caughtException =
@@ -80,7 +94,7 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
-        [NUnit.Framework.Category("Long")]
+        [Category("Long")]
         public void ShowDialog_ExistingDialog_SpecificNamespace_ExecutesFaster()
         {
             var normalStopwatch = new Stopwatch();
@@ -91,17 +105,56 @@ namespace EWPF_Tests.Unit.Utility
             Assert.Catch<TargetInvocationException>(() => DialogUtility.ShowDialog(cExistingDialogName));
             normalStopwatch.Stop();
 
-            var enhancedStopwatch = new Stopwatch();
+            var namespaceOptimizedStopwatch = new Stopwatch();
             string currentNamespaceName = GetType().Namespace;
-            enhancedStopwatch.Start();
+            namespaceOptimizedStopwatch.Start();
             // Catch an exception because the actual code can't be fully run in a unit test, 
             // requires STA threading model.
             Assert.Catch<TargetInvocationException>(
                 () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName));
-            enhancedStopwatch.Stop();
+            namespaceOptimizedStopwatch.Stop();
 
-            Assert.Less(enhancedStopwatch.Elapsed, normalStopwatch.Elapsed);
+            Assert.Less(namespaceOptimizedStopwatch.Elapsed, normalStopwatch.Elapsed);
         }
+
+        [Test]
+        [Category("Long")]
+        public void ShowDialog_ExistingDialog_SpecificNamespace_SpecificAssembly_ExecutesEvenFaster()
+        {
+            var normalStopwatch = new Stopwatch();
+            const string cExistingDialogName = "fakeDialog";
+            normalStopwatch.Start();
+            // Catch an exception because the actual code can't be fully run in a unit test, 
+            // requires STA threading model.
+            Assert.Catch<TargetInvocationException>(() => DialogUtility.ShowDialog(cExistingDialogName));
+            normalStopwatch.Stop();
+
+            var namespaceOptimizedStopwatch = new Stopwatch();
+            string currentNamespaceName = GetType().Namespace;
+            namespaceOptimizedStopwatch.Start();
+            // Catch an exception because the actual code can't be fully run in a unit test, 
+            // requires STA threading model.
+            Assert.Catch<TargetInvocationException>(
+                () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName));
+            namespaceOptimizedStopwatch.Stop();
+
+            var assemblyOptimizedStopwatch = new Stopwatch();
+            string currentAssemblyName = Assembly.GetExecutingAssembly().FullName;
+            assemblyOptimizedStopwatch.Start();
+            // Catch an exception because the actual code can't be fully run in a unit test, 
+            // requires STA threading model.
+            Assert.Catch<TargetInvocationException>(
+                () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName, currentAssemblyName));
+            assemblyOptimizedStopwatch.Stop();
+
+            // First, validate that namespace optimization is better, because even though there is a
+            // separate test for this just a method above,
+            // results may be different in each execution (highly unlikely)
+            Assert.Less(namespaceOptimizedStopwatch.Elapsed, normalStopwatch.Elapsed);
+            Assert.Less(assemblyOptimizedStopwatch.Elapsed, namespaceOptimizedStopwatch.Elapsed);
+        }
+
+        #endregion
 
         #endregion
 
@@ -118,10 +171,10 @@ namespace EWPF_Tests.Unit.Utility
     /// This class is used only for testing purposes and is declared explicitly instead of using 'Moq' 
     /// because it solves some issues regarding assembly sources.
     /// </summary>
-    [DialogAttribute("fakeDialogNonWindow")]
+    [Dialog("fakeDialogNonWindow")]
     public class FakeDialogNonWindow
     {
-        
+
     }
 
     /// <summary>
@@ -130,9 +183,9 @@ namespace EWPF_Tests.Unit.Utility
     /// This class is used only for testing purposes and is declared explicitly instead of using 'Moq' 
     /// because it solves some issues regarding assembly sources.
     /// </summary>
-    [DialogAttribute("fakeDialog")]
+    [Dialog("fakeDialog")]
     public class FakeDialog : Window
     {
-        
+
     }
 }
