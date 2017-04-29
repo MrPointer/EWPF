@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
@@ -55,11 +56,11 @@ namespace EWPF_Tests.Unit.Utility
         {
             const string cDialogName = "abc";
             var caughtException = Assert.Catch<ArgumentException>(
-                () => DialogUtility.ShowDialog(cDialogName, string.Empty));
+                () => DialogUtility.ShowDialog(cDialogName, i_Namespace: string.Empty));
             StringAssert.Contains("can't be empty", caughtException.Message);
 
             caughtException = Assert.Catch<ArgumentException>(
-                () => DialogUtility.ShowDialog(cDialogName, " "));
+                () => DialogUtility.ShowDialog(cDialogName, i_Namespace: " "));
             StringAssert.Contains("contain only whitespaces", caughtException.Message);
         }
 
@@ -69,11 +70,11 @@ namespace EWPF_Tests.Unit.Utility
             const string cDialogName = "abc";
             const string cNamespace = "def";
             var caughtException = Assert.Catch<ArgumentException>(
-                () => DialogUtility.ShowDialog(cDialogName, cNamespace,string.Empty));
+                () => DialogUtility.ShowDialog(cDialogName, i_Namespace: cNamespace, i_AssemblyName: string.Empty));
             StringAssert.Contains("can't be empty", caughtException.Message);
 
             caughtException = Assert.Catch<ArgumentException>(
-                () => DialogUtility.ShowDialog(cDialogName, cNamespace," "));
+                () => DialogUtility.ShowDialog(cDialogName, i_Namespace: cNamespace, i_AssemblyName: " "));
             StringAssert.Contains("contain only whitespaces", caughtException.Message);
         }
 
@@ -94,6 +95,16 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void ShowDialog_ValidDefaultDialog_ReturnsFalse()
+        {
+            const string cValidDialogName = "fakeDialog";
+            var dialogResult = DialogUtility.ShowDialog(cValidDialogName);
+            Assert.False(dialogResult);
+        }
+
+        [Test]
         [Category("Long")]
         public void ShowDialog_ExistingDialog_SpecificNamespace_ExecutesFaster()
         {
@@ -111,7 +122,7 @@ namespace EWPF_Tests.Unit.Utility
             // Catch an exception because the actual code can't be fully run in a unit test, 
             // requires STA threading model.
             Assert.Catch<TargetInvocationException>(
-                () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName));
+                () => DialogUtility.ShowDialog(cExistingDialogName, i_Namespace: currentNamespaceName));
             namespaceOptimizedStopwatch.Stop();
 
             Assert.Less(namespaceOptimizedStopwatch.Elapsed, normalStopwatch.Elapsed);
@@ -135,7 +146,7 @@ namespace EWPF_Tests.Unit.Utility
             // Catch an exception because the actual code can't be fully run in a unit test, 
             // requires STA threading model.
             Assert.Catch<TargetInvocationException>(
-                () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName));
+                () => DialogUtility.ShowDialog(cExistingDialogName, i_Namespace: currentNamespaceName));
             namespaceOptimizedStopwatch.Stop();
 
             var assemblyOptimizedStopwatch = new Stopwatch();
@@ -144,7 +155,7 @@ namespace EWPF_Tests.Unit.Utility
             // Catch an exception because the actual code can't be fully run in a unit test, 
             // requires STA threading model.
             Assert.Catch<TargetInvocationException>(
-                () => DialogUtility.ShowDialog(cExistingDialogName, currentNamespaceName, currentAssemblyName));
+                () => DialogUtility.ShowDialog(cExistingDialogName, i_Namespace: currentNamespaceName, i_AssemblyName: currentAssemblyName));
             assemblyOptimizedStopwatch.Stop();
 
             // First, validate that namespace optimization is better, because even though there is a

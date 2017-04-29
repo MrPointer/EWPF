@@ -40,6 +40,8 @@ namespace EWPF.Utility
         /// and even further optimized to search in a specific assembly by passing its name.
         /// </summary>
         /// <param name="i_DialogName">Name of the dialog to search, registered in its <see cref="DialogAttribute"/>.</param>
+        /// <param name="i_DataContext">Reference to an object that will be stored as 
+        /// the dialog's <see cref="FrameworkElement.DataContext"/>.</param>
         /// <param name="i_Namespace">Name of the specific namespace to search in. 
         ///     Default is null, meaning the whole <see cref="Assembly"/> will be searched.</param>
         /// <param name="i_AssemblyName">Name of the specific assembly to search in.</param>
@@ -48,7 +50,7 @@ namespace EWPF.Utility
         /// or if the requested dialog isn't found.</exception>
         /// <exception cref="InvalidCastException">If the requested dialog is found but is not 
         /// of a <see cref="Window"/> type.</exception>
-        public static bool? ShowDialog(string i_DialogName, string i_Namespace = null, string i_AssemblyName = null)
+        public static bool? ShowDialog(string i_DialogName, object i_DataContext = null, string i_Namespace = null, string i_AssemblyName = null)
         {
             // Reserve optimization flags for later use
             bool useNamespaceOptimization = false, useAssemblyOptimization = false;
@@ -102,6 +104,8 @@ namespace EWPF.Utility
             var dialogInstance = Activator.CreateInstance(requestedDialogType) as Window;
             if (dialogInstance == null)
                 throw new InvalidCastException("Couldn't cast the created dialog instance to a Window object");
+            if (i_DataContext != null)
+                dialogInstance.DataContext = i_DataContext;
             return dialogInstance.ShowDialog();
         }
 
