@@ -98,7 +98,8 @@ namespace EWPF.Utility
 
             if (requestedDialogType == null)
             {
-                throw new ArgumentException(@"Given dialog name doesn't exist in this assembly, check spelling",
+                throw new ArgumentException(
+                    @"Given dialog name doesn't exist in the featured assemblies, check spelling",
                     "i_DialogName");
             }
             var dialogInstance = Activator.CreateInstance(requestedDialogType) as Window;

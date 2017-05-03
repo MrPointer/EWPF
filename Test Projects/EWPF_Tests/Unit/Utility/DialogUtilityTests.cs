@@ -95,6 +95,15 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
+        public void ShowDialog_MultipleAttributesDialog_NotWindowType_GetsSelected_ThrowsInvalidCastException()
+        {
+            const string cMultipleDialogName = "multipleAttrDialog";
+            var caughtException =
+                Assert.Catch<InvalidCastException>(() => DialogUtility.ShowDialog(cMultipleDialogName));
+            StringAssert.Contains("to a Window object", caughtException.Message);
+        }
+
+        [Test]
         [Apartment(ApartmentState.STA)]
         [Category("UI")]
         public void ShowDialog_ValidDefaultDialog_ReturnsFalse()
@@ -196,6 +205,13 @@ namespace EWPF_Tests.Unit.Utility
     /// </summary>
     [Dialog("fakeDialog")]
     public class FakeDialog : Window
+    {
+
+    }
+
+    [Serializable]
+    [Dialog("multipleAttrDialog")]
+    public class MultipleAttributesDialog
     {
 
     }

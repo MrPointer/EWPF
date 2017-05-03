@@ -29,7 +29,7 @@ namespace EWPF_Tests.Unit.Utility
 
         [Test]
         public void CloseWindow_NullWindowParam_ThrowsArgumentNullException()
-        {            
+        {
             var exception = Assert.Catch<ArgumentNullException>(
                 () => WindowUtility.CloseWindow(null, true));
             StringAssert.Contains("can't be null", exception.Message);
