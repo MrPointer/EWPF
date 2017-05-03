@@ -20,7 +20,7 @@ namespace EWPFLang.ELang
 
         #region Singleton
 
-        private static readonly Lazy<LanguageXmlReader> m_Instance = new Lazy<LanguageXmlReader>(() => new LanguageXmlReader());
+        private static readonly Lazy<LanguageXmlReader> sm_Instance = new Lazy<LanguageXmlReader>(() => new LanguageXmlReader());
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace EWPFLang.ELang
         public IDictionary<DictionaryCode, string> LoadLanguageFile(string i_FilePath)
         {
             if (string.IsNullOrEmpty(i_FilePath))
-                throw new ArgumentException(@"Language file's path cant be null or empty", nameof(i_FilePath));
+                throw new ArgumentException(@"Language file's path cant be null or empty", "i_FilePath");
 
             bool hasExtension = Regex.IsMatch(i_FilePath, @"\.xml$");
             if (!hasExtension) // File path should be appended with the '.xml' extension
@@ -83,7 +83,10 @@ namespace EWPFLang.ELang
         /// <summary>
         /// The singleton instance.
         /// </summary>
-        public static LanguageXmlReader Instance => m_Instance.Value;
+        public static LanguageXmlReader Instance
+        {
+            get { return sm_Instance.Value; }
+        }
 
         #endregion
 

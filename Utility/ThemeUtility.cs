@@ -78,15 +78,16 @@ namespace EWPF.Utility
                     themeUriString = ThemeUri.WebTheme;
                     break;
 
-                    case EWPFTheme.Web2:
+                case EWPFTheme.Web2:
                     themeUriString = ThemeUri.WebTheme2;
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(i_Theme),
+                    throw new ArgumentOutOfRangeException("i_Theme",
                         i_Theme, @"Unexpected theme type");
             }
 
+            // ToDo: Specifically check the Theme syntax of the URI, such as pack://
             if (!Uri.IsWellFormedUriString(themeUriString, UriKind.RelativeOrAbsolute))
                 throw new UriFormatException(i_Theme + " Theme URI is invalid");
             var themeUri = new Uri(themeUriString, UriKind.RelativeOrAbsolute);

@@ -44,7 +44,8 @@ namespace EWPF.MVVM
             if (i_InvokerViewModel == null)
                 i_InvokerViewModel = this;
             IsPropertyNameValid(i_PropertyName, i_InvokerViewModel);
-            PropertyChanged?.Invoke(i_InvokerViewModel, new PropertyChangedEventArgs(i_PropertyName));
+            if (PropertyChanged != null)
+                PropertyChanged(i_InvokerViewModel, new PropertyChangedEventArgs(i_PropertyName));
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace EWPF.MVVM
         public void OnPropertiesChanged(BaseViewModel i_InvokerViewModel, params string[] i_PropertiesNames)
         {
             if (i_InvokerViewModel == null)
-                throw new ArgumentNullException(nameof(i_InvokerViewModel),
+                throw new ArgumentNullException("i_InvokerViewModel",
                     @"Invoker can't be null - Must be set to the view model's instance");
 
             OnManyPropertiesChanged(i_PropertiesNames, i_InvokerViewModel);
@@ -89,7 +90,7 @@ namespace EWPF.MVVM
         internal bool SetValue<T>(ref T i_PropertyToSet, T i_NewValueToAssign)
         {
             if (i_NewValueToAssign == null)
-                throw new ArgumentNullException(nameof(i_NewValueToAssign), @"Can't ever assign a null value - This is WPF!");
+                throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
 
             if (i_PropertyToSet.Equals(i_NewValueToAssign))
                 return false;
@@ -112,7 +113,7 @@ namespace EWPF.MVVM
             where T : IEnumerable<TS>
         {
             if (i_NewValueToAssign == null)
-                throw new ArgumentNullException(nameof(i_NewValueToAssign), @"Can't ever assign a null value - This is WPF!");
+                throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
 
             if (i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
                 return false;
@@ -128,9 +129,9 @@ namespace EWPF.MVVM
         internal bool IsPropertyNameValid(string i_PropertyName, BaseViewModel i_Invoker)
         {
             if (string.IsNullOrEmpty(i_PropertyName))
-                throw new ArgumentException(@"Property name can't be null or empty", nameof(i_PropertyName));
+                throw new ArgumentException(@"Property name can't be null or empty", "i_PropertyName");
             if (i_Invoker == null)
-                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
+                throw new ArgumentNullException("i_Invoker", @"Invoker can't be null - Must be set to the view model's instance");
 
             if (TypeDescriptor.GetProperties(i_Invoker)[i_PropertyName] != null) // Property found
                 return true;
@@ -140,7 +141,7 @@ namespace EWPF.MVVM
             if (!Regex.IsMatch(i_PropertyName, @"\."))
             {
                 if (ThrowOnInvalidPropertyName)
-                    throw new ArgumentException(@"Given property name is direct but invalid", nameof(i_PropertyName));
+                    throw new ArgumentException(@"Given property name is direct but invalid", "i_PropertyName");
                 return false;
             }
 
@@ -161,7 +162,7 @@ namespace EWPF.MVVM
                 if (invokingViewModel != null)
                     seekedPropertyDescriptor = TypeDescriptor.GetProperties(invokingViewModel)[parentPropertyName];
                 else
-                    seekedPropertyDescriptor = seekedPropertyDescriptor?.GetChildProperties()[parentPropertyName];
+                    seekedPropertyDescriptor = seekedPropertyDescriptor.GetChildProperties()[parentPropertyName];
 
                 if (seekedPropertyDescriptor == null) // Property not found
                     isPropertyExist = false; // Could write return, but preferred the 'logical' method instead
@@ -182,7 +183,7 @@ namespace EWPF.MVVM
 
             if (isPropertyExist) return true;
             if (ThrowOnInvalidPropertyName)
-                throw new ArgumentException(@"Given property name is nested but invalid", nameof(i_PropertyName));
+                throw new ArgumentException(@"Given property name is nested but invalid", "i_PropertyName");
             return false;
         }
 
@@ -199,16 +200,17 @@ namespace EWPF.MVVM
         internal void OnManyPropertiesChanged(IEnumerable<string> i_PropertiesNames, BaseViewModel i_Invoker)
         {
             if (i_PropertiesNames == null)
-                throw new ArgumentNullException(nameof(i_PropertiesNames), @"Collection of properties can't be null");
+                throw new ArgumentNullException("i_PropertiesNames", @"Collection of properties can't be null");
             if (i_Invoker == null)
-                throw new ArgumentNullException(nameof(i_Invoker), @"Invoker can't be null - Must be set to the view model's instance");
+                throw new ArgumentNullException("i_Invoker", @"Invoker can't be null - Must be set to the view model's instance");
 
             foreach (string property in i_PropertiesNames)
             {
                 bool isNameVerified = IsPropertyNameValid(property, i_Invoker);
                 if (!isNameVerified)
-                    throw new ArgumentException(@"One of the properties' name is invalid", nameof(i_PropertiesNames));
-                PropertyChanged?.Invoke(i_Invoker, new PropertyChangedEventArgs(property));
+                    throw new ArgumentException(@"One of the properties' name is invalid", "i_PropertiesNames");
+                if (PropertyChanged != null)
+                    PropertyChanged(i_Invoker, new PropertyChangedEventArgs(property));
             }
         }
 

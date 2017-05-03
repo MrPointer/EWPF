@@ -88,7 +88,7 @@ namespace EWPFLang.ELang
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException(nameof(value), @"Input dictionary can't be null");
+                    throw new ArgumentNullException("value", @"Input dictionary can't be null");
                 if (!value.Any()) // Empty dictionary
                     throw new ArgumentException(@"Input dictionary must contain at least one value");
 
@@ -104,7 +104,7 @@ namespace EWPFLang.ELang
         /// <summary>
         /// Gets a reference to language reader object, used to read a language file to memory.
         /// </summary>
-        public IELanguageReader LanguageReader { get; }
+        public IELanguageReader LanguageReader { get; private set; }
 
         #endregion
     }

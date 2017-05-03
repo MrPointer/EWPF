@@ -73,7 +73,9 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandlePositive(object i_State)
         {
-            WindowService?.CloseWindow(true);
+            if (WindowService == null)
+                throw new InvalidOperationException("Window Service must be set");
+            WindowService.CloseWindow(true);
         }
 
         /// <summary>
@@ -82,7 +84,9 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandleNegative(object i_State)
         {
-            WindowService?.CloseWindow(false);
+            if (WindowService == null)
+                throw new InvalidOperationException("Window Service must be set");
+            WindowService.CloseWindow(false);
         }
 
         /// <summary>
@@ -91,7 +95,9 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_State">Irrelevant.</param>
         private void HandleNeutral(object i_State)
         {
-            WindowService?.CloseWindow(null);
+            if (WindowService == null)
+                throw new InvalidOperationException("Window Service must be set");
+            WindowService.CloseWindow(null);
         }
 
         #endregion

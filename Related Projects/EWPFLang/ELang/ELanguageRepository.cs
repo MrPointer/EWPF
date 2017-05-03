@@ -43,7 +43,7 @@ namespace EWPFLang.ELang
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(i_StorageType), i_StorageType, null);
+                    throw new ArgumentOutOfRangeException("i_StorageType", i_StorageType, null);
             }
         }
 
@@ -65,7 +65,7 @@ namespace EWPFLang.ELang
 
             if (LanguageReader == null)
                 throw new InvalidOperationException("Language reader must be set to load a new language, " +
-                                                    "please use the " + nameof(Initialize) + " method.");
+                                                    "please use the Initialize method.");
 
             languageObject = new ELanguage(i_Code, LanguageReader);
             languageObject.LoadDictionaryFromFile(i_LanguagesDirectoryPath ?? ConstantValues.DefaultELanguagesFolderPath);

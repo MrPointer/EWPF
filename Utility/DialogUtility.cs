@@ -56,24 +56,24 @@ namespace EWPF.Utility
             bool useNamespaceOptimization = false, useAssemblyOptimization = false;
             // First, check arguments validity
             if (i_DialogName == null)
-                throw new ArgumentNullException(nameof(i_DialogName), @"Dialog name can't be null");
+                throw new ArgumentNullException("i_DialogName", @"Dialog name can't be null");
             if (string.IsNullOrWhiteSpace(i_DialogName))
             {
                 throw new ArgumentException(@"Dialog name can't be empty or contain only whitespaces",
-                    nameof(i_DialogName));
+                    "i_DialogName");
             }
             if (i_Namespace != null)
             {
                 if (string.IsNullOrWhiteSpace(i_Namespace))
                     throw new ArgumentException(@"Namespace can't be empty or contain only whitespaces",
-                        nameof(i_Namespace));
+                        "i_Namespace");
                 useNamespaceOptimization = true;
             }
             if (i_AssemblyName != null)
             {
                 if (string.IsNullOrWhiteSpace(i_AssemblyName))
                     throw new ArgumentException(@"Assembly name can't be empty or contain only whitespaces",
-                        nameof(i_AssemblyName));
+                        "i_AssemblyName");
                 useAssemblyOptimization = true;
             }
 
@@ -90,7 +90,7 @@ namespace EWPF.Utility
                         if (customAttributes.Length == 0)
                             return false;
                         var currentDialogAttribute = customAttributes[0] as DialogAttribute;
-                        return currentDialogAttribute?.Name == i_DialogName;
+                        return currentDialogAttribute != null && currentDialogAttribute.Name == i_DialogName;
                     });
                 if (requestedDialogType != null) // Has been found in the current assembly
                     break;
@@ -99,7 +99,7 @@ namespace EWPF.Utility
             if (requestedDialogType == null)
             {
                 throw new ArgumentException(@"Given dialog name doesn't exist in this assembly, check spelling",
-                    nameof(i_DialogName));
+                    "i_DialogName");
             }
             var dialogInstance = Activator.CreateInstance(requestedDialogType) as Window;
             if (dialogInstance == null)

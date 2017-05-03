@@ -72,7 +72,8 @@ namespace EWPF.MVVM
             //CommandManager.InvalidateRequerySuggested();
             if (WhenToDo == null) return;
             var handler = m_InternalCanExecuteChanged;
-            handler?.Invoke(this, EventArgs.Empty);
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
         #endregion

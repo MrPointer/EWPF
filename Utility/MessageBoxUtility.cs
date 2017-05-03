@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using EWPF.MVVM.ViewModel;
 using EWPF.Styles;
-using EWPFLang;
 using EWPFLang.ELang;
 
 namespace EWPF.Utility
@@ -88,7 +87,7 @@ namespace EWPF.Utility
                         return IconStrings.INFORMATION;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(i_Image), i_Image, null);
+                        throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
                 }
             }
             // Custom icons are used
@@ -124,7 +123,7 @@ namespace EWPF.Utility
                     throw new KeyNotFoundException();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(i_Image), i_Image, null);
+                    throw new ArgumentOutOfRangeException("i_Image", i_Image, null);
             }
         }
 
@@ -170,7 +169,7 @@ namespace EWPF.Utility
                         i_Options | MessageBoxOptions.RtlReading : i_Options, i_OwnerWindow);
 
                 default: // Should never happen
-                    throw new ArgumentOutOfRangeException(nameof(i_Button), i_Button, null);
+                    throw new ArgumentOutOfRangeException("i_Button", i_Button, null);
             }
         }
 

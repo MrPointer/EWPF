@@ -34,7 +34,7 @@ namespace EWPF.Utility
         public static void CloseWindow(Window i_Window, bool? i_WindowResult)
         {
             if (i_Window == null)
-                throw new ArgumentNullException(nameof(i_Window), @"Given window can't be null");
+                throw new ArgumentNullException("i_Window", @"Given window can't be null");
             i_Window.DialogResult = i_WindowResult;
             i_Window.Close();
         }

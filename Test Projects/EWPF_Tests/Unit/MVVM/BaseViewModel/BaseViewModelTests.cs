@@ -164,7 +164,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         {
             var testVM = MvvmFactory.MakeTestViewModel();
             testVM.ThrowOnInvalidPropertyName = true;
-            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid("NonExistant", testVM));
+            Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid("NonExistent", testVM));
         }
 
         [Test]
@@ -180,8 +180,9 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         public void IsPropertyNameValid_DeepIndirectNonExistingProperty_ReturnsFalse()
         {
             var testVM = MvvmFactory.MakeTestViewModel();
-            const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." + nameof(testVM.NestedProperty.Property) +
-                "." + "NonExistant";
+            const string nestedPropertyName = cm_NESTED_TESTABLE_PROPERTY_NAME + "." +
+                                              "testVM.NestedProperty.Property" +
+                                              "." + "NonExistent";
             bool isValid = testVM.IsPropertyNameValid(nestedPropertyName, testVM);
             Assert.False(isValid);
         }
@@ -200,7 +201,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         {
             var testVM = MvvmFactory.MakeTestViewModel();
             testVM.ThrowOnInvalidPropertyName = true;
-            const string nestedPropertyName = nameof(testVM.NestedProperty) + "." + "NonExisting";
+            const string nestedPropertyName = "testVM.NestedProperty.NonExisting";
             Assert.Catch<ArgumentException>(() => testVM.IsPropertyNameValid(nestedPropertyName, testVM));
         }
 
@@ -263,8 +264,8 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         public void OnPropertiesChanged_ExistingMultipleItemCollection_ParamsVersion_NotFailing()
         {
             var testVM = MvvmFactory.MakeTestViewModel();
-            const string testPropertyName = nameof(testVM.TestProperty);
-            const string nestedPropertyName = nameof(testVM.NestedProperty);
+            const string testPropertyName = "TestProperty";
+            const string nestedPropertyName = "NestedProperty";
             Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(testVM, testPropertyName, nestedPropertyName));
         }
 
@@ -272,7 +273,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         public void OnPropertiesChanged_ExistingMultipleItemCollection_EnumerableVersion_NotFailing()
         {
             var testVM = MvvmFactory.MakeTestViewModel();
-            var singleItemList = new List<string> { nameof(testVM.TestProperty), nameof(testVM.NestedProperty) };
+            var singleItemList = new List<string> { "TestProperty", "NestedProperty" };
             Assert.DoesNotThrow(() => testVM.OnPropertiesChanged(singleItemList, testVM));
         }
 
@@ -314,7 +315,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         public void OnManyPropertiesChanged_SomeExistingSomeNotCollection_ThrowsArgumentException()
         {
             var testVM = MvvmFactory.MakeTestViewModel();
-            const string testPropertyName = nameof(testVM.TestProperty);
+            const string testPropertyName = "testVM.TestProperty";
             const string nonExistingPropertyName = "NonExisting";
             Assert.Catch<ArgumentException>(() => testVM.OnPropertiesChanged(testVM, testPropertyName, nonExistingPropertyName));
         }

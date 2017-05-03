@@ -17,7 +17,7 @@ namespace EWPF.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                throw new ArgumentNullException(nameof(value), @"Value to convert can't be null");
+                throw new ArgumentNullException("value", @"Value to convert can't be null");
             bool boolValue = (bool)value;
             return !boolValue;
         }
