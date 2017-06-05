@@ -114,6 +114,17 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void ShowDialog_SingleParameterConstructorDialog_ReturnsFalse()
+        {
+            const string cDialogName = "parameterCtorDialog";
+            var dataContext = new object();
+            var dialogResult = DialogUtility.ShowDialog(cDialogName, null, dataContext);
+            Assert.False(dialogResult);
+        }
+
+        [Test]
         [Category("Long")]
         public void ShowDialog_ExistingDialog_SpecificNamespace_ExecutesFaster()
         {
@@ -207,6 +218,16 @@ namespace EWPF_Tests.Unit.Utility
     public class FakeDialog : Window
     {
 
+    }
+
+    [Dialog("parameterCtorDialog")]
+    public class ParameterConstructorDialog : Window
+    {
+        /// <inheritdoc />
+        public ParameterConstructorDialog(object i_DataContext)
+        {
+            DataContext = i_DataContext;
+        }
     }
 
     [Serializable]
