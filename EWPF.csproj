@@ -91,6 +91,7 @@
       <DependentUpon>EMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Themes\ThemeUri.cs" />
+    <Compile Include="Themes\ThemeUriFormatException.cs" />
     <Compile Include="Utility\DialogUtility.cs" />
     <Compile Include="Utility\MessageBoxUtility.cs" />
     <Compile Include="Utility\ThemeUtility.cs" />

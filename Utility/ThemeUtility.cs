@@ -83,9 +83,10 @@ namespace EWPF.Utility
                         i_Theme, @"Unexpected theme type");
             }
 
-            // ToDo: Specifically check the Theme syntax of the URI, such as pack://
             if (!Uri.IsWellFormedUriString(themeUriString, UriKind.RelativeOrAbsolute))
-                throw new UriFormatException(i_Theme + " Theme URI is invalid");
+                throw new UriFormatException(i_Theme + " URI is malformed");
+            if (!Regex.IsMatch(themeUriString, ThemeUri.THEME_URI_REGEX_PATTERN))
+                throw new ThemeUriFormatException(themeUriString + " is an invalid WPF-Theme URI");
             var themeUri = new Uri(themeUriString, UriKind.RelativeOrAbsolute);
 
             var loadedThemeDictionary = new ResourceDictionary { Source = themeUri };
@@ -107,13 +108,17 @@ namespace EWPF.Utility
         public static bool LoadTheme(string i_ThemeFilePath)
         {
             if (string.IsNullOrEmpty(i_ThemeFilePath))
-                throw new ArgumentException(@"Theme file's path can't be null or empty", i_ThemeFilePath);
+                throw new
+                    ArgumentException(@"Theme file's path can't be null or empty",
+                                      i_ThemeFilePath);
 
             var fileInfo = new FileInfo(i_ThemeFilePath);
             if (!fileInfo.Exists)
                 throw new ArgumentException(@"Given path doesn't exist on the file system");
             if (fileInfo.Extension.ToLower() != cm_THEME_FILE_EXTENSION)
-                throw new ArgumentException(@"Given theme file must have a " + cm_THEME_FILE_EXTENSION + " extension");
+                throw new ArgumentException(@"Given theme file must have a " +
+                                            cm_THEME_FILE_EXTENSION +
+                                            " extension");
 
             ResourceDictionary loadedDictionary;
             // Load theme from file and dispose the stream as quickly as possible
@@ -121,7 +126,8 @@ namespace EWPF.Utility
             {
                 loadedDictionary = XamlReader.Load(fileStream) as ResourceDictionary;
                 if (loadedDictionary == null)
-                    throw new InvalidCastException("Couldn't cast loaded XAML root element to a ResourceDictionary");
+                    throw new
+                        InvalidCastException("Couldn't cast loaded XAML root element to a ResourceDictionary");
             }
             // Check that the loaded resource dictionary is actually a EWPF-constrained theme.
             string themeName = loadedDictionary[THEME_NAME_KEY] as string;
@@ -141,9 +147,10 @@ namespace EWPF.Utility
 
         /// <summary>
         /// Load theme's special bounded icons into an internal dictionary, 
-        /// storing keys as the icon's file name without the extension, and the values as the icon's full path.
-        /// <para />
-        /// The icons could be retrieved later using either <see cref="GetIconPath"/> or <see cref="GetIcon"/> methods.
+        /// storing keys as the icon's file name without the extension, 
+        /// and the values as the icon's full path. <br />
+        /// The icons could be retrieved later using either 
+        /// <see cref="GetIconPath"/> or <see cref="GetIcon"/> methods.
         /// </summary>
         /// <param name="i_IconsDirectoryPath">Path to the parent directory of all theme's icons.</param>
         /// <param name="i_AcceptedExtensions"></param>
@@ -158,15 +165,21 @@ namespace EWPF.Utility
             if (!dirInfo.Exists)
                 throw new ArgumentException(@"Given path doesn't exist on the file system");
 
-            // Clear the current icons dictionary and add all files in the folder that match one of the given extensions
+            // Clear the current icons dictionary and add all files in the 
+            // folder that match one of the given extensions
             sm_ThemeIcons.Clear();
             var dirFiles = dirInfo.EnumerateFiles();
             // ToDo: Check if LINQ expression can be parallel
-            var acceptedExtensionsCopy = i_AcceptedExtensions as List<string> ?? i_AcceptedExtensions.ToList();
-            var iconFiles = dirFiles.Where(i_Info => acceptedExtensionsCopy.Contains(i_Info.Extension.ToLower()));
+            var acceptedExtensionsCopy =
+                i_AcceptedExtensions as List<string> ??
+                i_AcceptedExtensions.ToList();
+            var iconFiles =
+                dirFiles.Where(i_Info =>
+                                   acceptedExtensionsCopy
+                                       .Contains(i_Info.Extension.ToLower()));
             foreach (var iconFile in iconFiles)
             {
-                string fileNameWithoutExt = Regex.Match(iconFile.Name, @"(.+)(?=(\.))").Value;
+                string fileNameWithoutExt = Path.GetFileNameWithoutExtension(iconFile.Name);
                 // ToDo: Try to compress file's path
                 sm_ThemeIcons.Add(fileNameWithoutExt, iconFile.FullName);
             }
@@ -177,9 +190,11 @@ namespace EWPF.Utility
         #region Getters
 
         /// <summary>
-        /// Searches the given icon name in the internal icons dictionary, and returns its' full path on the file system if found.
+        /// Searches the given icon name in the internal icons dictionary, 
+        /// and returns its' full path on the file system if found.
         /// </summary>
-        /// <param name="i_IconName">Icon's name - Must match the icon's name on the file system without extension.</param>
+        /// <param name="i_IconName">Icon's name - Must match the icon's name on the 
+        /// file system without extension.</param>
         /// <returns>Icon's full path on the file system.</returns>
         public static string GetIconPath(string i_IconName)
         {
@@ -189,15 +204,18 @@ namespace EWPF.Utility
             string iconPath;
             bool isIconExist = sm_ThemeIcons.TryGetValue(i_IconName, out iconPath);
             if (!isIconExist)
-                throw new KeyNotFoundException("Given icon name doesn't exist in the themes' icons - " +
-                                               "Assert the given name is equal to the icon's file name without extension");
+                throw new
+                    KeyNotFoundException("Given icon name doesn't exist in the themes' icons - " +
+                                         "Assert the given name is equal to the icon's file name without extension");
             return iconPath;
         }
 
         /// <summary>
-        /// Searches the given icon name in the internal icons dictionary, and returns it as an <see cref="ImageSource"/> object.
+        /// Searches the given icon name in the internal icons dictionary, 
+        /// and returns it as an <see cref="ImageSource"/> object.
         /// </summary>
-        /// <param name="i_IconName">Icon's name - Must match the icon's name on the file system without extension.</param>
+        /// <param name="i_IconName">Icon's name - Must match the icon's name on the 
+        /// file system without extension.</param>
         /// <returns><see cref="BitmapSource"/> object representing the icon.</returns>
         public static ImageSource GetIcon(string i_IconName)
         {
@@ -227,8 +245,9 @@ namespace EWPF.Utility
                 case cm_WEB_THEME_NAME:
                     return EWPFTheme.Web;
                 default:
-                    throw new Exception("A theme has been found but it's not an EWPF built-in theme. " +
-                                        "Please use the appropriate method.");
+                    throw new
+                        Exception("A theme has been found but it's not an EWPF built-in theme. " +
+                                  "Please use the appropriate method.");
             }
         }
 
@@ -237,9 +256,11 @@ namespace EWPF.Utility
         #region Helper Methods
 
         /// <summary>
-        /// Finds the currently active theme in the app, and returns it as a <see cref="ResourceDictionary"/> object.
+        /// Finds the currently active theme in the app, 
+        /// and returns it as a <see cref="ResourceDictionary"/> object.
         /// </summary>
-        /// <returns>Active theme represented as a full <see cref="ResourceDictionary"/> object.</returns>
+        /// <returns>Active theme represented as a full 
+        /// <see cref="ResourceDictionary"/> object.</returns>
         private static ResourceDictionary GetCurrentTheme()
         {
             var appResourceDict = ApplicationDictionary ?? Application.Current.Resources;
@@ -260,8 +281,17 @@ namespace EWPF.Utility
         /// </summary>
         private static void FillCommonExtensions()
         {
-            var extenstionList = new List<string> { ".bmp", ".jpg", ".jpeg", ".gif", ".png", ".ico" };
-            CommonIconExtensions = extenstionList.AsReadOnly();
+            var extensionList =
+                new List<string>
+                {
+                    ".bmp",
+                    ".jpg",
+                    ".jpeg",
+                    ".gif",
+                    ".png",
+                    ".ico"
+                };
+            CommonIconExtensions = extensionList.AsReadOnly();
         }
 
         #endregion
@@ -271,7 +301,8 @@ namespace EWPF.Utility
         #region Properties
 
         /// <summary>
-        /// Gets an <see cref="IEnumerable{T}"/> of strings representing all commonly used extensions for icon/image files.
+        /// Gets an <see cref="IEnumerable{T}"/> of strings representing 
+        /// all commonly used extensions for icon/image files.
         /// </summary>
         public static IEnumerable<string> CommonIconExtensions { get; private set; }
 
