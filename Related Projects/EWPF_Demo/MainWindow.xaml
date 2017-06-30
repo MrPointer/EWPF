@@ -5,7 +5,7 @@
     xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
     xmlns:mvvm="clr-namespace:EWPF_Demo.MVVM"
     Title="MainWindow"
-    Width="625"
+    Width="650"
     Height="425"
     Style="{StaticResource EWindowStyle}"
     WindowStartupLocation="CenterScreen">
@@ -33,7 +33,8 @@
             <ewpfc:BusyIndicator
                 x:Name="BusyIndicator"
                 IsAccelerated="True"
-                IsAnimated="False"
+                IsAnimated="True"
+                Size="50"
                 Points="18" />
 
         </GroupBox>

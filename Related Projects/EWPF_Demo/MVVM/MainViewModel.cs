@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
@@ -39,6 +40,9 @@ namespace EWPF_Demo.MVVM
         #region Commands
 
         private RelayCommand m_ButtonClickCommand;
+        private ICommand m_ViewLoadedCommand;
+
+
 
         #endregion
 
@@ -51,29 +55,6 @@ namespace EWPF_Demo.MVVM
         #endregion
 
         #region Constructors
-
-        public MainViewModel()
-        {
-            TextboxContent = "Hello World!";
-            OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
-
-            GetStartupTheme();
-
-            // Set custom icons to message boxes
-            string iconsDirPath = Path.GetFullPath(Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) +
-                "Icons" + Path.DirectorySeparatorChar;
-
-            ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
-
-            string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
-            string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
-            string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
-            string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
-
-            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath, 
-                questionIconPath, informationIconPath);            
-        }
 
         #endregion
 
@@ -89,10 +70,41 @@ namespace EWPF_Demo.MVVM
         {
             if (MessageBoxService == null) return;
             MessageBoxService.Show(@"Test",
-                @"Hello World! This is a sample content for a sample message box." 
+                @"Hello World! This is a sample content for a sample message box."
                 + Environment.NewLine +
                 "Did you like it? Please contribute the EWPF team online on Github!",
                 MessageBoxButton.OK, MessageBoxImage.Question);
+        }
+
+        /// <summary>
+        /// Handles the `Loaded` event of the bound view by initializing various aspects 
+        /// of the view, such as <see cref="TextBox"/> contents, 
+        /// <see cref="MessageBox"/> icons, etc.
+        /// </summary>
+        /// <param name="i_State">Irrelevant.</param>
+        private void HandleViewLoaded(object i_State)
+        {
+            TextboxContent = "Hello World!";
+            OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
+
+            GetStartupTheme();
+
+            // Set custom icons to message boxes
+            string iconsDirPath =
+                Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                              @"..\..\..\..\")) +
+                "Icons" + Path.DirectorySeparatorChar;
+
+            ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
+
+            string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
+            string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
+            string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
+            string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
+
+            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath,
+                                             questionIconPath,
+                                             informationIconPath);
         }
 
         #endregion
@@ -163,8 +175,24 @@ namespace EWPF_Demo.MVVM
         /// </summary>
         public ICommand ButtonClickCommand
         {
-            get { return m_ButtonClickCommand ?? (m_ButtonClickCommand = 
-                    new RelayCommand(ShowMessageBox, i_O => true)); }
+            get
+            {
+                return m_ButtonClickCommand ?? (m_ButtonClickCommand =
+                  new RelayCommand(ShowMessageBox, i_O => true));
+            }
+        }
+
+        /// <summary>
+        /// Command used to handle the `Loaded` event of the bound view.
+        /// </summary>
+        public ICommand ViewLoadedCommand
+        {
+            get
+            {
+                return m_ViewLoadedCommand ??
+                       (m_ViewLoadedCommand =
+                            new RelayCommand(HandleViewLoaded, i_O => true));
+            }
         }
 
         #endregion

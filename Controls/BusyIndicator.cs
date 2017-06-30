@@ -36,6 +36,24 @@ namespace EWPF.Controls
 
         #region Dependency Properties
 
+        /// <summary>
+        /// Gets or sets the size of the Control, translated into 
+        /// <see cref="FrameworkElement.Width"/> and <see cref="FrameworkElement.Height"/>.
+        /// </summary>
+        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
+            "Size", typeof(double), typeof(BusyIndicator),
+            new FrameworkPropertyMetadata(default(double)));
+
+        /// <summary>
+        /// Gets or sets the size of the Control, translated into 
+        /// <see cref="FrameworkElement.Width"/> and <see cref="FrameworkElement.Height"/>.
+        /// </summary>
+        public double Size
+        {
+            get { return (double)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
+        }
+
         #region Points
 
         /// <summary>
@@ -162,8 +180,10 @@ namespace EWPF.Controls
         /// Handles an event raised when the number of points to draw has changed.
         /// </summary>
         /// <param name="i_Sender">This class.</param>
-        /// <param name="i_EventArgs">Event args for this method containing the old and new values of the number of points.</param>
-        private static void OnPointsChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
+        /// <param name="i_EventArgs">Event args for this method containing 
+        /// the old and new values of the number of points.</param>
+        private static void OnPointsChanged(DependencyObject i_Sender,
+                                            DependencyPropertyChangedEventArgs i_EventArgs)
         {
             try
             {
@@ -171,13 +191,11 @@ namespace EWPF.Controls
                 if (instance == null)
                     return;
                 instance.m_AngleBetweenPoints = 360.0 / (int)i_EventArgs.NewValue;
-                if (!sm_IsInitialized) return; // Do not proceed if control is not yet initialized
+                if (!sm_IsInitialized)
+                    return; // Do not proceed if control is not yet initialized
                 instance.InvalidateCanvas();
             }
-            catch (Exception ex)
-            {
-                Log.LogException(ex);
-            }
+            catch (Exception ex) { Log.LogException(ex); }
         }
 
         /// <summary>
@@ -185,8 +203,10 @@ namespace EWPF.Controls
         /// meaning when the animating state of the busy indicator has changed.
         /// </summary>
         /// <param name="i_Sender">This class.</param>
-        /// <param name="i_EventArgs">Event args for this method containing the new value of the IsAnimated property.</param>
-        private static void OnIsAnimatedChanged(DependencyObject i_Sender, DependencyPropertyChangedEventArgs i_EventArgs)
+        /// <param name="i_EventArgs">Event args for this method containing 
+        /// the new value of the IsAnimated property.</param>
+        private static void OnIsAnimatedChanged(DependencyObject i_Sender,
+                                                DependencyPropertyChangedEventArgs i_EventArgs)
         {
             try
             {
@@ -201,10 +221,7 @@ namespace EWPF.Controls
                 else
                     instance.StopAnimation();
             }
-            catch (Exception ex)
-            {
-                Log.LogException(ex);
-            }
+            catch (Exception ex) { Log.LogException(ex); }
         }
 
         /// <summary>
@@ -221,7 +238,6 @@ namespace EWPF.Controls
                 m_ParentCanvas.IsVisibleChanged += ParentCanvasIsVisibleChanged;
                 Visibility = Visibility.Hidden; // Hide the control by default unless user sets the 'IsAnimated' property to 'true'
 
-                //CreateAnimationStoryBoard();
                 CreatePointBindings(); // Create all necessary bindings
                 InvalidateCanvas();
 
@@ -294,10 +310,10 @@ namespace EWPF.Controls
             #region X Coordinate
 
             m_PointXCoordinateBinding = new MultiBinding
-                {
-                    Converter = new PointToCanvasLeftConverter(),
-                    ConverterParameter = m_AngleBetweenPoints
-                };
+            {
+                Converter = new PointToCanvasLeftConverter(),
+                ConverterParameter = m_AngleBetweenPoints
+            };
 
             m_PointXCoordinateBinding.Bindings.Add(new Binding("Width") { Source = m_ParentCanvas });
             m_PointXCoordinateBinding.Bindings.Add(new Binding("Height") { Source = m_ParentCanvas });
@@ -309,10 +325,10 @@ namespace EWPF.Controls
             #region Y Coordinate
 
             m_PointYCoordinateBinding = new MultiBinding
-                {
-                    Converter = new PointToCanvasTopConverter(),
-                    ConverterParameter = m_AngleBetweenPoints
-                };
+            {
+                Converter = new PointToCanvasTopConverter(),
+                ConverterParameter = m_AngleBetweenPoints
+            };
 
             m_PointYCoordinateBinding.Bindings.Add(new Binding("Width") { Source = m_ParentCanvas });
             m_PointYCoordinateBinding.Bindings.Add(new Binding("Height") { Source = m_ParentCanvas });
@@ -324,9 +340,9 @@ namespace EWPF.Controls
             #region Stroke
 
             m_StrokeBinding = new Binding("Stroke")
-                {
-                    RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor) { AncestorType = typeof(BusyIndicator) }
-                };
+            {
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor) { AncestorType = typeof(BusyIndicator) }
+            };
 
             #endregion
 
@@ -353,20 +369,24 @@ namespace EWPF.Controls
         private void CreateAnimationStoryBoard()
         {
             try
-            {                
+            {
+
                 m_AnimationStoryboard = new Storyboard();
                 var renderTransformAnimation = new DoubleAnimation
                 {
                     AccelerationRatio = IsAccelerated ? 0.4 : 0,
                     DecelerationRatio = IsAccelerated ? 0.6 : 0,
-                    Duration = new Duration(TimeSpan.FromSeconds(1.0).Add(TimeSpan.FromMilliseconds(200.0))),
+                    Duration =
+                        new Duration(TimeSpan.FromSeconds(1.0)
+                                             .Add(TimeSpan.FromMilliseconds(200.0))),
                     From = 0.0,
                     To = 360.0,
                     RepeatBehavior = RepeatBehavior.Forever
                 };
                 m_AnimationStoryboard.Children.Add(renderTransformAnimation);
                 Storyboard.SetTarget(renderTransformAnimation, m_ParentCanvas);
-                Storyboard.SetTargetProperty(renderTransformAnimation, new PropertyPath("RenderTransform.Angle"));
+                Storyboard.SetTargetProperty(renderTransformAnimation,
+                                             new PropertyPath("RenderTransform.Angle"));
             }
             catch (Exception ex)
             {
@@ -375,9 +395,10 @@ namespace EWPF.Controls
         }
 
         /// <summary>
-        /// Starts the animation bound to the busy indicator, changing its' visibility to Visibility.Visible if needed.
+        /// Starts the animation bound to the busy indicator, 
+        /// changing its' visibility to Visibility.Visible if needed.
         /// </summary>
-        public void StartAnimation()
+        private void StartAnimation()
         {
             try
             {
@@ -385,7 +406,9 @@ namespace EWPF.Controls
                 if (m_AnimationStoryboard == null)
                     CreateAnimationStoryBoard();
                 if (m_AnimationStoryboard == null) // Validate storyboard has been created
-                    throw new InvalidOperationException("Animation storyboard hasn't been created, can't proceed to display animation");
+                    throw new
+                        NullReferenceException("Animation storyboard hasn't been created, " +
+                                                  "can't proceed to display animation");
 
                 if (Visibility != Visibility.Visible) // Control isn't visible
                     Visibility = Visibility.Visible;
@@ -398,9 +421,10 @@ namespace EWPF.Controls
         }
 
         /// <summary>
-        /// Stops the animation bound to the busy indicator and sets its' visibility state to <see cref="Visibility.Hidden"/>.
+        /// Stops the animation bound to the busy indicator and 
+        /// sets its' visibility state to <see cref="Visibility.Hidden"/>.
         /// </summary>
-        public void StopAnimation()
+        private void StopAnimation()
         {
             if (m_AnimationStoryboard == null)
                 return;
