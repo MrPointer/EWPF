@@ -32,9 +32,11 @@
 
             <ewpfc:BusyIndicator
                 x:Name="BusyIndicator"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 IsAccelerated="True"
                 IsAnimated="True"
-                Size="50"
+                Margin="10"
                 Points="18" />
 
         </GroupBox>

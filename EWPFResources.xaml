@@ -2,6 +2,18 @@
 
     <ResourceDictionary.MergedDictionaries>
 
+        <!--#region Converters-->
+
+        <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
+
+        <!--#endregion-->
+
+        <!--#region Advanced Dictionaries-->
+
+        <ResourceDictionary Source="Dictionaries/ObjectDictionary.xaml" />
+
+        <!--#endregion-->
+
         <!--#region Control Templates-->
 
         <ResourceDictionary Source="Styles/EWindow.xaml" />
@@ -26,18 +38,6 @@
         <!--#region Custom Controls-->
 
         <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
-
-        <!--#endregion-->
-
-        <!--#region Converters-->
-
-        <ResourceDictionary Source="Converters/ConvertersDictionary.xaml" />
-
-        <!--#endregion-->
-
-        <!--#region Advanced Dictionaries-->
-
-        <ResourceDictionary Source="Dictionaries/ObjectDictionary.xaml" />
 
         <!--#endregion-->
 

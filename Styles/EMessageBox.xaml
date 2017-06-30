@@ -82,17 +82,17 @@
             </Button>
             <Button
                 x:Name="NegativeButton"
-                Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource MBoxNButtonPositonConverter}}"
+                Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource MBoxNButtonPositionConverter}}"
                 Command="{Binding Path=NegativeCommand}"
                 Content="{Binding Path=NegativeText}"
-                Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisiblity}}" />
+                Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisibility}}" />
 
             <Button
                 x:Name="NeutralButton"
                 Grid.Column="2"
                 Command="{Binding Path=NeutralCommand}"
                 Content="{Binding Path=NeutralText}"
-                Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisiblity}}" />
+                Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisibility}}" />
 
         </Grid>
 
