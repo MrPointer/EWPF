@@ -30,7 +30,7 @@ namespace EWPF.MVVM
 
         #endregion
 
-        #region Methods        
+        #region Methods
 
         #region Implementation of INotifyPropertiesChanged
 
@@ -76,7 +76,7 @@ namespace EWPF.MVVM
 
         #endregion
 
-        #region Validation
+        #region Property Setters
 
         /// <summary>
         /// Sets a new given value to the given property the 'MVVM' way.
@@ -87,7 +87,7 @@ namespace EWPF.MVVM
         /// <param name="i_PropertyToSet">Reference to the property that should be set. Ref is used to keep it permanent.</param>
         /// <param name="i_NewValueToAssign">Reference to the value that should be assigned. Must not be null.</param>
         /// <returns>True if a new value has been set, false otherwise.</returns>
-        internal bool SetValue<T>(ref T i_PropertyToSet, T i_NewValueToAssign)
+        public static bool SetValue<T>(ref T i_PropertyToSet, T i_NewValueToAssign)
         {
             if (i_NewValueToAssign == null)
                 throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
@@ -109,17 +109,23 @@ namespace EWPF.MVVM
         /// <param name="i_NewValueToAssign">Reference to the value that should be assigned. Must not be null.</param>
         /// <param name="i_Comparer">Reference to a comparer that is capable of comparing two values of the TS type.</param>
         /// <returns>True if a new value has been set, false otherwise.</returns>
-        internal bool SetCollectionValue<T, TS>(ref T i_PropertyToSet, T i_NewValueToAssign, IEqualityComparer<TS> i_Comparer = null)
+        public static bool SetCollectionValue<T, TS>(ref T i_PropertyToSet, T i_NewValueToAssign,
+            IEqualityComparer<TS> i_Comparer = null)
             where T : IEnumerable<TS>
         {
             if (i_NewValueToAssign == null)
-                throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
+                throw new ArgumentNullException("i_NewValueToAssign",
+                    @"Can't ever assign a null value - This is WPF!");
 
             if (i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
                 return false;
             i_PropertyToSet = i_NewValueToAssign;
             return true;
         }
+
+        #endregion
+
+        #region Validation    
 
         /// <summary>
         /// Verifies that a given property name matches a real, public, instance property on this object. 

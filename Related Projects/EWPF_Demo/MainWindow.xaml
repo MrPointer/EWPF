@@ -70,8 +70,8 @@
                     Grid.Column="1"
                     Margin="3"
                     Padding="3"
-                    MaxLines="{Binding Path=TextboxContent.Length}"
-                    Text="{Binding Path=TextboxContent}" />
+                    MaxLines="{Binding Path=TextBoxContent.Length}"
+                    Text="{Binding Path=TextBoxContent}" />
 
                 <StackPanel
                     Grid.Row="1"

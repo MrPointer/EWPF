@@ -37,7 +37,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             byte? valueToAssign = 2;
             byte? propertyToSet = null;
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
             Assert.True(isValueSet);
         }
 
@@ -47,7 +47,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             byte? propertyToSet = 0;
             byte? valueToAssign = null;
-            Assert.Catch<ArgumentNullException>(() => testVM.SetValue(ref propertyToSet, valueToAssign));
+            Assert.Catch<ArgumentNullException>(() => EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 10;
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
             Assert.False(isValueSet);
         }
 
@@ -66,7 +66,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new object();
             var valueToAssign = propertyToSet;
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
             Assert.False(isValueSet);
         }
 
@@ -76,7 +76,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 5;
-            bool isValueSet = testVM.SetValue(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
             Assert.True(isValueSet);
         }
 
@@ -86,7 +86,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 5;
-            testVM.SetValue(ref propertyToSet, valueToAssign);
+            EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
             Assert.ByVal(propertyToSet, new EqualConstraint(valueToAssign));
         }
 
@@ -101,7 +101,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             IEnumerable<byte> propertyToTest = null;
             IEnumerable<byte> valueToAssign = null;
             Assert.Catch<ArgumentNullException>(() =>
-            testVM.SetCollectionValue<IEnumerable<byte>, byte>(ref propertyToTest, valueToAssign));
+            EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(ref propertyToTest, valueToAssign));
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 2 };
-            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
             Assert.False(isValueSet);
         }
 
@@ -120,7 +120,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
             var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 3, 5 };
-            bool isValueSet = testVM.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
+            bool isValueSet = EWPF.MVVM.BaseViewModel.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
             Assert.True(isValueSet);
         }
 

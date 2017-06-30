@@ -14,7 +14,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
 
         #region Fields
 
-        private const string cm_NULL_ACTION_EXCPETION_MESSAGE = "Action to be executed can't be null";
+        private const string cm_NULL_ACTION_EXCEPTION_MESSAGE = "Action to be executed can't be null";
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         {
             var relayCommand = MvvmFactory.MakeRelayCommand();
             var nullReferenceException = Assert.Catch<NullReferenceException>(() => relayCommand.Execute(null));
-            StringAssert.AreEqualIgnoringCase(cm_NULL_ACTION_EXCPETION_MESSAGE, nullReferenceException.Message);
+            StringAssert.AreEqualIgnoringCase(cm_NULL_ACTION_EXCEPTION_MESSAGE, nullReferenceException.Message);
         }
 
         [Test]
