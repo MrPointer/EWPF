@@ -67,19 +67,15 @@ namespace EWPF.Utility
             switch (i_Theme)
             {
                 case EWPFTheme.Light:
-                    themeUriString = ThemeUri.LightTheme;
+                    themeUriString = ThemeUri.LIGHT_THEME;
                     break;
 
                 case EWPFTheme.Dark:
-                    themeUriString = ThemeUri.DarkTheme;
+                    themeUriString = ThemeUri.DARK_THEME;
                     break;
 
                 case EWPFTheme.Web:
-                    themeUriString = ThemeUri.WebTheme;
-                    break;
-
-                case EWPFTheme.Web2:
-                    themeUriString = ThemeUri.WebTheme2;
+                    themeUriString = ThemeUri.WEB_THEME;
                     break;
 
                 default:
@@ -305,7 +301,6 @@ namespace EWPF.Utility
         /// <summary>
         /// Web Theme 1.
         /// </summary>
-        Web,
-        Web2
+        Web
     }
 }

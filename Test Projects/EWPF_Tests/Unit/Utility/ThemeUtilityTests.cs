@@ -57,17 +57,13 @@ namespace EWPF_Tests.Unit.Utility
         }
 
         [Test]
+        [Category("ConstantDependent")]
         public void LoadThemeEnumParam_InvalidUri_ThrowsUriFormatException()
         {
             ThemeUtility.ApplicationDictionary = MergeDictionaries("abc");
 
-            string oldThemeUri = ThemeUri.LightTheme;
-            ThemeUri.LightTheme = "bad_value";
-
             Assert.Catch<UriFormatException>(() => ThemeUtility.LoadTheme(EWPFTheme.Light));
-
-            ThemeUri.LightTheme = oldThemeUri;
-        }
+           }
 
         #endregion
 

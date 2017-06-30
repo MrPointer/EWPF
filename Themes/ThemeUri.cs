@@ -17,19 +17,17 @@ namespace EWPF.Themes
         /// <summary>
         /// Uri format of the light theme.
         /// </summary>
-        public static string LightTheme = "pack://application:,,,/EWPF;component/Themes/LightTheme.xaml";
+        public const string LIGHT_THEME = "pack://application:,,,/EWPF;component/Themes/LightTheme.xaml";
 
         /// <summary>
         /// Uri format of the dark theme.
         /// </summary>
-        public static string DarkTheme = "pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml";
+        public const string DARK_THEME = "pack://application:,,,/EWPF;component/Themes/DarkTheme.xaml";
 
         /// <summary>
         /// Uri format of the web theme.
         /// </summary>
-        public static string WebTheme = "pack://application:,,,/EWPF;component/Themes/WebTheme.xaml";
-
-        public static string WebTheme2 = "pack://application:,,,/EWPF;component/Themes/WebTheme2.xaml";
+        public const string WEB_THEME = "pack://application:,,,/EWPF;component/Themes/WebTheme.xaml";
 
         #endregion
 
