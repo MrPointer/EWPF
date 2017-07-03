@@ -50,11 +50,9 @@
     <Compile Include="ELang\ELanguageRepository.cs" />
     <Compile Include="ELang\LanguageXmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordNotFoundExcpetion.cs" />
+    <Compile Include="WordNotFoundException.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

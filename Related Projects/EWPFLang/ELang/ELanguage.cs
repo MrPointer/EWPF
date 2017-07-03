@@ -49,11 +49,14 @@ namespace EWPFLang.ELang
         public void LoadDictionaryFromFile(string i_LanguageFileParentDirectory)
         {
             if (string.IsNullOrEmpty(i_LanguageFileParentDirectory))
-                throw new ArgumentException(@"Language file's path can't be null or empty", i_LanguageFileParentDirectory);
+                throw new ArgumentException(@"Language file's path can't be null or empty",
+                    i_LanguageFileParentDirectory);
             if (Code == LanguageCode.None)
-                throw new InvalidOperationException("Language code must be set to load a dictionary");
+                throw new InvalidOperationException(
+                    "Language code must be set to load a dictionary");
             if (LanguageReader == null)
-                throw new InvalidOperationException("Language reader must be set to load a language");
+                throw new InvalidOperationException(
+                    "Language reader must be set to load a language");
 
             string fileName = Code.ToString();
 
@@ -71,7 +74,8 @@ namespace EWPFLang.ELang
             string wordValue;
             bool isWordFound = Dictionary.TryGetValue(i_WordCode, out wordValue);
             if (!isWordFound) // Word not found in dictionary
-                throw new WordNotFoundExcpetion("Current dictionary doesn't contain the given word", i_WordCode);
+                throw new WordNotFoundException("Current dictionary doesn't contain the given word",
+                    i_WordCode);
             return wordValue;
         }
 
@@ -97,12 +101,12 @@ namespace EWPFLang.ELang
         }
 
         /// <summary>
-        /// Describes the language code of this language object.
+        /// Gets or sets the language code.
         /// </summary>
         public LanguageCode Code { get; set; }
 
         /// <summary>
-        /// Gets a reference to language reader object, used to read a language file to memory.
+        /// Gets a reference to a language reader object, used to read a language file to memory.
         /// </summary>
         public IELanguageReader LanguageReader { get; private set; }
 

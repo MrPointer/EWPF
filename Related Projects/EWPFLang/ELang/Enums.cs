@@ -12,7 +12,7 @@
         Italian,
         Spanish,
         Hebrew,
-        Deutch,
+        Deutsch,
         Russian
     }
 

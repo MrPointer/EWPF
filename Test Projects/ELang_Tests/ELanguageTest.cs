@@ -83,7 +83,7 @@ namespace ELang_UnitTests
             };
             var elang = LanguageFactory.MakeELanguage(LanguageCode.EnglishUs, testableReader);
             elang.LoadDictionaryFromFile("Test");
-            Assert.Catch<WordNotFoundExcpetion>(() => elang.GetWord(DictionaryCode.No));
+            Assert.Catch<WordNotFoundException>(() => elang.GetWord(DictionaryCode.No));
         }
 
         [Test]
