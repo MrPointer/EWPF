@@ -38,6 +38,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KISBase, Version=1.0.6421.39402, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Debug\KISBase.dll</HintPath>
+    </Reference>
+    <Reference Include="KISLogger, Version=1.0.6423.27824, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Debug\KISLogger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -105,10 +113,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\C#\MPLogger\MPLogger.csproj">
-      <Project>{6831d41d-c7d2-414e-a0c1-861dd61df8f5}</Project>
-      <Name>MPLogger</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\EWPF.csproj">
       <Project>{a041388b-9279-48f8-a64d-445cf42e5663}</Project>
       <Name>EWPF</Name>

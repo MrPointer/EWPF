@@ -42,6 +42,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KISBase, Version=1.0.6421.39402, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Debug\KISBase.dll</HintPath>
+    </Reference>
+    <Reference Include="KISLogger, Version=1.0.6423.27824, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Debug\KISLogger.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -226,10 +234,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\C#\MPLogger\MPLogger.csproj">
-      <Project>{6831d41d-c7d2-414e-a0c1-861dd61df8f5}</Project>
-      <Name>MPLogger</Name>
-    </ProjectReference>
     <ProjectReference Include="Related Projects\EWPFLang\EWPFLang.csproj">
       <Project>{6c9bb701-6ff8-4807-99e6-4a869b57e116}</Project>
       <Name>EWPFLang</Name>

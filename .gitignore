@@ -254,3 +254,8 @@ paket-files/
 # Custom Ignores
 /Related Projects/EWPF_Test/Languages
 /Themes/*.png
+
+# External Dependencies
+![Dd]ependencies/
+![Dd]ependencies/Debug/
+![Dd]ependencies/Release/

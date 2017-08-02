@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KISBase</name>
+    </assembly>
+    <members>
+        <member name="T:KISBase.NullObject">
+            <summary>
+            A class following the Null-object design pattern, 
+            used instead of 'null' where appropriate - 
+            Creating a more readable and better maintained code design. <br />
+            Note that this object simply inherits <see cref="T:System.Object"/>, 
+            without adding any additional members.
+            <remarks>
+            This class implements a sort of a hybrid between the Singleton design pattern 
+            and the Factory design pattern - It stores a cached instance of the object, 
+            lazily instantiated, yet gives access to it through the <see cref="M:KISBase.NullObject.Create"/> method, 
+            instead of a classic getter.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:KISBase.NullObject.Create">
+            <summary>
+            Creates a <see cref="T:KISBase.NullObject"/> if necessary and returns a reference to it. <br />
+            This method attempts to lazily instantiate the object on the first call 
+            to it, returning a cached instance afterward to save memory.
+            </summary>
+            <returns>Reference to the created object.</returns>
+        </member>
+        <member name="T:KISBase.Parse.IniConfigurationParser`1">
+            <summary>
+            A class used to parse an ini configuration, assuming it has the format of:
+            'PropertyName=PropertyValue'.
+            <para />
+            Please note that <see cref="!:TModel"/> MUST have all of its' convertible from a string value.
+            </summary>
+            <typeparam name="TModel"></typeparam>
+        </member>
+        <member name="M:KISBase.Parse.IniConfigurationParser`1.Parse(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:KISBase.Parse.IParser`2">
+            <summary>
+            An interface declaring methods to parse some sort of input.
+            </summary>
+            <typeparam name="TInput">Type of the object that's being parsed.</typeparam>
+            <typeparam name="TOutput">Type of the object that stores the parsed information.</typeparam>
+        </member>
+        <member name="M:KISBase.Parse.IParser`2.Parse(`0)">
+            <summary>
+            Performs a parse operation on the given object.
+            </summary>
+            <param name="i_ParsableObject">Reference to an object that should be parsed.</param>
+            <returns>Reference to an object that stores the parsing result.</returns>
+        </member>
+        <member name="T:KISBase.Parse.IXmlParser`1">
+            <summary>
+            An abstract class representing a XML parser, used to parse DOM-trees in the form of <see cref="T:System.Xml.Linq.XElement"/> objects.
+            </summary>
+            <typeparam name="T">Type of the object that stores the parsed information.</typeparam>
+        </member>
+        <member name="T:KISBase.Random.IRandomNumberGenerator">
+            <summary>
+            An interface declaring methods to generate random numbers.
+            </summary>
+        </member>
+        <member name="T:KISBase.Random.IRandomValueGenerator`1">
+            <summary>
+            An interface delcaring methods to generate random values.
+            </summary>
+            <typeparam name="TValue">Type of the value to be generated.</typeparam>
+        </member>
+        <member name="M:KISBase.Random.IRandomValueGenerator`1.GenerateValue``1(``0)">
+            <summary>
+            Generates a random value using a custom algorithm that can be based on the given range predicate.
+            </summary>
+            <typeparam name="TBase">Type of a paramater the random function is based on (such as an integer range).</typeparam>
+            <param name="i_RandomBase">Some value that the random function will be based on, if any. 
+            This is an optional parameter.</param>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:KISBase.Random.RandomNumberInRangeGenerator">
+            <summary>
+            A class used to generate random numbers that fall in a defined range. <br />
+            For example: Given the range of 1-20, 13 is a valid number but 21 isn't.
+            </summary>
+        </member>
+        <member name="M:KISBase.Random.RandomNumberInRangeGenerator.GenerateValue``1(``0)">
+            <inheritdoc />
+        </member>
+        <member name="T:KISBase.Utilities.ConversionUtils">
+            <summary>
+            A static utility class providing utility methods to convert between different types of objects.
+            </summary>
+        </member>
+        <member name="M:KISBase.Utilities.ConversionUtils.ConvertFromString``1(System.String)">
+            <summary>
+            Converts a given string to the given explicit type, which is known at compile time, 
+            assuming it can be converted to easilly.
+            </summary>
+            <typeparam name="T">Type of the object we're converting to.</typeparam>
+            <param name="i_ConvertedString">The string to convert.</param>
+            <returns>Reference to the converted type.</returns>
+        </member>
+        <member name="M:KISBase.Utilities.ConversionUtils.ConvertFromString(System.String,System.Type)">
+            <summary>
+            Converts a given string to the given explicit type, which is known only at runtime, 
+            assuming it can be converted to easilly.
+            Returns an object.
+            </summary>
+            <param name="i_ConvertedString">The string to convert.</param>
+            <param name="i_TypeToConvertTo">The type we're converting to.</param>
+            <returns>Reference to the converted object.</returns>
+        </member>
+    </members>
+</doc>
