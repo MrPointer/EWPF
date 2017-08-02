@@ -31,7 +31,7 @@ namespace EWPF_Tests.Unit.Converters
         [Test]
         public void Convert_NullValue_ReturnsCollapsed()
         {
-            var converter = new StringToVisiblityConverter();
+            var converter = new StringToVisibilityConverter();
             const Visibility expectedVisibility = Visibility.Collapsed;
 
             var visibility = converter.Convert(null, typeof(string), 
@@ -42,7 +42,7 @@ namespace EWPF_Tests.Unit.Converters
         [Test]
         public void Convert_EmptyStringValue_ReturnsCollapsed()
         {
-            var converter = new StringToVisiblityConverter();
+            var converter = new StringToVisibilityConverter();
             const Visibility expectedVisibility = Visibility.Collapsed;
 
             var visibility = converter.Convert(string.Empty, typeof(string),
@@ -53,7 +53,7 @@ namespace EWPF_Tests.Unit.Converters
         [Test]
         public void Convert_ValidStringValue_ReturnsVisible()
         {
-            var converter = new StringToVisiblityConverter();
+            var converter = new StringToVisibilityConverter();
 
             const Visibility expectedVisibility = Visibility.Visible;
             const string validString = "abc";

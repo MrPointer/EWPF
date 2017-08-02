@@ -70,7 +70,8 @@
             <Button
                 x:Name="PositiveButton"
                 Command="{Binding Path=PositiveCommand}"
-                Content="{Binding Path=PositiveText}">
+                Content="{Binding Path=PositiveText}"
+                IsDefault="True">
 
                 <Grid.Column>
                     <MultiBinding Converter="{StaticResource MBoxButtonPositionConverter}">
@@ -80,11 +81,13 @@
                 </Grid.Column>
 
             </Button>
+
             <Button
                 x:Name="NegativeButton"
                 Grid.Column="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource MBoxNButtonPositionConverter}}"
                 Command="{Binding Path=NegativeCommand}"
                 Content="{Binding Path=NegativeText}"
+                IsCancel="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource InverseVisibilityToBool}}"
                 Visibility="{Binding Path=NegativeText, Converter={StaticResource StringToVisibility}}" />
 
             <Button
@@ -92,6 +95,7 @@
                 Grid.Column="2"
                 Command="{Binding Path=NeutralCommand}"
                 Content="{Binding Path=NeutralText}"
+                IsCancel="{Binding ElementName=NeutralButton, Path=Visibility, Converter={StaticResource VisibilityToBool}}"
                 Visibility="{Binding Path=NeutralText, Converter={StaticResource StringToVisibility}}" />
 
         </Grid>

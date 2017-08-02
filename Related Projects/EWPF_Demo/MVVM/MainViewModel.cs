@@ -69,11 +69,12 @@ namespace EWPF_Demo.MVVM
         private void ShowMessageBox(object i_State)
         {
             if (MessageBoxService == null) return;
-            MessageBoxService.Show(@"Test",
+            var result = MessageBoxService.Show(@"Test",
                 @"Hello World! This is a sample content for a sample message box."
                 + Environment.NewLine +
                 "Did you like it? Please contribute the EWPF team online on Github!",
-                MessageBoxButton.OK, MessageBoxImage.Question);
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            Console.WriteLine(result);
         }
 
         /// <summary>
