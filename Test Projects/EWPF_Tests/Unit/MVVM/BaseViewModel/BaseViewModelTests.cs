@@ -32,28 +32,17 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         #region Set Value
 
         [Test]
-        public void SetValue_NullProperty_ReturnsTrue()
+        public void SetValue_NullPropertyToSet_ReturnsFalse()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
-            byte? valueToAssign = 2;
-            byte? propertyToSet = null;
+            const string valueToAssign = "abc";
+            string propertyToSet = null;
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
-            Assert.True(isValueSet);
-        }
-
-        [Test]
-        public void SetValue_NullValue_ThrowsArgumentNullException()
-        {
-            var testVM = MvvmFactory.MakeTestViewModel();
-            byte? propertyToSet = 0;
-            byte? valueToAssign = null;
-            Assert.Catch<ArgumentNullException>(() => EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign));
-        }
+            Assert.False(isValueSet);
+        }        
 
         [Test]
         public void SetValue_EqualByVal_ReturnsFalse()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 10;
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
@@ -63,7 +52,6 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         [Test]
         public void SetValue_EqualByRef_ReturnsFalse()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new object();
             var valueToAssign = propertyToSet;
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
@@ -73,7 +61,6 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         [Test]
         public void SetValue_UnequalByValue_ReturnsTrue()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 5;
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
@@ -83,7 +70,6 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         [Test]
         public void SetValue_UnequalByValue_ChangesPassedReference()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             byte propertyToSet = 10;
             const byte valueToAssign = 5;
             EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
@@ -95,19 +81,28 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         #region Set Collection Value
 
         [Test]
+        public void SetCollectionValue_NullPropertyToSet_ReturnsFalse()
+        {
+            IEnumerable<byte> propertyToSet = null;
+            var valueToAssign = new List<byte>();
+            bool isValueSet =
+                EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
+                    ref propertyToSet, valueToAssign);
+            Assert.False(isValueSet);
+        }
+
+        [Test]
         public void SetValue_NullValue_ThrowsNullArgumentException()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
-            IEnumerable<byte> propertyToTest = null;
-            IEnumerable<byte> valueToAssign = null;
+            IEnumerable<byte> propertyToTest = null;            
             Assert.Catch<ArgumentNullException>(() =>
-            EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(ref propertyToTest, valueToAssign));
+                EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
+                    ref propertyToTest, null));
         }
 
         [Test]
         public void SetValue_EqualCollectionsByVal_ReturnsFalse()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 2 };
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);
@@ -117,7 +112,6 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         [Test]
         public void SetValue_UnequalCollectionByVal_ReturnsTrue()
         {
-            var testVM = MvvmFactory.MakeTestViewModel();
             var propertyToSet = new List<byte> { 1, 2 };
             var valueToAssign = new List<byte> { 1, 3, 5 };
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetCollectionValue<List<byte>, byte>(ref propertyToSet, valueToAssign);

@@ -92,7 +92,7 @@ namespace EWPF.MVVM
             if (i_NewValueToAssign == null)
                 throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
 
-            if (i_PropertyToSet.Equals(i_NewValueToAssign))
+            if (i_PropertyToSet == null || i_PropertyToSet.Equals(i_NewValueToAssign))
                 return false;
             i_PropertyToSet = i_NewValueToAssign;
             return true;
@@ -117,7 +117,7 @@ namespace EWPF.MVVM
                 throw new ArgumentNullException("i_NewValueToAssign",
                     @"Can't ever assign a null value - This is WPF!");
 
-            if (i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
+            if (i_PropertyToSet == null || i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
                 return false;
             i_PropertyToSet = i_NewValueToAssign;
             return true;
