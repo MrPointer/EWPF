@@ -32,11 +32,11 @@
 
             <ewpfc:BusyIndicator
                 x:Name="BusyIndicator"
+                Margin="10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 IsAccelerated="True"
-                IsAnimated="True"
-                Margin="10"
+                IsAnimated="False"
                 Points="18" />
 
         </GroupBox>
@@ -208,6 +208,12 @@
                     </TabItem>
                     <TabItem Header="ListView">
                         <ListView>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Column 1" />
+                                    <GridViewColumn Header="Column 2" />
+                                </GridView>
+                            </ListView.View>
                             <ListViewItem Content="Item 1" />
                             <ListViewItem Content="Item 2" />
                         </ListView>
