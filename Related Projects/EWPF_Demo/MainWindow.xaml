@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
     xmlns:mvvm="clr-namespace:EWPF_Demo.MVVM"
+    xmlns:ewpfa="clr-namespace:EWPF.Attached;assembly=EWPF"
     Title="MainWindow"
     Width="650"
     Height="425"
@@ -207,7 +208,7 @@
                         </ListBox>
                     </TabItem>
                     <TabItem Header="ListView">
-                        <ListView>
+                        <ListView ewpfa:GridViewExtensions.StretchedColumns="True">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Column 1" />
