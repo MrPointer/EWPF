@@ -25,6 +25,26 @@ namespace EWPF.Attached
 
         #region Methods
 
+        public static bool? GetIsFocused(DependencyObject i_Element)
+        {
+            if (i_Element == null)
+            {
+                throw new ArgumentNullException("i_Element");
+            }
+
+            return (bool?)i_Element.GetValue(IsFocusedProperty);
+        }
+
+        public static void SetIsFocused(DependencyObject i_Element, bool? i_Value)
+        {
+            if (i_Element == null)
+            {
+                throw new ArgumentNullException("i_Element");
+            }
+
+            i_Element.SetValue(IsFocusedProperty, i_Value);
+        }
+
         private static void IsFocusedChanged(DependencyObject i_DependencyObject, DependencyPropertyChangedEventArgs i_E)
         {
             var frameworkElement = (FrameworkElement)i_DependencyObject;
@@ -77,27 +97,7 @@ namespace EWPF.Attached
 
         public static readonly DependencyProperty IsFocusedProperty =
         DependencyProperty.RegisterAttached("IsFocused", typeof(bool?), typeof(FocusExtension),
-                                            new FrameworkPropertyMetadata(IsFocusedChanged));
-
-        public static bool? GetIsFocused(DependencyObject i_Element)
-        {
-            if (i_Element == null)
-            {
-                throw new ArgumentNullException("i_Element");
-            }
-
-            return (bool?)i_Element.GetValue(IsFocusedProperty);
-        }
-
-        public static void SetIsFocused(DependencyObject i_Element, bool? i_Value)
-        {
-            if (i_Element == null)
-            {
-                throw new ArgumentNullException("i_Element");
-            }
-
-            i_Element.SetValue(IsFocusedProperty, i_Value);
-        }
+                                            new FrameworkPropertyMetadata(IsFocusedChanged));        
 
         #endregion
     }

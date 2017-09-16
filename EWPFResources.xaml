@@ -32,6 +32,8 @@
         <ResourceDictionary Source="Styles/ComboBoxItem.xaml" />
         <ResourceDictionary Source="Styles/ListBox.xaml" />
         <ResourceDictionary Source="Styles/ListView.xaml" />
+        <ResourceDictionary Source="Styles/GridViewColumnHeader.xaml" />
+        <ResourceDictionary Source="Styles/ListViewItem.xaml" />
 
         <!--#endregion-->
 

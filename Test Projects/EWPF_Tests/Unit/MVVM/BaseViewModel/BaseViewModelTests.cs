@@ -32,13 +32,21 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         #region Set Value
 
         [Test]
-        public void SetValue_NullPropertyToSet_ReturnsFalse()
+        public void SetValue_NullPropertyToSet_ReturnsTrue()
         {
             const string valueToAssign = "abc";
             string propertyToSet = null;
             bool isValueSet = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, valueToAssign);
-            Assert.False(isValueSet);
-        }        
+            Assert.True(isValueSet);
+        }
+
+        [Test]
+        public void SetValue_NullValueToAssign_ThrowsArgumentNullException()
+        {
+            string propertyToSet = null;
+            Assert.Catch<ArgumentNullException>(() =>
+                EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, null));
+        }
 
         [Test]
         public void SetValue_EqualByVal_ReturnsFalse()
@@ -81,20 +89,20 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         #region Set Collection Value
 
         [Test]
-        public void SetCollectionValue_NullPropertyToSet_ReturnsFalse()
+        public void SetCollectionValue_NullPropertyToSet_ReturnsTrue()
         {
             IEnumerable<byte> propertyToSet = null;
             var valueToAssign = new List<byte>();
             bool isValueSet =
                 EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
                     ref propertyToSet, valueToAssign);
-            Assert.False(isValueSet);
+            Assert.True(isValueSet);
         }
 
         [Test]
         public void SetValue_NullValue_ThrowsNullArgumentException()
         {
-            IEnumerable<byte> propertyToTest = null;            
+            IEnumerable<byte> propertyToTest = null;
             Assert.Catch<ArgumentNullException>(() =>
                 EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
                     ref propertyToTest, null));
