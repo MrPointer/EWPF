@@ -10,10 +10,9 @@ using System.Windows.Threading;
 namespace EWPF.Attached
 {
     /// <summary>
-    /// A static class defining various extensions to the <see cref="GridView"/> control 
-    /// in the form of attached properties.
+    /// A static class defining attached properties to handle column stretching in a <see cref="GridView"/>.
     /// </summary>
-    public static class GridViewExtensions
+    public static class GridViewStretchedColumns
     {
         #region Events
 
@@ -29,38 +28,16 @@ namespace EWPF.Attached
 
         #endregion
 
-        #region Methods
+        #region Methods        
 
         /// <summary>
-        /// Sets a value indicating whether the grid's columns should be stretched - 
-        /// Evenly sized across the entire <see cref="GridView"/>.
-        /// </summary>
-        public static void SetStretchedColumns(DependencyObject i_Element, bool i_Value)
-        {
-            if (i_Element == null)
-                throw new ArgumentNullException("i_Element", @"Element can't be null");
-            i_Element.SetValue(StretchedColumnsProperty, i_Value);
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the grid's columns should be stretched - 
-        /// Evenly sized across the entire <see cref="GridView"/>.
-        /// </summary>
-        public static bool GetStretchedColumns(DependencyObject i_Element)
-        {
-            if (i_Element == null)
-                throw new ArgumentNullException("i_Element", @"Element can't be null");
-            return (bool)i_Element.GetValue(StretchedColumnsProperty);
-        }
-
-        /// <summary>
-        /// Handle a change to the <see cref="StretchedColumnsProperty"/> 
+        /// Handles a change to the <see cref="StretchedColumnsProperty"/> 
         /// by stretching all grid's columns evenly when requested to, 
         /// and reverting to normal when not.
         /// </summary>
         /// <param name="i_DependencyObject">Source <see cref="ListView"/>.</param>
         /// <param name="i_E">Arguments containing the new property value.</param>
-        private static void IsStretchedColumnsChanged(DependencyObject i_DependencyObject,
+        private static void HandleStretchedColumnsChanged(DependencyObject i_DependencyObject,
             DependencyPropertyChangedEventArgs i_E)
         {
             Application.Current.Dispatcher.Invoke(async () =>
@@ -145,17 +122,46 @@ namespace EWPF.Attached
 
         #region Properties
 
+        #region Stretched Columns
+
         /// <summary>
         /// Gets or sets a value indicating whether the grid's columns should be stretched - 
         /// Evenly sized across the entire <see cref="GridView"/>.
         /// </summary>
         public static readonly DependencyProperty StretchedColumnsProperty =
             DependencyProperty.RegisterAttached(
-                "StretchedColumns", typeof(bool), typeof(GridViewExtensions),
+                "StretchedColumns",
+                typeof(bool),
+                typeof(GridViewStretchedColumns),
                 new FrameworkPropertyMetadata(default(bool),
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.AffectsRender |
-                    FrameworkPropertyMetadataOptions.AffectsArrange, IsStretchedColumnsChanged));
+                    FrameworkPropertyMetadataOptions.AffectsArrange,
+                    HandleStretchedColumnsChanged));
+
+        /// <summary>
+        /// Sets a value indicating whether the grid's columns should be stretched - 
+        /// Evenly sized across the entire <see cref="GridView"/>.
+        /// </summary>
+        public static void SetStretchedColumns(DependencyObject i_Element, bool i_Value)
+        {
+            if (i_Element == null)
+                throw new ArgumentNullException("i_Element", @"Element can't be null");
+            i_Element.SetValue(StretchedColumnsProperty, i_Value);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the grid's columns should be stretched - 
+        /// Evenly sized across the entire <see cref="GridView"/>.
+        /// </summary>
+        public static bool GetStretchedColumns(DependencyObject i_Element)
+        {
+            if (i_Element == null)
+                throw new ArgumentNullException("i_Element", @"Element can't be null");
+            return (bool)i_Element.GetValue(StretchedColumnsProperty);
+        }
+
+        #endregion
 
         #endregion
     }

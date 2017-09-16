@@ -1,10 +1,10 @@
 ﻿<Window
-    x:Class="EWPF_Demo.MainWindow"
+    x:Class="EWPF_Demo.View.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
-    xmlns:mvvm="clr-namespace:EWPF_Demo.MVVM"
     xmlns:ewpfa="clr-namespace:EWPF.Attached;assembly=EWPF"
+    xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
+    xmlns:viewModel="clr-namespace:EWPF_Demo.ViewModel"
     Title="MainWindow"
     Width="650"
     Height="425"
@@ -12,7 +12,7 @@
     WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        <mvvm:MainViewModel />
+        <viewModel:MainViewModel />
     </Window.DataContext>
 
     <Window.Resources />
@@ -99,7 +99,8 @@
                     Grid.Column="0"
                     Margin="3"
                     ItemsSource="{Binding Source={StaticResource ThemesEnum}}"
-                    SelectedItem="{Binding Path=ActiveTheme, Mode=TwoWay}" />
+                    SelectedItem="{Binding Path=ActiveTheme,
+                                           Mode=TwoWay}" />
                 <Slider
                     Grid.Row="2"
                     Grid.Column="1"
@@ -208,15 +209,27 @@
                         </ListBox>
                     </TabItem>
                     <TabItem Header="ListView">
-                        <ListView ewpfa:GridViewExtensions.StretchedColumns="True">
+                        <ListView
+                            ewpfa:GridViewSort.AutoSort="True"
+                            ewpfa:GridViewStretchedColumns.StretchedColumns="True"
+                            IsSynchronizedWithCurrentItem="True"
+                            ItemsSource="{Binding Persons}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Column 1" />
-                                    <GridViewColumn Header="Column 2" />
+                                    <GridViewColumn
+                                        ewpfa:GridViewSort.PropertyName="FirstName"
+                                        DisplayMemberBinding="{Binding Path=FirstName}"
+                                        Header="First Name" />
+                                    <GridViewColumn
+                                        ewpfa:GridViewSort.PropertyName="LastName"
+                                        DisplayMemberBinding="{Binding Path=LastName}"
+                                        Header="Last Name" />
+                                    <GridViewColumn
+                                        ewpfa:GridViewSort.PropertyName="Age"
+                                        DisplayMemberBinding="{Binding Path=Age}"
+                                        Header="Age" />
                                 </GridView>
                             </ListView.View>
-                            <ListViewItem Content="Item 1" />
-                            <ListViewItem Content="Item 2" />
                         </ListView>
                     </TabItem>
 

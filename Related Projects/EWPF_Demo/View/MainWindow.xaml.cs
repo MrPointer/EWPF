@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
-using EWPF_Demo.MVVM;
+using EWPF_Demo.Model;
+using EWPF_Demo.ViewModel;
 
-namespace EWPF_Demo
+namespace EWPF_Demo.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

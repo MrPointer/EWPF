@@ -1,6 +1,6 @@
 ﻿using EWPFLang.ELang;
 
-namespace EWPF_Demo
+namespace EWPF_Demo.Model
 {
     /// <summary>
     /// A static class listing various constant values used throughout the application.
@@ -13,7 +13,7 @@ namespace EWPF_Demo
 
         #region Fields
 
-        internal const LanguageCode DEFAULT_LANGUAGE = LanguageCode.Hebrew;
+        internal const LanguageCode DEFAULT_LANGUAGE = LanguageCode.EnglishUs;
 
         #endregion
 

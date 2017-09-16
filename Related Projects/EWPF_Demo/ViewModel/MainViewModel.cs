@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,9 +7,11 @@ using System.Windows.Input;
 using EWPF.MVVM;
 using EWPF.MVVM.Services;
 using EWPF.Utility;
+using EWPF_Demo.Model;
 
-namespace EWPF_Demo.MVVM
+namespace EWPF_Demo.ViewModel
 {
+    /// <inheritdoc />
     /// <summary>
     /// A class representing a view model bound to the MainWindow view.
     /// </summary>
@@ -30,6 +33,9 @@ namespace EWPF_Demo.MVVM
         private const string cm_ACTIVE_THEME_PROPERTY_NAME = "ActiveTheme";
         private EWPFTheme m_ActiveTheme;
 
+        private const string cm_PERSONS_PROPERTY_NAME = "Persons";
+        private ObservableCollection<Person> m_Persons;
+
         /// <summary>
         /// Used to test a deep-hierarchy searching method defined in the base class.
         /// </summary>
@@ -42,8 +48,6 @@ namespace EWPF_Demo.MVVM
         private RelayCommand m_ButtonClickCommand;
         private ICommand m_ViewLoadedCommand;
 
-
-
         #endregion
 
         #region Other
@@ -55,6 +59,17 @@ namespace EWPF_Demo.MVVM
         #endregion
 
         #region Constructors
+
+        public MainViewModel()
+        {
+            Persons = new ObservableCollection<Person>
+            {
+                new Person {FirstName = "John", LastName = "Snow", Age = 21},
+                new Person {FirstName = "Dayneris", LastName = "Targarian", Age = 20},
+                new Person {FirstName = "Tyrion", LastName = "Lanister", Age = 35},
+                new Person {FirstName = "Aryia", LastName = "Stark", Age = 17}
+            };
+        }
 
         #endregion
 
@@ -144,7 +159,11 @@ namespace EWPF_Demo.MVVM
         public string TextBoxContent
         {
             get { return m_TextBoxContent; }
-            set { SetValue(ref m_TextBoxContent, value); }
+            set
+            {
+                SetValue(ref m_TextBoxContent, value);
+                OnPropertyChanged(cm_TEXT_BOX_CONTENT_PROPERTY_NAME, this);
+            }
         }
 
         /// <summary>
@@ -156,7 +175,21 @@ namespace EWPF_Demo.MVVM
             set
             {
                 SetValue(ref m_ActiveTheme, value);
+                OnPropertyChanged(cm_ACTIVE_THEME_PROPERTY_NAME, this);
                 ApplyTheme();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a collection of <see cref="Person"/>s.
+        /// </summary>
+        public ObservableCollection<Person> Persons
+        {
+            get { return m_Persons; }
+            set
+            {
+                SetCollectionValue<ObservableCollection<Person>, Person>(ref m_Persons, value);                
+                OnPropertyChanged(cm_PERSONS_PROPERTY_NAME, this);
             }
         }
 

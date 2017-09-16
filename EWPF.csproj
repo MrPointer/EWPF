@@ -68,7 +68,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attached\GridViewExtensions.cs" />
+    <Compile Include="Attached\GridViewSort.cs" />
+    <Compile Include="Attached\GridViewStretchedColumns.cs" />
     <Compile Include="Controls\EWindow.cs" />
     <Compile Include="Converters\CanvasSizeConverter.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />
