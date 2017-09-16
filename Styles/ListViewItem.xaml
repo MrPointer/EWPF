@@ -21,8 +21,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Margin" Value="0,0,0,1" />
         <Setter Property="Padding" Value="5,2,5,2" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="{DynamicResource ThemeFont}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
 
