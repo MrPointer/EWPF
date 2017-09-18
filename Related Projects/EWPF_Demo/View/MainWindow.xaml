@@ -9,6 +9,8 @@
     Width="650"
     Height="425"
     Style="{StaticResource EWindowStyle}"
+    WindowState="Maximized"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
@@ -20,13 +22,13 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <GroupBox Margin="5" Header="Progress Bars">

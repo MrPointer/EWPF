@@ -77,16 +77,66 @@ namespace EWPF.Controls
             obj.SetValue(WindowBorderBroperty, value);
         }
 
-        #region sizing event handlers
+        #region Event Handlers
 
-        private void OnSizeSouth(object sender, MouseButtonEventArgs e) { OnSize(sender, SizingAction.South); }
-        private void OnSizeNorth(object sender, MouseButtonEventArgs e) { OnSize(sender, SizingAction.North); }
-        private void OnSizeEast(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.East : SizingAction.West); }
-        private void OnSizeWest(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.West : SizingAction.East); }
-        private void OnSizeNorthWest(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.NorthWest : SizingAction.NorthEast); }
-        private void OnSizeNorthEast(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.NorthEast : SizingAction.NorthWest); }
-        private void OnSizeSouthEast(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.SouthEast : SizingAction.SouthWest); }
-        private void OnSizeSouthWest(object sender, MouseButtonEventArgs e) { OnSize(sender, ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight ? SizingAction.SouthWest : SizingAction.SouthEast); }
+        #region OnSize
+
+        private void OnSizeSouth(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender, SizingAction.South);
+        }
+
+        private void OnSizeNorth(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender, SizingAction.North);
+        }
+
+        private void OnSizeEast(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.East
+                    : SizingAction.West);
+        }
+
+        private void OnSizeWest(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.West
+                    : SizingAction.East);
+        }
+
+        private void OnSizeNorthWest(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.NorthWest
+                    : SizingAction.NorthEast);
+        }
+
+        private void OnSizeNorthEast(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.NorthEast
+                    : SizingAction.NorthWest);
+        }
+
+        private void OnSizeSouthEast(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.SouthEast
+                    : SizingAction.SouthWest);
+        }
+        private void OnSizeSouthWest(object sender, MouseButtonEventArgs e)
+        {
+            OnSize(sender,
+                ((FrameworkElement)sender).FlowDirection == FlowDirection.LeftToRight
+                    ? SizingAction.SouthWest
+                    : SizingAction.SouthEast);
+        }
 
         private void OnSize(object sender, SizingAction action)
         {
@@ -99,6 +149,10 @@ namespace EWPF.Controls
                 });
             }
         }
+
+        #endregion
+
+        #region Titlebar Buttons
 
         private void IconMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -135,23 +189,16 @@ namespace EWPF.Controls
 
         }
 
-        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            sender.ForWindowFromTemplate(
-                i_W =>
-                {
-                    if (i_W.WindowState != WindowState.Maximized) return;
-                    i_W.MaxHeight = SystemParameters.WorkArea.Height + 14;
-                    i_W.MaxWidth = SystemParameters.WorkArea.Width + 14;
-                });
-        }
-
-        void TitleBarMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void TitleBarMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var window = sender.WindowFromTemplate();
             if (window == null) return;
+
+            if (IsFullScreenWindow(window))
+                return;
+
             if (e.ClickCount > 1 && (window.ResizeMode == ResizeMode.CanResize ||
-                window.ResizeMode == ResizeMode.CanResizeWithGrip))
+                                     window.ResizeMode == ResizeMode.CanResizeWithGrip))
             {
                 MaxButtonClick(sender, e);
             }
@@ -161,25 +208,60 @@ namespace EWPF.Controls
             }
         }
 
-        void TitleBarMouseMove(object sender, MouseEventArgs e)
+        private void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                sender.ForWindowFromTemplate(w =>
+            var window = sender.WindowFromTemplate();
+            if (window == null) return;
+
+            if (IsFullScreenWindow(window))
+                return;
+
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            if (window.WindowState != WindowState.Maximized)
+                return;
+
+            window.BeginInit();
+
+            const double adjustment = 40.0;
+            var mouse1 = e.MouseDevice.GetPosition(window);
+            double width1 = Math.Max(window.ActualWidth - 2 * adjustment, adjustment);
+
+            window.WindowState = WindowState.Normal;
+
+            double width2 = Math.Max(window.ActualWidth - 2 * adjustment, adjustment);
+            window.Left = (mouse1.X - adjustment) * (1 - width2 / width1);
+            window.Top = -7;
+
+            window.EndInit();
+            window.DragMove();
+        }
+
+        /// <summary>
+        /// Checks whether a given window is in full screen mode by checking whether its' 
+        /// <see cref="ResizeMode"/> is set to <see cref="ResizeMode.NoResize"/> and its' 
+        /// <see cref="WindowState"/> is set to <see cref="WindowState.Maximized"/>.
+        /// </summary>
+        /// <param name="i_TargetWindow">Window to check.</param>
+        /// <returns>True if window is in full screen, false otherwise.</returns>
+        private bool IsFullScreenWindow(Window i_TargetWindow)
+        {
+            return i_TargetWindow.ResizeMode == ResizeMode.NoResize &&
+                   i_TargetWindow.WindowState == WindowState.Maximized;
+        }
+
+        #endregion
+
+        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            sender.ForWindowFromTemplate(
+                i_W =>
                 {
-                    if (w.WindowState != WindowState.Maximized) return;
-                    w.BeginInit();
-                    const double adjustment = 40.0;
-                    var mouse1 = e.MouseDevice.GetPosition(w);
-                    var width1 = Math.Max(w.ActualWidth - 2 * adjustment, adjustment);
-                    w.WindowState = WindowState.Normal;
-                    var width2 = Math.Max(w.ActualWidth - 2 * adjustment, adjustment);
-                    w.Left = (mouse1.X - adjustment) * (1 - width2 / width1);
-                    w.Top = -7;
-                    w.EndInit();
-                    w.DragMove();
+                    if (i_W.WindowState != WindowState.Maximized) return;
+                    i_W.MaxHeight = SystemParameters.WorkArea.Height + 14;
+                    i_W.MaxWidth = SystemParameters.WorkArea.Width + 14;
                 });
-            }
         }
 
         #endregion
