@@ -133,7 +133,7 @@
                         the window outside of the current monitor on multi-display computers.
                     -->
                     <Grid Background="Transparent">
-                        <Grid Margin="7" SizeChanged="OnWindowSizeChanged">
+                        <Grid x:Name="RootGrid" Margin="7" SizeChanged="OnWindowSizeChanged">
                             <Border
                                 Width="Auto"
                                 Height="Auto"
@@ -188,7 +188,9 @@
                                                 Margin="4,0,0,7"
                                                 HorizontalAlignment="Right"
                                                 MouseLeftButtonDown="IconMouseLeftButtonDown"
-                                                Source="{Binding Path=Icon, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                Source="{Binding Path=Icon,
+                                                                 Mode=OneWay,
+                                                                 RelativeSource={RelativeSource TemplatedParent}}" />
                                             <TextBlock
                                                 x:Name="Caption"
                                                 Grid.Column="1"
@@ -197,7 +199,9 @@
                                                 VerticalAlignment="Center"
                                                 FontWeight="SemiBold"
                                                 Foreground="{DynamicResource PrimaryTextBrush}"
-                                                Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                Text="{Binding Path=Title,
+                                                               Mode=OneWay,
+                                                               RelativeSource={RelativeSource TemplatedParent}}" />
 
                                             <!--#region Buttons-->
                                             <Button
@@ -378,6 +382,13 @@
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
                             <Setter TargetName="PART_Border" Property="Effect" Value="{x:Null}" />
                             <Setter TargetName="PART_Border" Property="BorderThickness" Value="{DynamicResource WindowDialogBorderThickness}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="NoResize" />
+                                <Condition Property="WindowState" Value="Maximized" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="RootGrid" Property="Margin" Value="0,0,0,14" />
                         </MultiTrigger>
                         <Trigger Property="ResizeMode" Value="CanMinimize">
                             <Setter TargetName="MaxButton" Property="IsEnabled" Value="False" />
