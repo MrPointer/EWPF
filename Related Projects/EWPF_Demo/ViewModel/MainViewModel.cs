@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,6 +37,9 @@ namespace EWPF_Demo.ViewModel
         private const string cm_PERSONS_PROPERTY_NAME = "Persons";
         private ObservableCollection<Person> m_Persons;
 
+        private const string cm_AMOUNT_OF_PROGRESS_PROPERTY_NAME = "AmountOfProgress";
+        private int m_AmountOfProgress;
+
         /// <summary>
         /// Used to test a deep-hierarchy searching method defined in the base class.
         /// </summary>
@@ -69,6 +73,7 @@ namespace EWPF_Demo.ViewModel
                 new Person {FirstName = "Tyrion", LastName = "Lanister", Age = 35},
                 new Person {FirstName = "Aryia", LastName = "Stark", Age = 17}
             };
+            DoAndRepeatExtensiveTask();
         }
 
         #endregion
@@ -145,6 +150,37 @@ namespace EWPF_Demo.ViewModel
             ActiveTheme = m_ActiveTheme;
         }
 
+        /// <summary>
+        /// Performs an extensive <see cref="Task"/> in the background, 
+        /// repeating it until the bound view is closed.
+        /// </summary>
+        private async void DoAndRepeatExtensiveTask()
+        {
+            while (true)
+            {
+                AmountOfProgress = 0;
+                await CountFromOneToHundredInTenSeconds();
+            }
+        }
+
+        /// <summary>
+        /// Count from 1 to 100 in 10 seconds by forcing delays. <br />
+        /// Counting is executed in a background <see cref="Task"/>, 
+        /// reporting change in progress through the <see cref="IProgressService"/>.
+        /// </summary>
+        private Task CountFromOneToHundredInTenSeconds()
+        {
+            return Task.Run(async () =>
+            {
+                const int timeToWaitBetweenEveryCount = 100;
+                for (int i = 0; i < 100; ++i)
+                {
+                    ++AmountOfProgress;
+                    await Task.Delay(timeToWaitBetweenEveryCount);
+                }
+            });
+        }
+
         #endregion
 
         #endregion
@@ -188,8 +224,21 @@ namespace EWPF_Demo.ViewModel
             get { return m_Persons; }
             set
             {
-                SetCollectionValue<ObservableCollection<Person>, Person>(ref m_Persons, value);                
+                SetCollectionValue<ObservableCollection<Person>, Person>(ref m_Persons, value);
                 OnPropertyChanged(cm_PERSONS_PROPERTY_NAME, this);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the amount of progress made in some long-running task.
+        /// </summary>
+        public int AmountOfProgress
+        {
+            get { return m_AmountOfProgress; }
+            set
+            {
+                SetValue(ref m_AmountOfProgress, value);
+                OnPropertyChanged(cm_AMOUNT_OF_PROGRESS_PROPERTY_NAME, this);
             }
         }
 
@@ -231,6 +280,11 @@ namespace EWPF_Demo.ViewModel
         /// on top of the bound view.
         /// </summary>
         public IMessageBoxService MessageBoxService { get; set; }
+
+        /// <summary>
+        /// Gets or sets a service used to report progress in long-running tasks.
+        /// </summary>
+        public IProgressService ProgressService { get; set; }
 
         #endregion
 
