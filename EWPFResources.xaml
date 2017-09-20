@@ -34,6 +34,7 @@
         <ResourceDictionary Source="Styles/ListView.xaml" />
         <ResourceDictionary Source="Styles/GridViewColumnHeader.xaml" />
         <ResourceDictionary Source="Styles/ListViewItem.xaml" />
+        <ResourceDictionary Source="Styles/ProgressBar.xaml" />
 
         <!--#endregion-->
 

@@ -31,14 +31,30 @@
 
         <GroupBox Margin="5" Header="Progress Bars">
 
-            <ewpfc:BusyIndicator
-                x:Name="BusyIndicator"
-                Margin="10"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                IsAccelerated="True"
-                IsAnimated="False"
-                Points="18" />
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ewpfc:BusyIndicator
+                    x:Name="BusyIndicator"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsAccelerated="True"
+                    IsAnimated="True"
+                    Points="18" />
+
+                <ProgressBar
+                    Grid.Row="1"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Minimum="0" Maximum="100" Value="25" />
+
+            </Grid>
 
         </GroupBox>
 
