@@ -14,7 +14,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ListViewItem}">
+    <Style x:Key="GridViewItemStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ListViewItemFocusVisual}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
