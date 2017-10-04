@@ -84,6 +84,7 @@
     <Compile Include="MVVM\Services\IDispatcherService.cs" />
     <Compile Include="MVVM\Services\IPageService.cs" />
     <Compile Include="MVVM\Services\IService.cs" />
+    <Compile Include="MVVM\Services\IViewModelService.cs" />
     <Compile Include="MVVM\Services\IWindowService.cs" />
     <Compile Include="MVVM\ViewModel\EMsgBoxViewModel.cs" />
     <Compile Include="MVVM\INotifyPropertiesChanged.cs" />
