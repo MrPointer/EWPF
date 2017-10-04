@@ -214,6 +214,9 @@
                             ewpfa:GridViewStretchedColumns.StretchedColumns="True"
                             IsSynchronizedWithCurrentItem="True"
                             ItemsSource="{Binding Persons}">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource GridViewItemStyle}" />
+                            </ListView.Resources>
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn
