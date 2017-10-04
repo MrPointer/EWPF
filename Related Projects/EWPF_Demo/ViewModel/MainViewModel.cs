@@ -69,11 +69,45 @@ namespace EWPF_Demo.ViewModel
                 new Person {FirstName = "Tyrion", LastName = "Lanister", Age = 35},
                 new Person {FirstName = "Aryia", LastName = "Stark", Age = 17}
             };
+            TextBoxContent = "Hello World!";
+            OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
         }
 
         #endregion
 
         #region Methods
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handles the `Loaded` event of the bound view by initializing various aspects 
+        /// of the view, such as <see cref="TextBox"/> contents, 
+        /// <see cref="MessageBox"/> icons, etc.
+        /// </summary>
+        /// <param name="i_State">Irrelevant.</param>
+        private void HandleViewLoaded(object i_State)
+        {
+            GetStartupTheme();
+
+            // Set custom icons to message boxes
+            string iconsDirPath =
+                Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\..\..\")) +
+                "Icons" + Path.DirectorySeparatorChar;
+
+            ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
+
+            string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
+            string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
+            string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
+            string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
+
+            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath,
+                questionIconPath,
+                informationIconPath);
+        }
+
+        #endregion
 
         #region Commands
 
@@ -90,37 +124,6 @@ namespace EWPF_Demo.ViewModel
                 "Did you like it? Please contribute the EWPF team online on Github!",
                 MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             Console.WriteLine(result);
-        }
-
-        /// <summary>
-        /// Handles the `Loaded` event of the bound view by initializing various aspects 
-        /// of the view, such as <see cref="TextBox"/> contents, 
-        /// <see cref="MessageBox"/> icons, etc.
-        /// </summary>
-        /// <param name="i_State">Irrelevant.</param>
-        private void HandleViewLoaded(object i_State)
-        {
-            TextBoxContent = "Hello World!";
-            OnPropertyChanged(cm_TEXT_BOX_LENGTH_PROPERTY_NAME, this);
-
-            GetStartupTheme();
-
-            // Set custom icons to message boxes
-            string iconsDirPath =
-                Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                                              @"..\..\..\..\")) +
-                "Icons" + Path.DirectorySeparatorChar;
-
-            ThemeUtility.LoadThemeIcons(iconsDirPath, ThemeUtility.CommonIconExtensions);
-
-            string errorIconPath = ThemeUtility.GetIconPath("ErrorIcon");
-            string warningIconPath = ThemeUtility.GetIconPath("WarningIcon");
-            string questionIconPath = ThemeUtility.GetIconPath("QuestionIcon");
-            string informationIconPath = ThemeUtility.GetIconPath("InformationIcon");
-
-            MessageBoxUtility.SetCustomIcons(errorIconPath, warningIconPath,
-                                             questionIconPath,
-                                             informationIconPath);
         }
 
         #endregion
@@ -188,7 +191,7 @@ namespace EWPF_Demo.ViewModel
             get { return m_Persons; }
             set
             {
-                SetCollectionValue<ObservableCollection<Person>, Person>(ref m_Persons, value);                
+                SetCollectionValue<ObservableCollection<Person>, Person>(ref m_Persons, value);
                 OnPropertyChanged(cm_PERSONS_PROPERTY_NAME, this);
             }
         }

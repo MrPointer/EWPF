@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Attached\GridViewSort.cs" />
     <Compile Include="Attached\GridViewStretchedColumns.cs" />
+    <Compile Include="Attached\TextBoxCaretPosition.cs" />
     <Compile Include="Controls\EWindow.cs" />
     <Compile Include="Converters\CanvasSizeConverter.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />

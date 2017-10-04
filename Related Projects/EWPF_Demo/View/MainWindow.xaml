@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ewpfa="clr-namespace:EWPF.Attached;assembly=EWPF"
     xmlns:ewpfc="clr-namespace:EWPF.Controls;assembly=EWPF"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:viewModel="clr-namespace:EWPF_Demo.ViewModel"
     Title="MainWindow"
     Width="650"
@@ -15,7 +16,11 @@
         <viewModel:MainViewModel />
     </Window.DataContext>
 
-    <Window.Resources />
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=ViewLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
 
@@ -71,6 +76,8 @@
                     Grid.Column="1"
                     Margin="3"
                     Padding="3"
+                    ewpfa:FocusExtension.IsFocused="True"
+                    ewpfa:TextBoxCaretPosition.IsPositionedAtTheEnd="True"
                     MaxLines="{Binding Path=TextBoxContent.Length}"
                     Text="{Binding Path=TextBoxContent}" />
 
@@ -215,7 +222,7 @@
                             IsSynchronizedWithCurrentItem="True"
                             ItemsSource="{Binding Persons}">
                             <ListView.Resources>
-                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource GridViewItemStyle}" />
+                                <Style BasedOn="{StaticResource GridViewItemStyle}" TargetType="{x:Type ListViewItem}" />
                             </ListView.Resources>
                             <ListView.View>
                                 <GridView>
