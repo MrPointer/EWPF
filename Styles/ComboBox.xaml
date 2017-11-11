@@ -34,7 +34,7 @@
 
                     <Border
                         x:Name="templateRoot"
-                        Background="{DynamicResource AccentBrush}"
+                        Background="{DynamicResource PrimaryBrush}"
                         BorderBrush="{DynamicResource PrimaryTextBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
@@ -44,8 +44,8 @@
                             Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
                             Margin="0"
                             HorizontalAlignment="Right"
-                            Background="{DynamicResource GraphicsBrush}"
-                            BorderBrush="{DynamicResource GraphicsBrush}"
+                            Background="{DynamicResource AccentBrush}"
+                            BorderBrush="{DynamicResource AccentBrush}"
                             BorderThickness="1"
                             SnapsToDevicePixels="true">
                             <Path
@@ -54,7 +54,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z"
-                                Fill="{DynamicResource SecondaryTextBrush}" />
+                                Fill="{DynamicResource PrimaryTextBrush}" />
                         </Border>
 
                     </Border>
@@ -63,19 +63,19 @@
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="arrow" Property="Fill" Value="{DynamicResource PrimaryTextBrush}" />
-                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource AccentLightBrush}" />
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource PrimaryHighlightBrush}" />
                             <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource PrimaryTextBrush}" />
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="arrow" Property="Fill" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource AccentLightBrush}" />
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource PrimaryHighlightBrush}" />
                             <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="arrow" Property="Fill" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
-                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource AccentLightBrush}" />
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource AccentOpaqueBrush}" />
                             <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource PrimaryTextOpaqueBrush}" />
                             <Setter TargetName="templateRoot" Property="Opacity" Value="75" />
                             <Setter TargetName="arrow" Property="Opacity" Value="75" />
@@ -151,20 +151,23 @@
                 Grid.ColumnSpan="2"
                 Margin="1"
                 AllowsTransparency="True"
-                IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                IsOpen="{Binding IsDropDownOpen,
+                                 Mode=TwoWay,
+                                 RelativeSource={RelativeSource TemplatedParent}}"
                 Placement="Bottom"
                 PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
 
                 <themes:SystemDropShadowChrome
                     x:Name="shadow"
-                    MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+                    MinWidth="{Binding ActualWidth,
+                                       ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
                     Color="Transparent">
 
                     <Border
                         x:Name="dropDownBorder"
-                        Background="{DynamicResource AccentLightBrush}"
-                        BorderBrush="{DynamicResource GraphicsBrush}"
+                        Background="{DynamicResource PrimaryBrush}"
+                        BorderBrush="{DynamicResource PrimaryTextBrush}"
                         BorderThickness="1">
                         <ScrollViewer x:Name="DropDownScrollViewer">
 
@@ -178,9 +181,12 @@
                                     VerticalAlignment="Top">
                                     <Rectangle
                                         x:Name="opaqueRect"
-                                        Width="{Binding ActualWidth, ElementName=dropDownBorder}"
-                                        Height="{Binding ActualHeight, ElementName=dropDownBorder}"
-                                        Fill="{Binding Background, ElementName=dropDownBorder}" />
+                                        Width="{Binding ActualWidth,
+                                                        ElementName=dropDownBorder}"
+                                        Height="{Binding ActualHeight,
+                                                         ElementName=dropDownBorder}"
+                                        Fill="{Binding Background,
+                                                       ElementName=dropDownBorder}" />
                                 </Canvas>
 
                                 <ItemsPresenter
@@ -203,7 +209,9 @@
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                IsChecked="{Binding IsDropDownOpen,
+                                    Mode=TwoWay,
+                                    RelativeSource={RelativeSource TemplatedParent}}"
                 Style="{StaticResource ComboBoxToggleButton2}" />
 
             <ContentPresenter
@@ -280,12 +288,14 @@
                 x:Name="PART_Popup"
                 Grid.ColumnSpan="2"
                 AllowsTransparency="true"
-                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                IsOpen="{Binding IsDropDownOpen,
+                                 RelativeSource={RelativeSource TemplatedParent}}"
                 Placement="Bottom"
                 PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                 <themes:SystemDropShadowChrome
                     x:Name="shadow"
-                    MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+                    MinWidth="{Binding ActualWidth,
+                                       ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
                     Color="Transparent">
                     <Border
@@ -303,9 +313,12 @@
                                     VerticalAlignment="Top">
                                     <Rectangle
                                         x:Name="opaqueRect"
-                                        Width="{Binding ActualWidth, ElementName=dropDownBorder}"
-                                        Height="{Binding ActualHeight, ElementName=dropDownBorder}"
-                                        Fill="{Binding Background, ElementName=dropDownBorder}" />
+                                        Width="{Binding ActualWidth,
+                                                        ElementName=dropDownBorder}"
+                                        Height="{Binding ActualHeight,
+                                                         ElementName=dropDownBorder}"
+                                        Fill="{Binding Background,
+                                                       ElementName=dropDownBorder}" />
                                 </Canvas>
                                 <ItemsPresenter
                                     x:Name="ItemsPresenter"
@@ -322,7 +335,9 @@
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                IsChecked="{Binding IsDropDownOpen,
+                                    Mode=TwoWay,
+                                    RelativeSource={RelativeSource TemplatedParent}}"
                 Style="{StaticResource ComboBoxToggleButton2}" />
             <Border
                 x:Name="border"
@@ -333,7 +348,8 @@
                     Margin="{TemplateBinding Padding}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                    IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                    IsReadOnly="{Binding IsReadOnly,
+                                         RelativeSource={RelativeSource TemplatedParent}}"
                     Style="{StaticResource ComboBoxEditableTextBox}" />
             </Border>
         </Grid>
@@ -369,12 +385,7 @@
     <Style TargetType="{x:Type ComboBox}">
 
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-
-        <Setter Property="Background" Value="{DynamicResource DividerBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
-
-
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="6,3,5,3" />
 
