@@ -34,7 +34,9 @@ namespace EWPFLang.ELang
         /// Initializes the repository by setting the <see cref="LanguageReader"/> to the requested implementation.
         /// </summary>
         /// <param name="i_StorageType">Represents how the language files to be loaded are stored.</param>
-        public static void Initialize(LanguageStorageType i_StorageType)
+        /// <param name="i_LanguageDirectoryPath">Path to the main languages directory path, 
+        /// containing all language files used by the library.</param>
+        public static void Initialize(LanguageStorageType i_StorageType, string i_LanguageDirectoryPath = null)
         {
             switch (i_StorageType)
             {
@@ -45,6 +47,7 @@ namespace EWPFLang.ELang
                 default:
                     throw new ArgumentOutOfRangeException("i_StorageType", i_StorageType, null);
             }
+            LanguagesDirectoryPath = i_LanguageDirectoryPath;
         }
 
         /// <summary>
@@ -68,7 +71,9 @@ namespace EWPFLang.ELang
                                                     "please use the Initialize method.");
 
             languageObject = new ELanguage(i_Code, LanguageReader);
-            languageObject.LoadDictionaryFromFile(i_LanguagesDirectoryPath ?? ConstantValues.DefaultELanguagesFolderPath);
+            languageObject.LoadDictionaryFromFile(i_LanguagesDirectoryPath ??
+                                                  LanguagesDirectoryPath ?? ConstantValues
+                                                      .DefaultELanguagesFolderPath);
             Languages.Add(i_Code, languageObject);
             return languageObject;
         }
@@ -91,6 +96,11 @@ namespace EWPFLang.ELang
         /// Gets or sets the language reader used to read new languages.
         /// </summary>
         public static IELanguageReader LanguageReader { get; set; }
+
+        /// <summary>
+        /// Gets the languages directory path set externally.
+        /// </summary>
+        public static string LanguagesDirectoryPath { get; private set; }
 
         #endregion
     }
