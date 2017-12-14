@@ -43,13 +43,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KISBase, Version=1.0.6421.39402, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Debug\KISBase.dll</HintPath>
+    <Reference Include="KISCore, Version=1.0.6557.32644, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\KISCore.0.2.0\lib\net45\KISCore.dll</HintPath>
     </Reference>
-    <Reference Include="KISLogger, Version=1.0.6423.27824, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Debug\KISLogger.dll</HintPath>
+    <Reference Include="KISLogger, Version=1.0.6539.18840, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\KISLogger.0.1.0\lib\net45\KISLogger.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
@@ -72,6 +70,9 @@
     <Compile Include="Attached\GridViewStretchedColumns.cs" />
     <Compile Include="Attached\TextBoxCaretPosition.cs" />
     <Compile Include="Controls\EWindow.cs" />
+    <Compile Include="Dialogs\IndefiniteProgressDialog.xaml.cs">
+      <DependentUpon>IndefiniteProgressDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\CanvasSizeConverter.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="MVVM\Services\IWindowService.cs" />
     <Compile Include="MVVM\ViewModel\EMsgBoxViewModel.cs" />
     <Compile Include="MVVM\INotifyPropertiesChanged.cs" />
+    <Compile Include="MVVM\ViewModel\IndefiniteProgressDialogViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,6 +120,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -129,6 +132,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Dialogs\IndefiniteProgressDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Converters\ConvertersDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
