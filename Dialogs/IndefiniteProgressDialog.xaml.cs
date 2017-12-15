@@ -19,9 +19,10 @@ namespace EWPF.Dialogs
         private const string cm_VIEW_MODEL_WINDOW_SERVICE_PROPERTY_NAME = "WindowService";
 
         private const string cm_VIEW_MODEL_HANDLE_VIEW_LOADED_COMMAND_NAME =
-            "HandleViewLoadedCommand";
+            "DoProgressCommand";
 
-        private const string cm_VIEW_MODEL_CANCEL_PROGRESS_COMMAND_NAME = "CancelProgressCommand";
+        private const string cm_VIEW_MODEL_CANCEL_PROGRESS_COMMAND_NAME =
+            "CancelProgressCommand";
 
         #endregion
 

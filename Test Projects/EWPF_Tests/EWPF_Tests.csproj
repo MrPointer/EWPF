@@ -39,6 +39,9 @@
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="KISCore, Version=1.0.6557.32644, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KISCore.0.2.0\lib\net45\KISCore.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -60,12 +63,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\TestExecutorFactory.cs" />
+    <Compile Include="Integration\Utility\DialogUtilityTests.cs" />
     <Compile Include="Unit\Converters\InverseBoolTests.cs" />
     <Compile Include="Unit\Converters\StringVisibilityTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\BaseViewModelTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\RelayCommandTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\TestableNestedObject.cs" />
     <Compile Include="Unit\MVVM\EMsgBoxVMTests.cs" />
+    <Compile Include="Unit\MVVM\IndefiniteProgressDialogViewModelTests.cs" />
     <Compile Include="Unit\MVVM\MvvmFactory.cs" />
     <Compile Include="Unit\MVVM\TestableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,9 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integration\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

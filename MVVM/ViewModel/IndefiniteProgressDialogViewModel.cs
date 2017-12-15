@@ -8,6 +8,7 @@ using EWPF.Controls;
 using EWPF.Dialogs;
 using EWPF.MVVM.Services;
 using KISCore.Execution;
+using KISLogger;
 
 namespace EWPF.MVVM.ViewModel
 {
@@ -61,9 +62,19 @@ namespace EWPF.MVVM.ViewModel
         public IndefiniteProgressDialogViewModel(
             ICancellableTaskExecutor<CancellationToken> i_TaskExecutor,
             Action<CancellationToken> i_ProgressAction,
-            CancellationTokenSource i_CancellationTokenSource, Action i_CancellationCallback,
-            Action i_ActionCompletionCallback)
+            CancellationTokenSource i_CancellationTokenSource,
+            Action i_ActionCompletionCallback = null,
+            Action i_CancellationCallback = null)
         {
+            if (i_TaskExecutor == null)
+                throw new ArgumentNullException("i_TaskExecutor",
+                    @"Task Executor can't be null");
+            if (i_CancellationTokenSource == null)
+            {
+                throw new ArgumentNullException("i_CancellationTokenSource",
+                    @"Cancellation Token Source can't be null");
+            }
+
             m_TaskExecutor = i_TaskExecutor;
             m_ProgressAction = i_ProgressAction;
             m_ProgressCancellationToken = i_CancellationTokenSource;
@@ -75,9 +86,19 @@ namespace EWPF.MVVM.ViewModel
         public IndefiniteProgressDialogViewModel(
             ICancellableTaskExecutor<CancellationToken> i_TaskExecutor,
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
-            CancellationTokenSource i_CancellationTokenSource, Action i_CancellationCallback,
-            Action<TProgressResult> i_FunctionCompletionCallback)
+            CancellationTokenSource i_CancellationTokenSource,
+            Action<TProgressResult> i_FunctionCompletionCallback = null,
+            Action i_CancellationCallback = null)
         {
+            if (i_TaskExecutor == null)
+                throw new ArgumentNullException("i_TaskExecutor",
+                    @"Task Executor can't be null");
+            if (i_CancellationTokenSource == null)
+            {
+                throw new ArgumentNullException("i_CancellationTokenSource",
+                    @"Cancellation Token Source can't be null");
+            }
+
             m_TaskExecutor = i_TaskExecutor;
             m_ProgressFunction = i_ProgressFunction;
             m_ProgressCancellationToken = i_CancellationTokenSource;
@@ -99,36 +120,50 @@ namespace EWPF.MVVM.ViewModel
         /// Handles the bound view's 'Loaded' event 
         /// by executing the progress action set in the constructor.
         /// </summary>
-        /// <param name="i_O">Irrelevant.</param>
-        private async void HandleViewLoaded(object i_O)
+        internal async Task DoProgress()
         {
             if (WindowService == null)
                 throw new NullReferenceException("Window service must be set");
             if (m_ProgressAction == null && m_ProgressFunction == null)
-                throw new NullReferenceException("Progress action or function must be set");
-            if (m_ProgressCancellationToken == null)
-                throw new NullReferenceException("Progress Cancellation Token must be set");
+                throw new NullReferenceException(
+                    "Progress action or function must be set");
 
+            await ExecuteProgress();
+            WindowService.CloseWindow(true);
+        }
+
+        /// <summary>
+        /// Executes progress in a separate task asynchronously, awaiting the result 
+        /// and handling faulty situations.
+        /// </summary>
+        private async Task ExecuteProgress()
+        {
             try
             {
                 if (m_ProgressAction != null)
                 {
                     await m_TaskExecutor.Execute(m_ProgressAction,
                         m_ProgressCancellationToken.Token);
-                    m_ActionCompletionCallback();
+                    if (m_ActionCompletionCallback != null)
+                        m_ActionCompletionCallback();
                 }
                 else if (m_ProgressFunction != null)
                 {
                     var progressResult = await m_TaskExecutor.Execute(m_ProgressFunction,
                                              m_ProgressCancellationToken.Token);
-                    m_FunctionCompletionCallback(progressResult);
+                    if (m_FunctionCompletionCallback != null)
+                        m_FunctionCompletionCallback(progressResult);
                 }
             }
             catch (AggregateException aggregateException)
             {
                 HandleFaultyExecution(aggregateException);
             }
-            WindowService.CloseWindow(true);
+            catch (Exception ex)
+            {
+                Log.LogException(ex);
+                WindowService.CloseWindow(false);
+            }
         }
 
         /// <summary>
@@ -142,8 +177,8 @@ namespace EWPF.MVVM.ViewModel
             if (i_ThrownAggregateException.InnerExceptions.Any(i_Exception =>
                 i_Exception.GetType() == typeof(TaskCanceledException)))
             {
-                WindowService.CloseWindow(false);
-                m_CancellationCallback();
+                if (m_CancellationCallback != null)
+                    m_CancellationCallback();
             }
             else
                 throw i_ThrownAggregateException;
@@ -153,10 +188,8 @@ namespace EWPF.MVVM.ViewModel
         /// Handles the bound view's 'Closed' event by canceling the executed progress.
         /// </summary>
         /// <param name="i_O">Irrelevant.</param>
-        private void CancelProgress(object i_O)
+        internal void CancelProgress(object i_O)
         {
-            if (m_ProgressCancellationToken == null)
-                throw new NullReferenceException("Progress Cancellation Token must be set");
             m_ProgressCancellationToken.Cancel();
         }
 
@@ -213,13 +246,13 @@ namespace EWPF.MVVM.ViewModel
         /// <summary>
         /// Command used to handle the 'Loaded' event of the bound view.
         /// </summary>
-        public ICommand HandleViewLoadedCommand
+        public ICommand DoProgressCommand
         {
             get
             {
                 return m_HandleViewLoadedCommand ??
                        (m_HandleViewLoadedCommand =
-                            new RelayCommand(HandleViewLoaded, i_O => true));
+                            new RelayCommand(async i_O => await DoProgress(), i_O => true));
             }
         }
 
@@ -231,7 +264,8 @@ namespace EWPF.MVVM.ViewModel
             get
             {
                 return m_CancelProgressCommand ??
-                       (m_CancelProgressCommand = new RelayCommand(CancelProgress, i_O => true));
+                       (m_CancelProgressCommand =
+                            new RelayCommand(CancelProgress, i_O => true));
             }
         }
 
