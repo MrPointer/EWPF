@@ -49,6 +49,7 @@ namespace EWPF.MVVM.ViewModel
         #region Commands
 
         private ICommand m_HandleViewLoadedCommand;
+        private ICommand m_CancelProgressCommand;
 
         #endregion
 
@@ -127,6 +128,12 @@ namespace EWPF.MVVM.ViewModel
             WindowService.CloseWindow(true);
         }
 
+        /// <summary>
+        /// Handles a faulty execution that has thrown an exception. <br />
+        /// If the fault is a cancellation request, the method requests to close 
+        /// the bound view's window.
+        /// </summary>
+        /// <param name="i_ThrownAggregateException">Exception representing the fault.</param>
         private void HandleFaultyExecution(AggregateException i_ThrownAggregateException)
         {
             if (i_ThrownAggregateException.InnerExceptions.Any(i_Exception =>
@@ -137,6 +144,11 @@ namespace EWPF.MVVM.ViewModel
             }
             else
                 throw i_ThrownAggregateException;
+        }
+
+        private void CancelProgress(object i_O)
+        {
+            
         }
 
         #endregion
@@ -199,6 +211,18 @@ namespace EWPF.MVVM.ViewModel
                 return m_HandleViewLoadedCommand ??
                        (m_HandleViewLoadedCommand =
                             new RelayCommand(HandleViewLoaded, i_O => true));
+            }
+        }
+
+        /// <summary>
+        /// Command used to cancel the executed progress.
+        /// </summary>
+        public ICommand CancelProgressCommand
+        {
+            get
+            {
+                return m_CancelProgressCommand ??
+                       (m_CancelProgressCommand = new RelayCommand(CancelProgress, i_O => true));
             }
         }
 
