@@ -44,7 +44,7 @@ namespace EWPF.MVVM.ViewModel
         private readonly Action<TProgressResult> m_FunctionCompletionCallback;
 
         private readonly Action m_CancellationCallback;
-        private readonly CancellationToken m_ProgressCancellationToken;
+        private readonly CancellationTokenSource m_ProgressCancellationToken;
 
         #region Commands
 
@@ -60,12 +60,13 @@ namespace EWPF.MVVM.ViewModel
         /// <inheritdoc />
         public IndefiniteProgressDialogViewModel(
             ICancellableTaskExecutor<CancellationToken> i_TaskExecutor,
-            Action<CancellationToken> i_ProgressAction, CancellationToken i_CancellationToken,
-            Action i_CancellationCallback, Action i_ActionCompletionCallback)
+            Action<CancellationToken> i_ProgressAction,
+            CancellationTokenSource i_CancellationTokenSource, Action i_CancellationCallback,
+            Action i_ActionCompletionCallback)
         {
             m_TaskExecutor = i_TaskExecutor;
             m_ProgressAction = i_ProgressAction;
-            m_ProgressCancellationToken = i_CancellationToken;
+            m_ProgressCancellationToken = i_CancellationTokenSource;
             m_CancellationCallback = i_CancellationCallback;
             m_ActionCompletionCallback = i_ActionCompletionCallback;
         }
@@ -74,12 +75,12 @@ namespace EWPF.MVVM.ViewModel
         public IndefiniteProgressDialogViewModel(
             ICancellableTaskExecutor<CancellationToken> i_TaskExecutor,
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
-            CancellationToken i_CancellationToken,
-            Action i_CancellationCallback, Action<TProgressResult> i_FunctionCompletionCallback)
+            CancellationTokenSource i_CancellationTokenSource, Action i_CancellationCallback,
+            Action<TProgressResult> i_FunctionCompletionCallback)
         {
             m_TaskExecutor = i_TaskExecutor;
             m_ProgressFunction = i_ProgressFunction;
-            m_ProgressCancellationToken = i_CancellationToken;
+            m_ProgressCancellationToken = i_CancellationTokenSource;
             m_CancellationCallback = i_CancellationCallback;
             m_FunctionCompletionCallback = i_FunctionCompletionCallback;
         }
@@ -103,21 +104,23 @@ namespace EWPF.MVVM.ViewModel
         {
             if (WindowService == null)
                 throw new NullReferenceException("Window service must be set");
-
             if (m_ProgressAction == null && m_ProgressFunction == null)
                 throw new NullReferenceException("Progress action or function must be set");
+            if (m_ProgressCancellationToken == null)
+                throw new NullReferenceException("Progress Cancellation Token must be set");
 
             try
             {
                 if (m_ProgressAction != null)
                 {
-                    await m_TaskExecutor.Execute(m_ProgressAction, m_ProgressCancellationToken);
+                    await m_TaskExecutor.Execute(m_ProgressAction,
+                        m_ProgressCancellationToken.Token);
                     m_ActionCompletionCallback();
                 }
                 else if (m_ProgressFunction != null)
                 {
                     var progressResult = await m_TaskExecutor.Execute(m_ProgressFunction,
-                                             m_ProgressCancellationToken);
+                                             m_ProgressCancellationToken.Token);
                     m_FunctionCompletionCallback(progressResult);
                 }
             }
@@ -146,9 +149,15 @@ namespace EWPF.MVVM.ViewModel
                 throw i_ThrownAggregateException;
         }
 
+        /// <summary>
+        /// Handles the bound view's 'Closed' event by canceling the executed progress.
+        /// </summary>
+        /// <param name="i_O">Irrelevant.</param>
         private void CancelProgress(object i_O)
         {
-            
+            if (m_ProgressCancellationToken == null)
+                throw new NullReferenceException("Progress Cancellation Token must be set");
+            m_ProgressCancellationToken.Cancel();
         }
 
         #endregion
