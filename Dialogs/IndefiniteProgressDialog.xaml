@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="EWPF.Controls.IndefiniteProgressDialog"
+    x:Class="EWPF.Dialogs.IndefiniteProgressDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:EWPF.Controls"
@@ -8,7 +8,7 @@
     Title="{Binding Path=DialogTitle}"
     Width="280"
     Height="250"
-    controls:EWindow.WindowBorder="MessageBox"
+    controls:EWindow.WindowBorder="Normal"
     FlowDirection="{Binding Path=DialogFlowDirection}"
     ResizeMode="NoResize"
     Style="{DynamicResource EWindowStyle}"

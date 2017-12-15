@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using EWPF.Controls;
+using EWPF.Dialogs;
 using EWPF.MVVM.Services;
 using KISCore.Execution;
 
@@ -12,7 +13,7 @@ namespace EWPF.MVVM.ViewModel
 {
     /// <summary>
     /// A class representing a generic view model bound to the 
-    /// <see cref="IndefiniteProgressDialog"/> view.
+    /// <see cref="Dialogs.IndefiniteProgressDialog"/> view.
     /// </summary>
     /// <typeparam name="TProgressResult">Type of the progressed action's result.</typeparam>
     public class IndefiniteProgressDialogViewModel<TProgressResult> : BaseViewModel
@@ -92,8 +93,6 @@ namespace EWPF.MVVM.ViewModel
 
         #endregion
 
-        #region Commands
-
         /// <summary>
         /// Handles the bound view's 'Loaded' event 
         /// by executing the progress action set in the constructor.
@@ -127,8 +126,6 @@ namespace EWPF.MVVM.ViewModel
             }
             WindowService.CloseWindow(true);
         }
-
-        #endregion
 
         private void HandleFaultyExecution(AggregateException i_ThrownAggregateException)
         {

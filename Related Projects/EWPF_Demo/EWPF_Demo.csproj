@@ -38,13 +38,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KISBase, Version=1.0.6421.39402, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Debug\KISBase.dll</HintPath>
+    <Reference Include="KISCore, Version=1.0.6557.32644, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KISCore.0.2.0\lib\net45\KISCore.dll</HintPath>
     </Reference>
-    <Reference Include="KISLogger, Version=1.0.6423.27824, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Debug\KISLogger.dll</HintPath>
+    <Reference Include="KISLogger, Version=1.0.6539.18840, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KISLogger.0.1.0\lib\net45\KISLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,6 +103,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
