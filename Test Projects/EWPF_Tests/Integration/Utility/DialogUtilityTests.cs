@@ -1,9 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using EWPF.Dialogs;
 using EWPF.MVVM.Services;
+using EWPF.MVVM.ViewModel;
 using EWPF.Utility;
+using EWPF_Tests.Factory;
 using NUnit.Framework;
 
 namespace EWPF_Tests.Integration.Utility
@@ -30,6 +34,8 @@ namespace EWPF_Tests.Integration.Utility
         #endregion
 
         #region Methods
+
+        #region Show Dialog
 
         [Test]
         [Apartment(ApartmentState.STA)]
@@ -112,6 +118,91 @@ namespace EWPF_Tests.Integration.Utility
             Assert.Less(namespaceOptimizedStopwatch.Elapsed, normalStopwatch.Elapsed);
             Assert.Less(assemblyOptimizedStopwatch.Elapsed, namespaceOptimizedStopwatch.Elapsed);
         }
+
+        #endregion
+
+        #region Show Indefinite Progress Dialog
+
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void ShowIndefiniteProgressDialog_ValidViewModel_DisplaysDialog()
+        {
+            var taskExecutor = TestExecutorFactory.CreateCancellableTaskExecutor();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                var progressAction = new Action<CancellationToken>(i_Token => { });
+                var progressDialogVM =
+                    new IndefiniteProgressDialogViewModel<bool>(taskExecutor, progressAction,
+                        cancellationTokenSource);
+
+                var dialogResult =
+                    DialogUtility.ShowIndefiniteProgressDialog(progressDialogVM);
+
+                Assert.True(dialogResult);
+            }
+        }
+
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void
+            ShowIndefiniteProgressDialog_ValidViewModelValidProgressAction_ExecutesAction()
+        {
+            var taskExecutor = TestExecutorFactory.CreateCancellableTaskExecutor();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                int x = 0;
+                var progressAction = new Action<CancellationToken>(i_Token => x = 5);
+                var progressDialogVM =
+                    new IndefiniteProgressDialogViewModel<bool>(taskExecutor, progressAction,
+                        cancellationTokenSource);
+
+                DialogUtility.ShowIndefiniteProgressDialog(progressDialogVM);
+
+                Assert.AreEqual(5, x);
+            }
+        }
+
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void ShowIndefiniteProgressDialog_ValidAction_Executes()
+        {
+            var taskExecutor = TestExecutorFactory.CreateCancellableTaskExecutor();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                int x = 0;
+                var progressAction = new Action<CancellationToken>(i_Token => x = 5);
+                DialogUtility.ShowIndefiniteProgressDialog(taskExecutor,
+                    cancellationTokenSource, progressAction);
+
+                Assert.AreEqual(5, x);
+            }
+        }
+
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void ShowIndefiniteProgressDialog_ValidFunction_Executes()
+        {
+            var taskExecutor = TestExecutorFactory.CreateCancellableTaskExecutor();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                int x = 0;
+                var progressFunction = new Func<CancellationToken, int>(i_Token =>
+                 {
+                     x = 5;
+                     return x;
+                 });
+                DialogUtility.ShowIndefiniteProgressDialog(taskExecutor,
+                    cancellationTokenSource, progressFunction);
+
+                Assert.AreEqual(5, x);
+            }
+        }
+
+        #endregion
 
         #endregion
 

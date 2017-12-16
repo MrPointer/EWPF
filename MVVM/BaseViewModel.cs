@@ -90,7 +90,7 @@ namespace EWPF.MVVM
         public static bool SetValue<T>(ref T i_PropertyToSet, T i_NewValueToAssign)
         {
             if (i_NewValueToAssign == null)
-                throw new ArgumentNullException("i_NewValueToAssign", @"Can't ever assign a null value - This is WPF!");
+                return false;
 
             if (i_PropertyToSet != null && i_PropertyToSet.Equals(i_NewValueToAssign))
                 return false;
@@ -114,8 +114,7 @@ namespace EWPF.MVVM
             where T : IEnumerable<TS>
         {
             if (i_NewValueToAssign == null)
-                throw new ArgumentNullException("i_NewValueToAssign",
-                    @"Can't ever assign a null value - This is WPF!");
+                return false;
 
             if (i_PropertyToSet != null && i_PropertyToSet.SequenceEqual(i_NewValueToAssign, i_Comparer))
                 return false;

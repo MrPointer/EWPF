@@ -41,11 +41,12 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         }
 
         [Test]
-        public void SetValue_NullValueToAssign_ThrowsArgumentNullException()
+        public void SetValue_NullValueToAssign_ReturnsFalse()
         {
             string propertyToSet = null;
-            Assert.Catch<ArgumentNullException>(() =>
-                EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, null));
+            bool isSetSuccessfully = EWPF.MVVM.BaseViewModel.SetValue(ref propertyToSet, null);
+
+            Assert.False(isSetSuccessfully);
         }
 
         [Test]
@@ -100,12 +101,13 @@ namespace EWPF_Tests.Unit.MVVM.BaseViewModel
         }
 
         [Test]
-        public void SetValue_NullValue_ThrowsNullArgumentException()
+        public void SetCollectionValue_NullValueToAssign_ReturnsFalse()
         {
             IEnumerable<byte> propertyToTest = null;
-            Assert.Catch<ArgumentNullException>(() =>
-                EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
-                    ref propertyToTest, null));
+            bool isSetSuccessfully = EWPF.MVVM.BaseViewModel.SetCollectionValue<IEnumerable<byte>, byte>(
+                ref propertyToTest, null);
+
+            Assert.False(isSetSuccessfully);
         }
 
         [Test]
