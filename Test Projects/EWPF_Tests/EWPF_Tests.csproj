@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory\TestExecutorFactory.cs" />
+    <Compile Include="Integration\MVVM\IndefiniteProgressDialogViewModelTests.cs" />
     <Compile Include="Integration\Utility\DialogUtilityTests.cs" />
     <Compile Include="Unit\Converters\InverseBoolTests.cs" />
     <Compile Include="Unit\Converters\StringVisibilityTests.cs" />

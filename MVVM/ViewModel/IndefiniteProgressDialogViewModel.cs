@@ -157,31 +157,28 @@ namespace EWPF.MVVM.ViewModel
             }
             catch (AggregateException aggregateException)
             {
-                HandleFaultyExecution(aggregateException);
+                if (aggregateException.InnerExceptions.Any(i_Exception =>
+                    i_Exception.GetType() == typeof(TaskCanceledException)))
+                {
+                    if (m_CancellationCallback != null)
+                        m_CancellationCallback();
+                    WindowService.CloseWindow(false);
+                }
+                else
+                    throw;
+            }
+            catch (OperationCanceledException)
+            {
+                if (m_CancellationCallback != null)
+                    m_CancellationCallback();
+                WindowService.CloseWindow(false);
+                throw;
             }
             catch (Exception ex)
             {
                 Log.LogException(ex);
                 WindowService.CloseWindow(false);
             }
-        }
-
-        /// <summary>
-        /// Handles a faulty execution that has thrown an exception. <br />
-        /// If the fault is a cancellation request, the method requests to close 
-        /// the bound view's window.
-        /// </summary>
-        /// <param name="i_ThrownAggregateException">Exception representing the fault.</param>
-        private void HandleFaultyExecution(AggregateException i_ThrownAggregateException)
-        {
-            if (i_ThrownAggregateException.InnerExceptions.Any(i_Exception =>
-                i_Exception.GetType() == typeof(TaskCanceledException)))
-            {
-                if (m_CancellationCallback != null)
-                    m_CancellationCallback();
-            }
-            else
-                throw i_ThrownAggregateException;
         }
 
         /// <summary>

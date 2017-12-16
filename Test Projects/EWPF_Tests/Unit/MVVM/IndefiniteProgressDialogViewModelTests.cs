@@ -92,6 +92,8 @@ namespace EWPF_Tests.Unit.MVVM
                 Assert.CatchAsync<NullReferenceException>(() =>
                     progressDialogVM.DoProgress());
             StringAssert.Contains("must be set", caughtException.Message);
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -112,6 +114,8 @@ namespace EWPF_Tests.Unit.MVVM
                     progressDialogVM.DoProgress());
             StringAssert.Contains("Progress action or function must be set",
                 caughtException.Message);
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -134,7 +138,10 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             await progressDialogVM.DoProgress();
+
             fakeExecutor.Verify();
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -157,7 +164,10 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             await progressDialogVM.DoProgress();
+
             fakeExecutor.Verify();
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -180,6 +190,8 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             Assert.DoesNotThrowAsync(async () => await progressDialogVM.DoProgress());
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -202,6 +214,8 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             Assert.DoesNotThrowAsync(async () => await progressDialogVM.DoProgress());
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -228,6 +242,8 @@ namespace EWPF_Tests.Unit.MVVM
             await progressDialogVM.DoProgress();
 
             Assert.AreEqual(5, x);
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -252,7 +268,10 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             await progressDialogVM.DoProgress();
+
             Assert.True(flag);
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -275,6 +294,8 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             Assert.DoesNotThrowAsync(async () => await progressDialogVM.DoProgress());
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -299,7 +320,10 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             await progressDialogVM.DoProgress();
+
             Assert.AreEqual(5, x);
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -322,6 +346,8 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             Assert.DoesNotThrowAsync(async () => await progressDialogVM.DoProgress());
+
+            cancellationTokenSource.Dispose();
         }
 
         [Test]
@@ -345,7 +371,10 @@ namespace EWPF_Tests.Unit.MVVM
             };
 
             await progressDialogVM.DoProgress();
+
             fakeWindowService.Verify(i_Service => i_Service.CloseWindow(false));
+
+            cancellationTokenSource.Dispose();
         }
 
         #endregion        
