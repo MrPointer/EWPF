@@ -31,6 +31,11 @@ namespace EWPF.Dialogs
         /// <inheritdoc />
         public IndefiniteProgressDialog(object i_DataContext)
         {
+            if (i_DataContext == null)
+            {
+                throw new ArgumentNullException("i_DataContext",
+                    @"Data context can't be null");
+            }
             DataContext = i_DataContext;
             InitializeComponent();
             AssignServices();
@@ -53,7 +58,8 @@ namespace EWPF.Dialogs
             try
             {
                 var handleViewLoadedCommand =
-                        GetCommandFromViewModelProperty(cm_VIEW_MODEL_HANDLE_VIEW_LOADED_COMMAND_NAME);
+                    GetCommandFromViewModelProperty(
+                        cm_VIEW_MODEL_HANDLE_VIEW_LOADED_COMMAND_NAME);
                 if (handleViewLoadedCommand.CanExecute(null))
                     handleViewLoadedCommand.Execute(null);
             }
@@ -92,15 +98,15 @@ namespace EWPF.Dialogs
         public void AssignServices()
         {
             var vmType = DataContext.GetType();
-            var vmWindowServiceProperty =
+            var windowServiceProperty =
                 vmType.GetProperty(cm_VIEW_MODEL_WINDOW_SERVICE_PROPERTY_NAME,
                     typeof(IWindowService));
-            if (vmWindowServiceProperty == null)
+            if (windowServiceProperty == null)
             {
                 throw new Exception(string.Format("{0} property not found in {1}",
                     cm_VIEW_MODEL_WINDOW_SERVICE_PROPERTY_NAME, vmType));
             }
-            vmWindowServiceProperty.SetValue(DataContext, this);
+            windowServiceProperty.SetValue(DataContext, this);
         }
 
         #endregion

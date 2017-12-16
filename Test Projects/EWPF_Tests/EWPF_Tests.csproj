@@ -68,6 +68,7 @@
     <Compile Include="Integration\Utility\DialogUtilityTests.cs" />
     <Compile Include="Unit\Converters\InverseBoolTests.cs" />
     <Compile Include="Unit\Converters\StringVisibilityTests.cs" />
+    <Compile Include="Unit\Dialogs\IndefiniteProgressDialogTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\BaseViewModelTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\RelayCommandTests.cs" />
     <Compile Include="Unit\MVVM\BaseViewModel\TestableNestedObject.cs" />

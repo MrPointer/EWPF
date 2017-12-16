@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using EWPF.Controls;
-using EWPF.Dialogs;
 using EWPF.MVVM.Services;
 using KISCore.Execution;
 using KISLogger;

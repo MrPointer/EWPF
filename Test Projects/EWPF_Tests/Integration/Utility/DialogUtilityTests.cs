@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
+using System.Windows;
+using EWPF.MVVM.Services;
 using EWPF.Utility;
 using NUnit.Framework;
 
@@ -118,5 +120,27 @@ namespace EWPF_Tests.Integration.Utility
 
 
         #endregion
+    }
+
+    /// <summary>
+    /// A class representing a fake dialog which inherits the <see cref="Window"/> type and also 
+    /// registers itself as a dialog with the <see cref="DialogAttribute"/>. <br />
+    /// This class is used only for testing purposes and is declared explicitly instead of using 'Moq' 
+    /// because it solves some issues regarding assembly sources.
+    /// </summary>
+    [Dialog("fakeDialog")]
+    public class FakeDialog : Window
+    {
+
+    }
+
+    [Dialog("parameterCtorDialog")]
+    public class ParameterConstructorDialog : Window
+    {
+        /// <inheritdoc />
+        public ParameterConstructorDialog(object i_DataContext)
+        {
+            DataContext = i_DataContext;
+        }
     }
 }
