@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using EWPF.Dialogs;
 using EWPF.MVVM.Services;
 using EWPF.MVVM.ViewModel;
@@ -324,7 +325,7 @@ namespace EWPF_Tests.Integration.MVVM
                 int x = 0;
                 var progressAction = new Action<CancellationToken>(i_Token =>
                 {
-                    Task.Delay(TimeSpan.FromSeconds(5), i_Token).Wait(i_Token);
+                    Task.Delay(TimeSpan.FromSeconds(3), i_Token).Wait(i_Token);
                     x = 5;
                 });
                 var progressDialogVM =
@@ -332,6 +333,12 @@ namespace EWPF_Tests.Integration.MVVM
                         cancellationTokenSource);
                 var progressDialog = new IndefiniteProgressDialog(progressDialogVM);
 
+                Task.Factory.StartNew(() =>
+                {
+                    Task.Delay(TimeSpan.FromSeconds(0.5)).Wait();
+                    progressDialog.Dispatcher.Invoke(() => progressDialog.Close(),
+                        DispatcherPriority.Send);
+                }, cancellationTokenSource.Token);
                 progressDialog.ShowDialog();
 
                 Assert.AreEqual(0, x);
@@ -394,13 +401,19 @@ namespace EWPF_Tests.Integration.MVVM
             {
                 var progressAction = new Action<CancellationToken>(i_Token =>
                 {
-                    Task.Delay(TimeSpan.FromSeconds(5), i_Token).Wait(i_Token);
+                    Task.Delay(TimeSpan.FromSeconds(3), i_Token).Wait(i_Token);
                 });
                 var progressDialogVM =
                     new IndefiniteProgressDialogViewModel<bool>(taskExecutor, progressAction,
                         cancellationTokenSource);
                 var progressDialog = new IndefiniteProgressDialog(progressDialogVM);
 
+                Task.Run(() =>
+                {
+                    Task.Delay(TimeSpan.FromSeconds(0.5)).Wait();
+                    progressDialog.Dispatcher.Invoke(() => progressDialog.Close(),
+                        DispatcherPriority.Send);
+                });
                 var dialogResult = progressDialog.ShowDialog();
 
                 Assert.False(dialogResult);

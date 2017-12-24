@@ -47,6 +47,8 @@ namespace EWPF.MVVM.ViewModel
 
         private readonly Action<Exception> m_ExceptionCallback;
 
+        private bool m_IsCloseRequested;
+
         #region Commands
 
         private ICommand m_HandleViewLoadedCommand;
@@ -130,15 +132,16 @@ namespace EWPF.MVVM.ViewModel
                 throw new NullReferenceException(
                     "Progress action or function must be set");
 
-            await ExecuteProgress();
-            WindowService.CloseWindow(true);
+            bool isCompletedSuccessfully = await ExecuteProgress();
+            if (!m_IsCloseRequested) // Closing already in progress - Avoid duplicate call
+                WindowService.CloseWindow(isCompletedSuccessfully);
         }
 
         /// <summary>
         /// Executes progress in a separate task asynchronously, awaiting the result 
         /// and handling faulty situations.
         /// </summary>
-        private async Task ExecuteProgress()
+        private async Task<bool> ExecuteProgress()
         {
             try
             {
@@ -156,6 +159,7 @@ namespace EWPF.MVVM.ViewModel
                     if (m_FunctionCompletionCallback != null)
                         m_FunctionCompletionCallback(progressResult);
                 }
+                return true;
             }
             catch (AggregateException aggregateException)
             {
@@ -164,26 +168,25 @@ namespace EWPF.MVVM.ViewModel
                 {
                     if (m_CancellationCallback != null)
                         m_CancellationCallback();
-                    WindowService.CloseWindow(false);
                 }
                 else
                 {
                     if (m_ExceptionCallback != null)
                         m_ExceptionCallback(aggregateException);
                 }
+                return false;
             }
             catch (OperationCanceledException)
             {
                 if (m_CancellationCallback != null)
                     m_CancellationCallback();
-                WindowService.CloseWindow(false);
+                return false;
             }
             catch (Exception ex)
             {
-                Log.LogException(ex);
-                WindowService.CloseWindow(false);
                 if (m_ExceptionCallback != null)
                     m_ExceptionCallback(ex);
+                return false;
             }
         }
 
@@ -193,6 +196,7 @@ namespace EWPF.MVVM.ViewModel
         /// <param name="i_O">Irrelevant.</param>
         internal void CancelProgress(object i_O)
         {
+            m_IsCloseRequested = true;
             m_ProgressCancellationToken.Cancel();
         }
 
