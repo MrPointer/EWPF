@@ -45,6 +45,8 @@ namespace EWPF.MVVM.ViewModel
         private readonly Action m_CancellationCallback;
         private readonly CancellationTokenSource m_ProgressCancellationToken;
 
+        private readonly Action<Exception> m_ExceptionCallback;
+
         #region Commands
 
         private ICommand m_HandleViewLoadedCommand;
@@ -61,8 +63,8 @@ namespace EWPF.MVVM.ViewModel
             ICancellableTaskExecutor<CancellationToken> i_TaskExecutor,
             Action<CancellationToken> i_ProgressAction,
             CancellationTokenSource i_CancellationTokenSource,
-            Action i_ActionCompletionCallback = null,
-            Action i_CancellationCallback = null)
+            Action i_ActionCompletionCallback = null, Action i_CancellationCallback = null,
+            Action<Exception> i_ExceptionCallback = null)
         {
             if (i_TaskExecutor == null)
                 throw new ArgumentNullException("i_TaskExecutor",
@@ -78,6 +80,7 @@ namespace EWPF.MVVM.ViewModel
             m_ProgressCancellationToken = i_CancellationTokenSource;
             m_CancellationCallback = i_CancellationCallback;
             m_ActionCompletionCallback = i_ActionCompletionCallback;
+            m_ExceptionCallback = i_ExceptionCallback;
         }
 
         /// <inheritdoc />
@@ -86,7 +89,7 @@ namespace EWPF.MVVM.ViewModel
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
             CancellationTokenSource i_CancellationTokenSource,
             Action<TProgressResult> i_FunctionCompletionCallback = null,
-            Action i_CancellationCallback = null)
+            Action i_CancellationCallback = null, Action<Exception> i_ExceptionCallback = null)
         {
             if (i_TaskExecutor == null)
                 throw new ArgumentNullException("i_TaskExecutor",
@@ -102,6 +105,7 @@ namespace EWPF.MVVM.ViewModel
             m_ProgressCancellationToken = i_CancellationTokenSource;
             m_CancellationCallback = i_CancellationCallback;
             m_FunctionCompletionCallback = i_FunctionCompletionCallback;
+            m_ExceptionCallback = i_ExceptionCallback;
         }
 
         #endregion
@@ -163,19 +167,23 @@ namespace EWPF.MVVM.ViewModel
                     WindowService.CloseWindow(false);
                 }
                 else
-                    throw;
+                {
+                    if (m_ExceptionCallback != null)
+                        m_ExceptionCallback(aggregateException);
+                }
             }
             catch (OperationCanceledException)
             {
                 if (m_CancellationCallback != null)
                     m_CancellationCallback();
                 WindowService.CloseWindow(false);
-                throw;
             }
             catch (Exception ex)
             {
                 Log.LogException(ex);
                 WindowService.CloseWindow(false);
+                if (m_ExceptionCallback != null)
+                    m_ExceptionCallback(ex);
             }
         }
 

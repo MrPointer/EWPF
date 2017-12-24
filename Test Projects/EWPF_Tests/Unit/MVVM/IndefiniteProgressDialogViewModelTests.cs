@@ -377,6 +377,59 @@ namespace EWPF_Tests.Unit.MVVM
             cancellationTokenSource.Dispose();
         }
 
+        [Test]
+        public void DoProgress_NullExceptionCallback_DoesNotThrow()
+        {
+            var fakeExecutor = new Mock<ICancellableTaskExecutor<CancellationToken>>();
+            var fakeWindowService = new Mock<IWindowService>();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                var fakeAction = new Action<CancellationToken>(i_Token => { });
+                fakeExecutor
+                    .Setup(i_Executor =>
+                        i_Executor.Execute(fakeAction,
+                            It.IsAny<CancellationToken>())).Throws<Exception>();
+
+                var progressDialogVM = new IndefiniteProgressDialogViewModel<bool>(
+                    fakeExecutor.Object, fakeAction,
+                    cancellationTokenSource)
+                {
+                    WindowService = fakeWindowService.Object
+                };
+
+                Assert.DoesNotThrowAsync(async () => await progressDialogVM.DoProgress());
+            }
+        }
+
+        [Test]
+        public async Task DoProgress_ValidExceptionHandler_IsCalled()
+        {
+            var fakeExecutor = new Mock<ICancellableTaskExecutor<CancellationToken>>();
+            var fakeWindowService = new Mock<IWindowService>();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                var fakeAction = new Action<CancellationToken>(i_Token => { });
+                fakeExecutor
+                    .Setup(i_Executor =>
+                        i_Executor.Execute(fakeAction,
+                            It.IsAny<CancellationToken>())).Throws<Exception>();
+
+                bool flag = false;
+                var exceptionCallback = new Action<Exception>(i_Exception => flag = true);
+
+                var progressDialogVM = new IndefiniteProgressDialogViewModel<bool>(
+                    fakeExecutor.Object, fakeAction,
+                    cancellationTokenSource, i_ExceptionCallback: exceptionCallback)
+                {
+                    WindowService = fakeWindowService.Object
+                };
+
+                await progressDialogVM.DoProgress();
+
+                Assert.True(flag);
+            }
+        }
+
         #endregion        
 
         #endregion

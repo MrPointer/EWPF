@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using EWPF.Dialogs;
 using EWPF.MVVM.Services;
 using EWPF.MVVM.ViewModel;
 using EWPF_Tests.Factory;
-using KISCore.Execution;
 using Moq;
 using NUnit.Framework;
 
@@ -406,6 +404,32 @@ namespace EWPF_Tests.Integration.MVVM
                 var dialogResult = progressDialog.ShowDialog();
 
                 Assert.False(dialogResult);
+            }
+        }
+
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        [Category("UI")]
+        public void Execution_ThrowsException_ExceptionCallback_IsCalled()
+        {
+            var taskExecutor = TestExecutorFactory.CreateCancellableTaskExecutor();
+
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                int x = 0;
+                var progressAction = new Action<CancellationToken>(i_Token =>
+                {
+                    throw new Exception();
+                });
+                var exceptionCallback = new Action<Exception>(i_Exception => x = 5);
+                var progressDialogVM =
+                    new IndefiniteProgressDialogViewModel<bool>(taskExecutor, progressAction,
+                        cancellationTokenSource, i_ExceptionCallback: exceptionCallback);
+                var progressDialog = new IndefiniteProgressDialog(progressDialogVM);
+
+                progressDialog.ShowDialog();
+
+                Assert.AreEqual(5, x);
             }
         }
 
