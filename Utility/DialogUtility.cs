@@ -203,16 +203,20 @@ namespace EWPF.Utility
         /// or by closing the dialog.
         /// </summary>
         /// <param name="i_IndefiniteProgressDialogViewModel">Dialog's ViewModel.</param>
+        /// <param name="i_Owner"></param>
         /// <typeparam name="TProgressResult">Type of the result 
         /// returned by the progress.</typeparam>
         /// <returns>Dialog result indicating whether the progress 
         /// has completed successfully or not.</returns>
         public static bool? ShowIndefiniteProgressDialog<TProgressResult>(
             IndefiniteProgressDialogViewModel<TProgressResult>
-                i_IndefiniteProgressDialogViewModel)
+                i_IndefiniteProgressDialogViewModel, Window i_Owner = null)
         {
             var progressDialog =
-                new IndefiniteProgressDialog(i_IndefiniteProgressDialogViewModel);
+                new IndefiniteProgressDialog(i_IndefiniteProgressDialogViewModel)
+                {
+                    Owner = i_Owner
+                };
             return progressDialog.ShowDialog();
         }
 
@@ -223,18 +227,19 @@ namespace EWPF.Utility
         /// or by closing the dialog.
         /// </summary>
         /// <param name="i_CancellableTaskExecutor">
-        /// Executor with cancellation capabilities.</param>
+        ///     Executor with cancellation capabilities.</param>
         /// <param name="i_CancellationTokenSource">Cancellation token's source.</param>
         /// <param name="i_ProgressAction">Action to execute as progress.</param>
         /// <param name="i_CompletionCallback">Callback to call 
-        /// when progress is complete.</param>
+        ///     when progress is complete.</param>
         /// <param name="i_CancellationCallback">Callback to call 
-        /// when progress is canceled.</param>
+        ///     when progress is canceled.</param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
-        /// describing the progress.</param>
+        ///     describing the progress.</param>
         /// <param name="i_IsRtlDisplay">Boolean value indicating whether 
-        /// dialog should be displayed Right-To-Left.</param>
+        ///     dialog should be displayed Right-To-Left.</param>
+        /// <param name="i_Owner"></param>
         /// <returns>Dialog result indicating whether the progress 
         /// has completed successfully or not.</returns>
         public static bool? ShowIndefiniteProgressDialog(
@@ -242,7 +247,8 @@ namespace EWPF.Utility
             CancellationTokenSource i_CancellationTokenSource,
             Action<CancellationToken> i_ProgressAction, Action i_CompletionCallback = null,
             Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false)
+            string i_ProgressDescription = null, bool i_IsRtlDisplay = false,
+            Window i_Owner = null)
         {
             var progressDialogVM = new IndefiniteProgressDialogViewModel<NullObject>(
                 i_CancellableTaskExecutor, i_ProgressAction, i_CancellationTokenSource,
@@ -254,7 +260,8 @@ namespace EWPF.Utility
                                           ? FlowDirection.RightToLeft
                                           : FlowDirection.LeftToRight
             };
-            var progressDialog = new IndefiniteProgressDialog(progressDialogVM);
+            var progressDialog =
+                new IndefiniteProgressDialog(progressDialogVM) { Owner = i_Owner };
             return progressDialog.ShowDialog();
         }
 
@@ -265,18 +272,19 @@ namespace EWPF.Utility
         /// or by closing the dialog.
         /// </summary>
         /// <param name="i_CancellableTaskExecutor">
-        /// Executor with cancellation capabilities.</param>
+        ///     Executor with cancellation capabilities.</param>
         /// <param name="i_CancellationTokenSource">Cancellation token's source.</param>
         /// <param name="i_ProgressFunction">Function to execute as progress.</param>
         /// <param name="i_CompletionCallback">Callback to call 
-        /// when progress is complete.</param>
+        ///     when progress is complete.</param>
         /// <param name="i_CancellationCallback">Callback to call 
-        /// when progress is canceled.</param>
+        ///     when progress is canceled.</param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
-        /// describing the progress.</param>
+        ///     describing the progress.</param>
         /// <param name="i_IsRtlDisplay">Boolean value indicating whether 
-        /// dialog should be displayed Right-To-Left.</param>
+        ///     dialog should be displayed Right-To-Left.</param>
+        /// <param name="i_Owner"></param>
         /// /// <typeparam name="TProgressResult">Type of the result 
         /// returned by the progress.</typeparam>
         /// <returns>Dialog result indicating whether the progress 
@@ -287,7 +295,8 @@ namespace EWPF.Utility
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
             Action<TProgressResult> i_CompletionCallback = null,
             Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false)
+            string i_ProgressDescription = null, bool i_IsRtlDisplay = false,
+            Window i_Owner = null)
         {
             var progressDialogVM = new IndefiniteProgressDialogViewModel<TProgressResult>(
                 i_CancellableTaskExecutor, i_ProgressFunction, i_CancellationTokenSource,
@@ -300,7 +309,8 @@ namespace EWPF.Utility
                                           : FlowDirection.LeftToRight
             };
 
-            var progressDialog = new IndefiniteProgressDialog(progressDialogVM);
+            var progressDialog =
+                new IndefiniteProgressDialog(progressDialogVM) { Owner = i_Owner };
             return progressDialog.ShowDialog();
         }
 
