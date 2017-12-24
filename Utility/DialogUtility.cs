@@ -234,6 +234,7 @@ namespace EWPF.Utility
         ///     when progress is complete.</param>
         /// <param name="i_CancellationCallback">Callback to call 
         ///     when progress is canceled.</param>
+        /// <param name="i_ExceptionCallback"></param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
         ///     describing the progress.</param>
@@ -246,13 +247,13 @@ namespace EWPF.Utility
             ICancellableTaskExecutor<CancellationToken> i_CancellableTaskExecutor,
             CancellationTokenSource i_CancellationTokenSource,
             Action<CancellationToken> i_ProgressAction, Action i_CompletionCallback = null,
-            Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false,
-            Window i_Owner = null)
+            Action i_CancellationCallback = null, Action<Exception> i_ExceptionCallback = null,
+            string i_DialogTitle = null, string i_ProgressDescription = null,
+            bool i_IsRtlDisplay = false, Window i_Owner = null)
         {
             var progressDialogVM = new IndefiniteProgressDialogViewModel<NullObject>(
                 i_CancellableTaskExecutor, i_ProgressAction, i_CancellationTokenSource,
-                i_CompletionCallback, i_CancellationCallback)
+                i_CompletionCallback, i_CancellationCallback, i_ExceptionCallback)
             {
                 DialogTitle = i_DialogTitle,
                 ProgressText = i_ProgressDescription,
@@ -261,7 +262,7 @@ namespace EWPF.Utility
                                           : FlowDirection.LeftToRight
             };
             var progressDialog =
-                new IndefiniteProgressDialog(progressDialogVM) { Owner = i_Owner };
+                new IndefiniteProgressDialog(progressDialogVM) {Owner = i_Owner};
             return progressDialog.ShowDialog();
         }
 
@@ -279,6 +280,7 @@ namespace EWPF.Utility
         ///     when progress is complete.</param>
         /// <param name="i_CancellationCallback">Callback to call 
         ///     when progress is canceled.</param>
+        /// <param name="i_ExceptionCallback"></param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
         ///     describing the progress.</param>
@@ -294,13 +296,13 @@ namespace EWPF.Utility
             CancellationTokenSource i_CancellationTokenSource,
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
             Action<TProgressResult> i_CompletionCallback = null,
-            Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false,
-            Window i_Owner = null)
+            Action i_CancellationCallback = null, Action<Exception> i_ExceptionCallback = null,
+            string i_DialogTitle = null, string i_ProgressDescription = null,
+            bool i_IsRtlDisplay = false, Window i_Owner = null)
         {
             var progressDialogVM = new IndefiniteProgressDialogViewModel<TProgressResult>(
                 i_CancellableTaskExecutor, i_ProgressFunction, i_CancellationTokenSource,
-                i_CompletionCallback, i_CancellationCallback)
+                i_CompletionCallback, i_CancellationCallback, i_ExceptionCallback)
             {
                 DialogTitle = i_DialogTitle,
                 ProgressText = i_ProgressDescription,
@@ -310,7 +312,7 @@ namespace EWPF.Utility
             };
 
             var progressDialog =
-                new IndefiniteProgressDialog(progressDialogVM) { Owner = i_Owner };
+                new IndefiniteProgressDialog(progressDialogVM) {Owner = i_Owner};
             return progressDialog.ShowDialog();
         }
 

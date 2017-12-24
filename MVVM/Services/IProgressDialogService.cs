@@ -38,14 +38,15 @@ namespace EWPF.MVVM.Services
         /// when the dialog is 'Loaded', with the ability to cancel it either programatically 
         /// or by closing the dialog.
         /// </summary>
-        /// <param name="i_CancellableTaskExecutor">
-        /// Executor with cancellation capabilities.</param>
+        /// <param name="i_CancellableTaskExecutor">Executor with cancellation capabilities.</param>
         /// <param name="i_CancellationTokenSource">Cancellation token's source.</param>
         /// <param name="i_ProgressAction">Action to execute as progress.</param>
-        /// <param name="i_CompletionCallback">Callback to call 
-        /// when progress is complete.</param>
-        /// <param name="i_CancellationCallback">Callback to call 
-        /// when progress is canceled.</param>
+        /// <param name="i_CompletionCallback">Callback to call when 
+        /// progress is complete.</param>
+        /// <param name="i_CancellationCallback">Callback to call when 
+        /// progress is canceled.</param>
+        /// <param name="i_ExceptionCallback">Callback to call when 
+        /// exception is caught during execution.</param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
         /// describing the progress.</param>
@@ -57,8 +58,9 @@ namespace EWPF.MVVM.Services
             ICancellableTaskExecutor<CancellationToken> i_CancellableTaskExecutor,
             CancellationTokenSource i_CancellationTokenSource,
             Action<CancellationToken> i_ProgressAction, Action i_CompletionCallback = null,
-            Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false);
+            Action i_CancellationCallback = null, Action<Exception> i_ExceptionCallback = null,
+            string i_DialogTitle = null, string i_ProgressDescription = null,
+            bool i_IsRtlDisplay = false);
 
         /// <summary>
         /// Displays an indefinite progress dialog using the given data. <br />
@@ -66,14 +68,15 @@ namespace EWPF.MVVM.Services
         /// when the dialog is 'Loaded', with the ability to cancel it either programatically 
         /// or by closing the dialog.
         /// </summary>
-        /// <param name="i_CancellableTaskExecutor">
-        /// Executor with cancellation capabilities.</param>
+        /// <param name="i_CancellableTaskExecutor">Executor with cancellation capabilities.</param>
         /// <param name="i_CancellationTokenSource">Cancellation token's source.</param>
         /// <param name="i_ProgressFunction">Function to execute as progress.</param>
         /// <param name="i_CompletionCallback">Callback to call 
         /// when progress is complete.</param>
         /// <param name="i_CancellationCallback">Callback to call 
         /// when progress is canceled.</param>
+        /// <param name="i_ExceptionCallback">Callback to call when 
+        /// exception is caught during execution.</param>
         /// <param name="i_DialogTitle">Dialog's title.</param>
         /// <param name="i_ProgressDescription">Text displayed in the dialog 
         /// describing the progress.</param>
@@ -88,8 +91,9 @@ namespace EWPF.MVVM.Services
             CancellationTokenSource i_CancellationTokenSource,
             Func<CancellationToken, TProgressResult> i_ProgressFunction,
             Action<TProgressResult> i_CompletionCallback = null,
-            Action i_CancellationCallback = null, string i_DialogTitle = null,
-            string i_ProgressDescription = null, bool i_IsRtlDisplay = false);
+            Action i_CancellationCallback = null, Action<Exception> i_ExceptionCallback = null,
+            string i_DialogTitle = null, string i_ProgressDescription = null,
+            bool i_IsRtlDisplay = false);
 
         #endregion
 
