@@ -4,15 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:EWPF.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{Binding Path=DialogTitle}"
     Width="280"
     Height="250"
     controls:EWindow.WindowBorder="Normal"
+    Closed="OnWindowClosed"
     FlowDirection="{Binding Path=DialogFlowDirection}"
+    Loaded="OnWindowLoaded"
     ResizeMode="NoResize"
     Style="{DynamicResource EWindowStyle}"
-    mc:Ignorable="d" Loaded="OnWindowLoaded" Closed="OnWindowClosed">
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
 
     <Grid>
 
